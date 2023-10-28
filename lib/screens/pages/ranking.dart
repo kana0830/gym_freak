@@ -8,6 +8,12 @@ class Ranking extends StatefulWidget {
 class _RankingState extends State<Ranking> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Center(child: Text("ranking"),),
+        ),
+      ),
+    );
   }
 }
