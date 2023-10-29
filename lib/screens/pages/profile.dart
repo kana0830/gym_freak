@@ -11,9 +11,46 @@ class _ProfileState extends State<Profile> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          child: Center(child: Text("profile"),),
+          child: Column(
+            children: [
+              Center(
+                child: Image.asset("assets/images/profile.jpeg"),
+              ),
+              const Icon(Icons.edit),
+              // TODO
+              _profileDetail(),
+              // TODO
+              _introduction(),
+              // TODO
+              _favoriteMenu(),
+              // TODO
+              _trainingTimes(),
+              // TODO
+              _tournamentResults(),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Widget _profileDetail() {
+    return Container();
+  }
+
+  Widget _introduction() {
+    return Container();
+  }
+
+  Widget _favoriteMenu() {
+    return Container();
+  }
+
+  Widget _trainingTimes() {
+    return Container();
+  }
+
+  Widget _tournamentResults() {
+    return Container();
   }
 }
