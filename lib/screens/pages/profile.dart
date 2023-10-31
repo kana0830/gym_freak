@@ -10,21 +10,37 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Image.asset("assets/images/profile.jpeg"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Image.asset("assets/images/profile.jpeg"),
+                    width: 160,
+                    height: 160,
+                  ),
+                  Container(
+                    child: const Icon(Icons.edit),
+                    margin: EdgeInsets.only(top: 140),
+                  ),
+                ],
               ),
-              const Icon(Icons.edit),
               // TODO
               _profileDetail(),
+              const Text("自己紹介"),
               // TODO
               _introduction(),
+              const Text("好きな種目"),
               // TODO
               _favoriteMenu(),
+              const Text("トレーニング回数"),
               // TODO
               _trainingTimes(),
+              const Text("大会実績"),
               // TODO
               _tournamentResults(),
             ],
