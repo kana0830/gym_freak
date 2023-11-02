@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -51,22 +53,29 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _profileDetail() {
-    return Container();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("花南"),
+        Text("33歳"),
+        Text("女"),
+      ],
+    );
   }
 
   Widget _introduction() {
-    return Container();
+    return Text("筋トレを始めて半年です。");
   }
 
   Widget _favoriteMenu() {
-    return Container();
+    return Text("DL/サイドレイズ/カール");
   }
 
   Widget _trainingTimes() {
-    return Container();
+    return Text("6日/週");
   }
 
   Widget _tournamentResults() {
-    return Container();
+    return Text("NABBA KOREA 2023");
   }
 }

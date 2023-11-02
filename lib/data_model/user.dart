@@ -5,7 +5,7 @@ class User {
   final String userName;
   final String email;
   final String gender;
-  final String age;
+  final String birthday;
   final String job;
   final String introduction;
   final String favoriteMenu;
@@ -20,7 +20,7 @@ class User {
     required this.userName,
     required this.email,
     required this.gender,
-    required this.age,
+    required this.birthday,
     required this.job,
     required this.introduction,
     required this.favoriteMenu,
@@ -39,7 +39,7 @@ class User {
           userName == other.userName &&
           email == other.email &&
           gender == other.gender &&
-          age == other.age &&
+          birthday == other.birthday &&
           job == other.job &&
           introduction == other.introduction &&
           favoriteMenu == other.favoriteMenu &&
@@ -54,7 +54,7 @@ class User {
       userName.hashCode ^
       email.hashCode ^
       gender.hashCode ^
-      age.hashCode ^
+      birthday.hashCode ^
       job.hashCode ^
       introduction.hashCode ^
       favoriteMenu.hashCode ^
@@ -70,7 +70,7 @@ class User {
         ' userName: $userName,' +
         ' email: $email,' +
         ' gender: $gender,' +
-        ' age: $age,' +
+        ' birthday: $birthday,' +
         ' job: $job,' +
         ' introduction: $introduction,' +
         ' favoriteMenu: $favoriteMenu,' +
@@ -86,7 +86,7 @@ class User {
     String? userName,
     String? email,
     String? gender,
-    String? age,
+    String? birthday,
     String? job,
     String? introduction,
     String? favoriteMenu,
@@ -100,7 +100,7 @@ class User {
       userName: userName ?? this.userName,
       email: email ?? this.email,
       gender: gender ?? this.gender,
-      age: age ?? this.age,
+      birthday: birthday ?? this.birthday,
       job: job ?? this.job,
       introduction: introduction ?? this.introduction,
       favoriteMenu: favoriteMenu ?? this.favoriteMenu,
@@ -117,7 +117,7 @@ class User {
       'userName': this.userName,
       'email': this.email,
       'gender': this.gender,
-      'age': this.age,
+      'birthday': this.birthday,
       'job': this.job,
       'introduction': this.introduction,
       'favoriteMenu': this.favoriteMenu,
@@ -134,7 +134,7 @@ class User {
       userName: map['userName'] as String,
       email: map['email'] as String,
       gender: map['gender'] as String,
-      age: map['age'] as String,
+      birthday: map['birthday'] as String,
       job: map['job'] as String,
       introduction: map['introduction'] as String,
       favoriteMenu: map['favoriteMenu'] as String,
