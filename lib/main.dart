@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: "gym_freak",
       theme: ThemeData(
         brightness: Brightness.dark,
+        textTheme: TextTheme(bodyMedium: TextStyle(fontSize: 16.0))
       ),
       home: HomeScreen(),
     );

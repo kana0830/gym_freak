@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../style.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -20,31 +21,16 @@ class _ProfileState extends State<Profile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    child: Image.asset("assets/images/profile.jpeg"),
+                  SizedBox(
                     width: 160,
                     height: 160,
-                  ),
-                  Container(
-                    child: const Icon(Icons.edit),
-                    margin: EdgeInsets.only(top: 140),
+                    child: Image.asset("assets/images/profile.jpeg"),
                   ),
                 ],
               ),
               // TODO
               _profileDetail(),
-              const Text("自己紹介"),
-              // TODO
-              _introduction(),
-              const Text("好きな種目"),
-              // TODO
-              _favoriteMenu(),
-              const Text("トレーニング回数"),
-              // TODO
-              _trainingTimes(),
-              const Text("大会実績"),
-              // TODO
-              _tournamentResults(),
+              Card(child: _myProfile()),
             ],
           ),
         ),
@@ -52,30 +38,68 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget _textTitle(String textTitle) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Text(
+        textTitle,
+        style: const TextStyle(
+            fontSize: 16.0,
+            color: Color(0xFFFFF59D),
+            fontFamily: BoldFont,
+            fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
   Widget _profileDetail() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("花南"),
-        Text("33歳"),
-        Text("女"),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("花南"),
+          Text("  /  "),
+          Text("33歳"),
+          Text("  /  "),
+          Text("女"),
+        ],
+      ),
     );
   }
 
   Widget _introduction() {
-    return Text("筋トレを始めて半年です。");
+    return const Text("筋トレを始めて半年です。");
   }
 
   Widget _favoriteMenu() {
-    return Text("DL/サイドレイズ/カール");
+    return const Text("DL / サイドレイズ / カール");
   }
 
   Widget _trainingTimes() {
-    return Text("6日/週");
+    return const Text("6日/週");
   }
 
   Widget _tournamentResults() {
-    return Text("NABBA KOREA 2023");
+    return const Text("NABBA KOREA 2023");
+  }
+
+  _myProfile() {
+    return Column(
+      children: [
+        _textTitle("自己紹介"),
+        // TODO
+        _introduction(),
+        _textTitle("好きな種目"),
+        // TODO
+        _favoriteMenu(),
+        _textTitle("トレーニング回数"),
+        // TODO
+        _trainingTimes(),
+        _textTitle("大会実績"),
+        // TODO
+        _tournamentResults(),
+      ],
+    );
   }
 }
