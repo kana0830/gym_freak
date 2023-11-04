@@ -23,6 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(0xFF7b755e),
+            title: Text('花南'),
+          ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -31,19 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_run),
-            label: "記録",
+            label: '記録',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month_outlined),
-            label: "カレンダー",
+            label: 'カレンダー',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_chart),
-            label: "ランキング",
+            label: 'ランキング',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
-            label: "マイページ",
+            label: 'マイページ',
           ),
         ],
         onTap: (index) {

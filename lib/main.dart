@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "gym_freak",
+      title: 'gym_freak',
       theme: ThemeData(
         brightness: Brightness.dark,
-        textTheme: TextTheme(bodyMedium: TextStyle(fontSize: 16.0))
+        textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16.0))
       ),
       home: HomeScreen(),
     );

@@ -13,25 +13,27 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 160,
-                    height: 160,
-                    child: Image.asset("assets/images/profile.jpeg"),
-                  ),
-                ],
-              ),
-              // TODO
-              _profileDetail(),
-              Card(child: _myProfile()),
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 160,
+                      height: 160,
+                      child: Image.asset('assets/images/profile.jpeg'),
+                    ),
+                  ],
+                ),
+                // TODO
+                _profileDetail(),
+                _myProfile(),
+              ],
+            ),
           ),
         ),
       ),
@@ -39,67 +41,49 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _textTitle(String textTitle) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Text(
-        textTitle,
-        style: const TextStyle(
-            fontSize: 16.0,
-            color: Color(0xFFFFF59D),
-            fontFamily: BoldFont,
-            fontWeight: FontWeight.bold),
-      ),
+    return Text(
+      textTitle,
+      style: const TextStyle(
+          fontSize: 16.0,
+          color: Color(0xFFFFF59D),
+          fontFamily: BoldFont,
+          fontWeight: FontWeight.bold),
     );
   }
 
   Widget _profileDetail() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: const Row(
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("花南"),
-          Text("  /  "),
-          Text("33歳"),
-          Text("  /  "),
-          Text("女"),
+          Text('33歳'),
+          Text('  /  '),
+          Text('女'),
+          Text('  /  '),
+          Text('会社員'),
         ],
       ),
     );
   }
 
-  Widget _introduction() {
-    return const Text("筋トレを始めて半年です。");
-  }
-
-  Widget _favoriteMenu() {
-    return const Text("DL / サイドレイズ / カール");
-  }
-
-  Widget _trainingTimes() {
-    return const Text("6日/週");
-  }
-
-  Widget _tournamentResults() {
-    return const Text("NABBA KOREA 2023");
-  }
-
-  _myProfile() {
+  Widget _myProfile() {
     return Column(
       children: [
-        _textTitle("自己紹介"),
-        // TODO
-        _introduction(),
-        _textTitle("好きな種目"),
-        // TODO
-        _favoriteMenu(),
-        _textTitle("トレーニング回数"),
-        // TODO
-        _trainingTimes(),
-        _textTitle("大会実績"),
-        // TODO
-        _tournamentResults(),
+        _listContent('自己紹介', '筋トレを始めて半年です。'),
+        _listContent('好きな種目', 'DL / サイドレイズ / カール'),
+        _listContent('トレーニング回数', '6日/週'),
+        _listContent('大会実績', 'NABBA KOREA 2023',)
       ],
+    );
+  }
+
+  Widget _listContent(String textTitle, String textContent) {
+    return Card(
+      child: ListTile(
+        title: _textTitle(textTitle),
+        subtitle: Text(textContent),
+      ),
     );
   }
 }
