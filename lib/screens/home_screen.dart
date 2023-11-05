@@ -3,6 +3,10 @@ import 'package:gym_freak/screens/pages/profile.dart';
 import 'package:gym_freak/screens/pages/ranking.dart';
 import 'package:gym_freak/screens/pages/training_memo.dart';
 import 'package:gym_freak/screens/pages/my_calender.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+
+import '../common/common_data_util.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,10 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFF7b755e),
-            title: Text('花南'),
-          ),
+      appBar: _appBar(),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -57,5 +58,44 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     ));
+  }
+
+  AppBar _appBar() {
+    // 表示用日付を取得
+    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
+
+    final List<Map<String, dynamic >> _pagesAppbar = [
+      {
+        'title': today,
+        'icon': Icon(Icons.add),
+      },
+      {
+        'title': today,
+        'icon': Icon(Icons.add),
+      },
+      {
+        'title': today,
+        'icon': Container(),
+      },
+      {
+        'title': '花南',
+        'icon': Icon(Icons.edit),
+      }
+  ];
+
+    return AppBar(
+      backgroundColor: Color(0xFF7b755e),
+      title: Text(_pagesAppbar[_currentIndex]['title']),
+      actions: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            fixedSize: Size(10.0, 10.0),
+            backgroundColor: Color(0xFF7b755e),
+          ),
+          onPressed: () {},
+          child: _pagesAppbar[_currentIndex]['icon'],
+        )
+      ],
+    );
   }
 }
