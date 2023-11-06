@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
-    final List<Map<String, dynamic >> _pagesAppbar = [
+    final List<Map<String, dynamic>> _pagesAppbar = [
       {
         'title': today,
         'icon': Icon(Icons.add),

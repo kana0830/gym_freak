@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_freak/db/db_user.dart';
 import '../../style.dart';
 
 class Profile extends StatefulWidget {
@@ -29,7 +30,6 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                // TODO
                 _profileDetail(),
                 _myProfile(),
               ],
@@ -52,6 +52,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _profileDetail() {
+
     return const Padding(
       padding: EdgeInsets.all(16.0),
       child: Row(
