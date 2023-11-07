@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_freak/firebase_options.dart';
-import 'package:gym_freak/screens/home_screen.dart';
+import 'package:gym_freak/view/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

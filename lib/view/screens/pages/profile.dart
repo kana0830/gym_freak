@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_freak/db/db_user.dart';
-import '../../style.dart';
+import '../../style/style.dart';
 
 class Profile extends StatefulWidget {
   @override

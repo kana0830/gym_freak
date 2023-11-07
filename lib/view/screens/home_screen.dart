@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gym_freak/screens/pages/profile.dart';
-import 'package:gym_freak/screens/pages/ranking.dart';
-import 'package:gym_freak/screens/pages/training_memo.dart';
-import 'package:gym_freak/screens/pages/my_calender.dart';
+import 'package:gym_freak/view/screens/pages/profile.dart';
+import 'package:gym_freak/view/screens/pages/ranking.dart';
+import 'package:gym_freak/view/screens/pages/training_memo.dart';
+import 'package:gym_freak/view/screens/pages/my_calender.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../common/common_data_util.dart';
+import '../../common/common_data_util.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

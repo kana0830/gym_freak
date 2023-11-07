@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_freak/screens/common/list_content.dart';
+import 'package:gym_freak/view/components/list_content.dart';
 
 class TrainingMemo extends StatefulWidget {
   @override
