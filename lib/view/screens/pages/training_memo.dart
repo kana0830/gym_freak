@@ -64,27 +64,27 @@ class _TrainingMemoState extends State<TrainingMemo> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             children: [
-              const Row(
+              Row(
                 children: [
                   Icon(Icons.room),
                   Text('  Forza神田'),
                 ],
               ),
               SizedBox(height: 10.0),
-              const Row(
+              Row(
                 children: [
                   Icon(Icons.access_time),
                   Text('  20:40~21:30  0:50:00'),
                 ],
               ),
               SizedBox(height: 10.0),
-              const Row(
+              Row(
                 children: [
                   Icon(Icons.accessibility),
                   Text('  腕 / 胸'),

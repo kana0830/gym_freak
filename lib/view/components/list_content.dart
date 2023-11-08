@@ -9,7 +9,7 @@ class ListContent {
     return
     ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: menuData.length,
         // itemBuilder: (context, i) => _cardList(context, i),
         itemBuilder: (context, i) {
