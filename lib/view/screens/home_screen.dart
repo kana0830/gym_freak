@@ -31,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        selectedItemColor: Color(0xFFFFF176),
-        unselectedItemColor: Color(0xFF757575),
+        selectedItemColor: const Color(0xFFFFF176),
+        unselectedItemColor: const Color(0xFF757575),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_run),
