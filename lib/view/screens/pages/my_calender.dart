@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class MyCalender extends StatefulWidget {
   @override
@@ -10,12 +11,19 @@ class _MyCalenderState extends State<MyCalender> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          child: Center(child: Text("mycarender"),),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TableCalendar(
+                focusedDay: DateTime.now(),
+                firstDay: DateTime.now(),
+                lastDay: DateTime.now(),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
