@@ -64,14 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
     // 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
-    final List<Map<String, dynamic>> _pagesAppbar = [
+    final List<Map<String, dynamic>> pagesAppbar = [
       {
         'title': today,
-        'icon': Icon(Icons.add),
+        'icon': const Icon(Icons.add),
       },
       {
         'title': today,
-        'icon': Icon(Icons.add),
+        'icon': const Icon(Icons.add),
       },
       {
         'title': today,
@@ -79,21 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       {
         'title': '花南',
-        'icon': Icon(Icons.edit),
+        'icon': const Icon(Icons.edit),
       }
   ];
 
     return AppBar(
-      backgroundColor: Color(0xFF7b755e),
-      title: Text(_pagesAppbar[_currentIndex]['title']),
+      backgroundColor: const Color(0xFF7b755e),
+      title: Text(pagesAppbar[_currentIndex]['title']),
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            fixedSize: Size(10.0, 10.0),
-            backgroundColor: Color(0xFF7b755e),
+            fixedSize: const Size(10.0, 10.0),
+            backgroundColor: const Color(0xFF7b755e),
           ),
           onPressed: () {},
-          child: _pagesAppbar[_currentIndex]['icon'],
+          child: pagesAppbar[_currentIndex]['icon'],
         )
       ],
     );
