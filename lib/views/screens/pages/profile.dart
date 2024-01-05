@@ -1,23 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../view_models/user_notifier.dart';
 import '../../style/style.dart';
 
-class Profile extends StatefulWidget {
-  @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
+class Profile extends ConsumerWidget {
+  const Profile({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userNotifierProvider);
+    final userInfo = user.when(
+        loading: () => const CircularProgressIndicator(),
+        error: (error, stacktrace) => Text('エラー $error'),
+        data: (data) =>
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -30,10 +30,36 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                _profileDetail(),
-                _myProfile(),
-              ],
-            ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('33歳'),
+                      const Text('  /  '),
+                      Text(data['gender']),
+                      const Text('  /  '),
+                      Text(data['job']),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    _listContent('自己紹介', data['introduction']),
+                    _listContent('好きな種目', data['favoriteMenu']),
+                    _listContent('トレーニング回数', data['trainingTimes']),
+                    _listContent('大会実績', data['tournamentResults'])
+                  ],
+                ),
+              ],)
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: userInfo
           ),
         ),
       ),
@@ -48,34 +74,6 @@ class _ProfileState extends State<Profile> {
           color: Color(0xFFFFF59D),
           fontFamily: BoldFont,
           fontWeight: FontWeight.bold),
-    );
-  }
-
-  Widget _profileDetail() {
-
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('33歳'),
-          Text('  /  '),
-          Text('女'),
-          Text('  /  '),
-          Text('会社員'),
-        ],
-      ),
-    );
-  }
-
-  Widget _myProfile() {
-    return Column(
-      children: [
-        _listContent('自己紹介', '筋トレを始めて半年です。'),
-        _listContent('好きな種目', 'DL / サイドレイズ / カール'),
-        _listContent('トレーニング回数', '6日/週'),
-        _listContent('大会実績', 'NABBA KOREA 2023',)
-      ],
     );
   }
 

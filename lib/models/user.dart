@@ -15,7 +15,7 @@ class User {
   late String trainingTimes;
   late String userName;
 
-  User(DocumentSnapshot doc, docId) {
+  User(Map<String, dynamic> doc, docId) {
     id = docId;
     birthday = doc['birthday'];
     displayName = doc['displayName'];

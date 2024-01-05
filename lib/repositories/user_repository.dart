@@ -1,11 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/user.dart';
+
 class UserRepository {
 
   @override
-  Future<String> getUser() async {
-    final querySnapshot = await FirebaseFirestore.instance.collection('user').doc('1').get();
-    final user = querySnapshot.toString();
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUser() async {
+    // final querySnapshot = await FirebaseFirestore.instance.collection('user').where('1').get();
+    final db = FirebaseFirestore.instance;
+    final user = db
+        .collection('user')
+        .doc('1')
+        .get();
+
+    // final data = querySnapshot.data() as Map<String, dynamic>;
+    // final user = User(querySnapshot.data, '1');
+
     return user;
   }
 
@@ -24,12 +34,4 @@ class UserRepository {
       'userName' : value,
     });
   }
-
-  // void insertTodo(task, detail) async{
-  //   await FirebaseFirestore.instance.collection('user').add({
-  //     'task' : task,
-  //     'detail': detail,
-  //     'endFlg' : 0,
-  //   });
-  // }
 }

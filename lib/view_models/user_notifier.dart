@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,7 +14,7 @@ class UserNotifier extends _$UserNotifier {
   final _userRepository = UserRepository();
 
   @override
-  Future<String> build() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> build() async {
     var user = await _userRepository.getUser();
     return user;
   }
