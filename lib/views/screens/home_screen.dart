@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_freak/views/screens/pages/edit_profile.dart';
 import 'package:gym_freak/views/screens/pages/profile.dart';
 import 'package:gym_freak/views/screens/pages/ranking.dart';
 import 'package:gym_freak/views/screens/pages/training_memo.dart';
@@ -9,6 +10,8 @@ import 'package:intl/intl.dart';
 import '../../common/common_data_util.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -16,11 +19,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
+  // ナビゲーションバーに表示するページ
   final _pages = [
     TrainingMemo(),
     MyCalender(),
     Ranking(),
-    Profile(),
+    const Profile(),
   ];
 
   @override
@@ -78,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
         'icon': Container(),
       },
       {
-        'title': '花南',
+        'title': '花南', // TODO 取得データを表示
         'icon': const Icon(Icons.edit),
       }
   ];
@@ -92,7 +96,19 @@ class _HomeScreenState extends State<HomeScreen> {
             fixedSize: const Size(10.0, 10.0),
             backgroundColor: const Color(0xFF7b755e),
           ),
-          onPressed: () {},
+          onPressed: () {
+            switch(_currentIndex) {
+              case 0 :
+                break;
+              case 1 :
+                break;
+              case 2 :
+                break;
+              case 3 :
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                break;
+            }
+          },
           child: pagesAppbar[_currentIndex]['icon'],
         )
       ],
