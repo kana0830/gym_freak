@@ -11,6 +11,7 @@ class _RankingState extends State<Ranking> {
     return SafeArea(
       child: Scaffold(
         body: Container(
+          // TODO
           child: Center(child: Text("ranking"),),
         ),
       ),

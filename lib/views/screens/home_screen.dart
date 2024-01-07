@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pages = [
     TrainingMemo(),
     MyCalender(),
-    Ranking(),
+    // Ranking(),
     const Profile(),
   ];
 
@@ -46,10 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.calendar_month_outlined),
             label: 'カレンダー',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_chart),
-            label: 'ランキング',
-          ),
+          // TODO ランキング機能いずれ追加したい
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.add_chart),
+          //   label: 'ランキング',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
             label: 'マイページ',
@@ -78,10 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
         'icon': const Icon(Icons.add),
       },
       {
-        'title': today,
-        'icon': Container(),
-      },
-      {
         'title': '花南', // TODO 取得データを表示
         'icon': const Icon(Icons.edit),
       }
@@ -103,8 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
               case 1 :
                 break;
               case 2 :
-                break;
-              case 3 :
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
                 break;
             }
