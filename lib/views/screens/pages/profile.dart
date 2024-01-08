@@ -5,6 +5,8 @@ import '../../../view_models/user_notifier.dart';
 import '../../style/style.dart';
 import 'package:age_calculator/age_calculator.dart';
 
+import 'edit_profile.dart';
+
 class Profile extends ConsumerWidget {
   const Profile({
     super.key,
@@ -13,60 +15,79 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userNotifierProvider);
+    Map<String, dynamic>? userData = {};
 
     // ユーザー情報表示部分
     final userInfo = user.when(
         loading: () => const CircularProgressIndicator(),
         error: (error, stacktrace) => Text('エラー $error'),
-        data: (data) =>
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+        data: (data) {
+          userData = data.data();
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 160,
+                    height: 160,
+                    // 画像表示
+                    child: Image.asset('assets/images/profile.jpeg'),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                // 基本情報横並び表示部分
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: 160,
-                      height: 160,
-                      // 画像表示
-                      child: Image.asset('assets/images/profile.jpeg'),
-                    ),
+                    Text('${_getAge(data['birthday'])}歳'),
+                    const Text('  /  '),
+                    Text(data['gender']),
+                    const Text('  /  '),
+                    Text(data['job']),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  // 基本情報横並び表示部分
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('${_getAge(data['birthday'])}歳'),
-                      const Text('  /  '),
-                      Text(data['gender']),
-                      const Text('  /  '),
-                      Text(data['job']),
-                    ],
-                  ),
-                ),
-                Column(
-                  // 文章系表示部分
-                  children: [
-                    _listContent('自己紹介', data['introduction']),
-                    _listContent('好きな種目', data['favoriteMenu']),
-                    _listContent('トレーニング回数', '${data['trainingTimes']}回'),
-                    _listContent('大会実績', data['tournamentResults'])
-                  ],
-                ),
-              ],)
-    );
+              ),
+              Column(
+                // 文章系表示部分
+                children: [
+                  _listContent('自己紹介', data['introduction']),
+                  _listContent('好きな種目', data['favoriteMenu']),
+                  _listContent('トレーニング回数', '${data['trainingTimes']}回'),
+                  _listContent('大会実績', data['tournamentResults'])
+                ],
+              ),
+            ],
+          );
+        });
 
     // プロフィール画面
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF7b755e),
+          title: Text(userData?['userName']),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(10.0, 10.0),
+                backgroundColor: const Color(0xFF7b755e),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditProfile(userData)));
+              },
+              child: const Icon(Icons.edit),
+            )
+          ],
+        ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: userInfo
-          ),
+          child: Padding(padding: const EdgeInsets.all(16.0), child: userInfo),
         ),
       ),
     );

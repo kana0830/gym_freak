@@ -12,10 +12,19 @@ part 'user_notifier.g.dart';
 @riverpod
 class UserNotifier extends _$UserNotifier {
   final _userRepository = UserRepository();
+  // Map<String, dynamic> user = {};
 
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> build() async {
     var user = await _userRepository.getUser();
     return user;
+  }
+
+  // update
+  void updateState(id, value) async {
+    _userRepository.updateUser(id, value);
+    var updatedUser = await _userRepository.getUser();
+    // user = updatedUser;
+    // state = AsyncData<User>(user);
   }
 }

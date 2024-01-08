@@ -31,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: _appBar(),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -78,10 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
         'title': today,
         'icon': const Icon(Icons.add),
       },
-      {
-        'title': '花南', // TODO 取得データを表示
-        'icon': const Icon(Icons.edit),
-      }
   ];
 
     return AppBar(
@@ -98,9 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
               case 0 :
                 break;
               case 1 :
-                break;
-              case 2 :
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
                 break;
             }
           },
