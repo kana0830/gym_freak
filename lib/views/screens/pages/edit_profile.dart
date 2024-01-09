@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../view_models/user_notifier.dart';
-import '../../components/custom_radio_button.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class EditProfile extends ConsumerWidget {
@@ -109,7 +108,7 @@ class EditProfile extends ConsumerWidget {
     int selectTimes = 1;
     int weekOrMonth = 1;
     return Card(
-      color: Color(0xFF565656),
+      color: const Color(0xFF565656),
       child: Row(
         children: [
           const Padding(
