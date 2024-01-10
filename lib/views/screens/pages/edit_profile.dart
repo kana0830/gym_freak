@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import '../../../common/division.dart';
 import '../../../view_models/user_notifier.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
@@ -19,14 +21,22 @@ class EditProfile extends ConsumerWidget {
       data: (data) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _textField('名前', 1, ref, user),
+          const Text('名前'),
+          _textField(1, ref, userData?['userName']),
+          const Text('性別'),
           _selectField(),
+          const Text('生年月日'),
           _birthDayField(context, data),
-          _textField('職業', 1, ref, user),
-          _textField('自己紹介', 5, ref, user),
-          _textField('好きな種目', 1, ref, user),
+          const Text('職業'),
+          _textField(1, ref, userData?['job']),
+          const Text('自己紹介'),
+          _textField(5, ref, userData?['introduction']),
+          const Text('好きな種目'),
+          _textField(1, ref, userData?['favoriteMenu']),
+          const Text('トレーニング回数'),
           _trainingTimesField(),
-          _textField('大会実績', 1, ref, user),
+          const Text('大会実績'),
+          _textField(1, ref, userData?['tournamentResults']),
         ],
       ),
     );
@@ -61,19 +71,19 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
-  Widget _textField(String labelText, int lines, ref, user) {
+  Widget _textField(int lines, ref, initValue) {
     return Card(
       child: TextField(
-        decoration: InputDecoration(
-          labelText: labelText,
-          floatingLabelStyle: const TextStyle(color: Colors.white),
+        controller: TextEditingController(text: initValue),
+        decoration: const InputDecoration(
+          floatingLabelStyle: TextStyle(color: Colors.white),
           filled: true,
           border: InputBorder.none,
         ),
         maxLines: lines,
         onChanged: (value) {
           final notifier = ref.read(userNotifierProvider.notifier);
-          notifier.updateState('1', user['introduction']);
+          notifier.updateState('1', userData?['introduction']);
         },
       ),
     );
@@ -82,10 +92,9 @@ class EditProfile extends ConsumerWidget {
   Widget _birthDayField(context, data) {
     return Card(
       child: TextFormField(
-        initialValue: data['birthday'].toString(),
+        initialValue: (DateFormat('yyyy/MM/dd').format(data['birthday'].toDate()).toString()),
         focusNode: AlwaysDisabledFocusNode(),
         decoration: const InputDecoration(
-          labelText: '生年月日',
           floatingLabelStyle: TextStyle(color: Colors.white),
           filled: true,
           border: InputBorder.none,
@@ -111,10 +120,6 @@ class EditProfile extends ConsumerWidget {
       color: const Color(0xFF565656),
       child: Row(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 12.0, right: 30.0),
-            child: Text('トレーニング回数'),
-          ),
           DropdownButton(
             items: const [
               DropdownMenuItem(
@@ -168,7 +173,7 @@ class EditProfile extends ConsumerWidget {
   Widget _selectField() {
     int gender = 1;
     return Card(
-      color: Color(0xFF565656),
+      color: const Color(0xFF565656),
       child: Row(
         children: [
           const Padding(
@@ -176,24 +181,12 @@ class EditProfile extends ConsumerWidget {
             child: Text('性別'),
           ),
           DropdownButton(
-            items: const [
+            items: genderDiv.forEach ((int key, String value){
               DropdownMenuItem(
-                value: 1,
-                child: Text('男性'),
-              ),
-              DropdownMenuItem(
-                value: 2,
-                child: Text('女性'),
-              ),
-              DropdownMenuItem(
-                value: 3,
-                child: Text('その他'),
-              ),
-              DropdownMenuItem(
-                value: 4,
-                child: Text('回答しない'),
-              ),
-            ],
+              value: key,
+              child: Text(value),
+                );
+            }),
             value: gender,
             onChanged: (int? value) {
               gender = value!;
