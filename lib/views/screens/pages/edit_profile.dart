@@ -6,10 +6,13 @@ import '../../../view_models/user_notifier.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class EditProfile extends ConsumerWidget {
-  EditProfile(this.userData, {
+  EditProfile(
+    this.userData, {
     super.key,
   });
+
   Map<String, dynamic>? userData = {};
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userNotifierProvider);
@@ -92,7 +95,9 @@ class EditProfile extends ConsumerWidget {
   Widget _birthDayField(context, data) {
     return Card(
       child: TextFormField(
-        initialValue: (DateFormat('yyyy/MM/dd').format(data['birthday'].toDate()).toString()),
+        initialValue: (DateFormat('yyyy/MM/dd')
+            .format(data['birthday'].toDate())
+            .toString()),
         focusNode: AlwaysDisabledFocusNode(),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
@@ -114,55 +119,39 @@ class EditProfile extends ConsumerWidget {
   }
 
   Widget _trainingTimesField() {
-    int selectTimes = 1;
-    int weekOrMonth = 1;
+    final trainingTimesList = [];
+    trainingTimesDiv.forEach((k, v) => trainingTimesList.add(TrainingTimes(k, v)));
+
+    final weekOrMonthList = [];
+    weekOrMonthDiv.forEach((k, v) => weekOrMonthList.add(WeekOrMonth(k, v)));
+
     return Card(
       color: const Color(0xFF565656),
       child: Row(
         children: [
           DropdownButton(
-            items: const [
-              DropdownMenuItem(
-                value: 1,
-                child: Text('1'),
-              ),
-              DropdownMenuItem(
-                value: 2,
-                child: Text('2'),
-              ),
-              DropdownMenuItem(
-                value: 3,
-                child: Text('3'),
-              ),
-              DropdownMenuItem(
-                value: 4,
-                child: Text('4'),
-              ),
-              DropdownMenuItem(
-                value: 5,
-                child: Text('5'),
-              ),
+            items: [
+              for (var a in trainingTimesList)
+                DropdownMenuItem(
+                  value: a.key,
+                  child: Text(a.times),
+                )
             ],
-            value: selectTimes,
-            onChanged: (int? value) {
-              selectTimes = value!;
+            value: 1,
+            onChanged: (value) {
             },
           ),
           const Text('回 / '),
           DropdownButton(
-            items: const [
-              DropdownMenuItem(
-                value: 1,
-                child: Text('週'),
-              ),
-              DropdownMenuItem(
-                value: 2,
-                child: Text('月'),
-              ),
+            items: [
+              for (var a in weekOrMonthList)
+                DropdownMenuItem(
+                  value: a.key,
+                  child: Text(a.weekOrMonth),
+                )
             ],
-            value: weekOrMonth,
-            onChanged: (int? value) {
-              weekOrMonth = value!;
+            value: 1,
+            onChanged: (value) {
             },
           ),
         ],
@@ -171,7 +160,8 @@ class EditProfile extends ConsumerWidget {
   }
 
   Widget _selectField() {
-    int gender = 1;
+    final list = [];
+    genderDiv.forEach((k, v) => list.add(Gender(k, v)));
     return Card(
       color: const Color(0xFF565656),
       child: Row(
@@ -181,15 +171,15 @@ class EditProfile extends ConsumerWidget {
             child: Text('性別'),
           ),
           DropdownButton(
-            items: genderDiv.forEach ((int key, String value){
-              DropdownMenuItem(
-              value: key,
-              child: Text(value),
-                );
-            }),
-            value: gender,
-            onChanged: (int? value) {
-              gender = value!;
+            items: [
+              for (var a in list)
+                DropdownMenuItem(
+                  value: a.key,
+                  child: Text(a.gender),
+                )
+            ],
+            value: 1,
+            onChanged: (value) {
             },
           ),
         ],
