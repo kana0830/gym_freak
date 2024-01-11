@@ -74,6 +74,7 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
+  // 名前/職業/自己紹介/好きな種目/大会実績
   Widget _textField(int lines, ref, initValue) {
     return Card(
       child: TextField(
@@ -92,6 +93,35 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
+  // 性別
+  Widget _selectField() {
+    final list = [];
+    genderDiv.forEach((k, v) => list.add(Gender(k, v)));
+    return Card(
+      color: const Color(0xFF565656),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: DropdownButton(
+              items: [
+                for (var a in list)
+                  DropdownMenuItem(
+                    value: a.key,
+                    child: Text(a.gender),
+                  )
+              ],
+              value: 1,
+              onChanged: (value) {
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 生年月日
   Widget _birthDayField(context, data) {
     return Card(
       child: TextFormField(
@@ -118,10 +148,13 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
+  // トレーニング回数
   Widget _trainingTimesField() {
+    // トレーニング回数
     final trainingTimesList = [];
     trainingTimesDiv.forEach((k, v) => trainingTimesList.add(TrainingTimes(k, v)));
 
+    // 週/月
     final weekOrMonthList = [];
     weekOrMonthDiv.forEach((k, v) => weekOrMonthList.add(WeekOrMonth(k, v)));
 
@@ -129,53 +162,28 @@ class EditProfile extends ConsumerWidget {
       color: const Color(0xFF565656),
       child: Row(
         children: [
-          DropdownButton(
-            items: [
-              for (var a in trainingTimesList)
-                DropdownMenuItem(
-                  value: a.key,
-                  child: Text(a.times),
-                )
-            ],
-            value: 1,
-            onChanged: (value) {
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: DropdownButton(
+              items: [
+                for (var a in trainingTimesList)
+                  DropdownMenuItem(
+                    value: a.key,
+                    child: Text(a.times),
+                  )
+              ],
+              value: 1,
+              onChanged: (value) {
+              },
+            ),
           ),
-          const Text('回 / '),
+          const Text('回　/　'),
           DropdownButton(
             items: [
               for (var a in weekOrMonthList)
                 DropdownMenuItem(
                   value: a.key,
                   child: Text(a.weekOrMonth),
-                )
-            ],
-            value: 1,
-            onChanged: (value) {
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _selectField() {
-    final list = [];
-    genderDiv.forEach((k, v) => list.add(Gender(k, v)));
-    return Card(
-      color: const Color(0xFF565656),
-      child: Row(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 12.0, right: 30.0),
-            child: Text('性別'),
-          ),
-          DropdownButton(
-            items: [
-              for (var a in list)
-                DropdownMenuItem(
-                  value: a.key,
-                  child: Text(a.gender),
                 )
             ],
             value: 1,
