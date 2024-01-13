@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gym_freak/common/division.dart';
 
 class User {
 
@@ -14,6 +15,7 @@ class User {
   late String tournamentResults;
   late String trainingTimes;
   late String userName;
+  late String weekOrMonth;
 
   User(Map<String, dynamic> doc, docId) {
     id = docId;
@@ -28,6 +30,7 @@ class User {
     tournamentResults = doc['tournamentResults'];
     trainingTimes = doc['trainingTimes'];
     userName = doc['userName'];
+    weekOrMonth = doc['weekOrMonth'];
   }
 
 
@@ -44,8 +47,7 @@ class User {
       'tournamentResults' : value['tournamentResults'],
       'trainingTimes' : value['trainingTimes'],
       'userName' : value['userName'],
-
-
+      'weekOrMonth' : value['weekOrMonth'],
     });
   }
 }

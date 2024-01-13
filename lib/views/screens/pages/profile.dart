@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../common/division.dart';
 import '../../../view_models/user_notifier.dart';
 import '../../style/style.dart';
 import 'package:age_calculator/age_calculator.dart';
@@ -45,7 +46,7 @@ class Profile extends ConsumerWidget {
                   children: [
                     Text('${_getAge(data['birthday'])}歳'),
                     const Text('  /  '),
-                    Text(data['gender']),
+                    Text(genderDiv[data['gender']]!),
                     const Text('  /  '),
                     Text(data['job']),
                   ],
@@ -56,7 +57,7 @@ class Profile extends ConsumerWidget {
                 children: [
                   _listContent('自己紹介', data['introduction']),
                   _listContent('好きな種目', data['favoriteMenu']),
-                  _listContent('トレーニング回数', '${data['trainingTimes']}回'),
+                  _listContent('トレーニング回数', '${data['trainingTimes']}回 / ${weekOrMonthDiv[data['weekOrMonth']]}'),
                   _listContent('大会実績', data['tournamentResults'])
                 ],
               ),

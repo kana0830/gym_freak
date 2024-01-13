@@ -101,19 +101,22 @@ class EditProfile extends ConsumerWidget {
       color: const Color(0xFF565656),
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: DropdownButton(
-              items: [
-                for (var a in list)
-                  DropdownMenuItem(
-                    value: a.key,
-                    child: Text(a.gender),
-                  )
-              ],
-              value: 1,
-              onChanged: (value) {
-              },
+          SizedBox(
+            width: 300,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: DropdownButton(
+                items: [
+                  for (var a in list)
+                    DropdownMenuItem(
+                      value: a.key,
+                      child: Text(a.gender),
+                    )
+                ],
+                value: userData?['gender'],
+                onChanged: (value) {
+                },
+              ),
             ),
           ),
         ],
@@ -172,7 +175,7 @@ class EditProfile extends ConsumerWidget {
                     child: Text(a.times),
                   )
               ],
-              value: 1,
+              value: userData?['trainingTimes'],
               onChanged: (value) {
               },
             ),
@@ -186,7 +189,7 @@ class EditProfile extends ConsumerWidget {
                   child: Text(a.weekOrMonth),
                 )
             ],
-            value: 1,
+            value: userData?['weekOrMonth'],
             onChanged: (value) {
             },
           ),
