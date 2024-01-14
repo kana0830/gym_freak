@@ -12,7 +12,7 @@ part 'user_notifier.g.dart';
 @riverpod
 class UserNotifier extends _$UserNotifier {
   final _userRepository = UserRepository();
-  // Map<String, dynamic> user = {};
+  late DocumentSnapshot<Map<String, dynamic>> user;
 
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> build() async {
@@ -23,8 +23,12 @@ class UserNotifier extends _$UserNotifier {
   // update
   void updateState(id, value) async {
     _userRepository.updateUser(id, value);
+  }
+
+  // 性別の状態変化
+  void rewriting() async {
     var updatedUser = await _userRepository.getUser();
-    // user = updatedUser;
-    // state = AsyncData<User>(user);
+    user = updatedUser;
+    state = AsyncData<DocumentSnapshot<Map<String, dynamic>>>(user);
   }
 }

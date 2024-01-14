@@ -19,19 +19,19 @@ class UserRepository {
     return user;
   }
 
-  void updateUser(id, value) async{
+  void updateUser(id, user) async{
     await FirebaseFirestore.instance.collection('user').doc(id).update({
-      'birthday' : value,
-      'displayName' : value,
-      'email' : value,
-      'favoriteMenu' : value,
-      'gender' : value,
-      'introduction' : value,
-      'job' : value,
-      'profileUrl' : value,
-      'tournamentResults' : value,
-      'trainingTimes' : value,
-      'userName' : value,
+      'birthday' : user['birthday'],
+      'email' : user['email'],
+      'favoriteMenu' : user['favoriteMenu'],
+      'gender' : user['gender'],
+      'introduction' : user['introduction'],
+      'job' : user['job'],
+      'profileUrl' : user['profileUrl'],
+      'tournamentResults' : user['tournamentResults'],
+      'trainingTimes' : user['trainingTimes'],
+      'userName' : user['userName'],
+      'weekOrMonth' : user['weekOrMonth'],
     });
   }
 }

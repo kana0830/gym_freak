@@ -4,8 +4,7 @@ import 'package:gym_freak/common/division.dart';
 class User {
 
   late String id;
-  late String birthday;
-  late String displayName;
+  late Timestamp birthday;
   late String email;
   late String favoriteMenu;
   late String gender;
@@ -20,7 +19,6 @@ class User {
   User(Map<String, dynamic> doc, docId) {
     id = docId;
     birthday = doc['birthday'];
-    displayName = doc['displayName'];
     email = doc['email'];
     favoriteMenu = doc['favoriteMenu'];
     gender = doc['gender'];
@@ -37,7 +35,6 @@ class User {
   void updateTodo(id, value) async{
     await FirebaseFirestore.instance.collection('user').doc('1').update({
       'birthday' : value['birthday'],
-      'displayName' : value['displayName'],
       'email' : value['email'],
       'favoriteMenu' : value['favoriteMenu'],
       'gender' : value['gender'],

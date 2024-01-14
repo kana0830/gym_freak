@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -25,21 +26,21 @@ class EditProfile extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('名前'),
-          _textField(1, ref, userData?['userName']),
+          _textField(1, userData?['userName'], 1),
           const Text('性別'),
-          _selectField(),
+          _selectField(ref, context),
           const Text('生年月日'),
-          _birthDayField(context, data),
+          _birthDayField(context, data, ref),
           const Text('職業'),
-          _textField(1, ref, userData?['job']),
+          _textField(1, userData?['job'], 2),
           const Text('自己紹介'),
-          _textField(5, ref, userData?['introduction']),
+          _textField(5, userData?['introduction'], 3),
           const Text('好きな種目'),
-          _textField(1, ref, userData?['favoriteMenu']),
+          _textField(1, userData?['favoriteMenu'], 4),
           const Text('トレーニング回数'),
-          _trainingTimesField(),
+          _trainingTimesField(ref),
           const Text('大会実績'),
-          _textField(1, ref, userData?['tournamentResults']),
+          _textField(1, userData?['tournamentResults'], 5),
         ],
       ),
     );
@@ -60,6 +61,7 @@ class EditProfile extends ConsumerWidget {
                 ),
                 onPressed: () {
                   final notifier = ref.read(userNotifierProvider.notifier);
+                  notifier.updateState('1', userData);
                 },
                 child: const Text('保存'),
               )
@@ -75,7 +77,7 @@ class EditProfile extends ConsumerWidget {
   }
 
   // 名前/職業/自己紹介/好きな種目/大会実績
-  Widget _textField(int lines, ref, initValue) {
+  Widget _textField(int lines, initValue, divNo) {
     return Card(
       child: TextField(
         controller: TextEditingController(text: initValue),
@@ -86,51 +88,69 @@ class EditProfile extends ConsumerWidget {
         ),
         maxLines: lines,
         onChanged: (value) {
-          final notifier = ref.read(userNotifierProvider.notifier);
-          notifier.updateState('1', userData?['introduction']);
+          switch (divNo) {
+            case 1:
+              userData?['userName'] = value;
+              break;
+            case 2:
+              userData?['job'] = value;
+              break;
+            case 3:
+              userData?['introduction'] = value;
+              break;
+            case 4:
+              userData?['favoriteMenu'] = value;
+              break;
+            case 5:
+              userData?['tournamentResults'] = value;
+              break;
+          }
         },
       ),
     );
   }
 
   // 性別
-  Widget _selectField() {
+  Widget _selectField(ref, context) {
     final list = [];
     genderDiv.forEach((k, v) => list.add(Gender(k, v)));
-    return Card(
-      color: const Color(0xFF565656),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 300,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: DropdownButton(
-                items: [
-                  for (var a in list)
-                    DropdownMenuItem(
-                      value: a.key,
-                      child: Text(a.gender),
-                    )
-                ],
-                value: userData?['gender'],
-                onChanged: (value) {
-                },
-              ),
-            ),
+    return SizedBox(
+      width: 500,
+      child: Card(
+        color: const Color(0xFF565656),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: DropdownButton(
+            underline: Container(),
+            isExpanded: true,
+            items: [
+              for (var a in list)
+                DropdownMenuItem(
+                  value: a.key,
+                  child: Text(a.gender),
+                )
+            ],
+            value: userData?['gender'],
+            onChanged: (value) {
+              userData?['gender'] = value;
+              final notifier = ref.read(userNotifierProvider.notifier);
+              notifier.rewriting();
+            },
           ),
-        ],
+        ),
       ),
     );
   }
 
   // 生年月日
-  Widget _birthDayField(context, data) {
+  Widget _birthDayField(context, data, ref) {
+    var bdData = data['birthday'].toDate();
+    var initBD = DateFormat('yyyy/MM/dd')
+        .format(bdData)
+        .toString();
     return Card(
       child: TextFormField(
-        initialValue: (DateFormat('yyyy/MM/dd')
-            .format(data['birthday'].toDate())
-            .toString()),
+        initialValue: initBD,
         focusNode: AlwaysDisabledFocusNode(),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
@@ -140,61 +160,92 @@ class EditProfile extends ConsumerWidget {
         onTap: () {
           DatePicker.showDatePicker(context,
               showTitleActions: true,
+              onChanged: (date) {
+                userData?['birthday'] = date;
+                final notifier = ref.read(userNotifierProvider.notifier);
+                notifier.rewriting();
+              },
+              onConfirm: (date) {
+                userData?['birthday'] = date;
+                initBD = DateFormat('yyyy/MM/dd')
+                    .format(data['birthday'].toDate())
+                    .toString();
+                final notifier = ref.read(userNotifierProvider.notifier);
+                notifier.rewriting();
+              },
               minTime: DateTime(1960, 1, 1),
-              maxTime: DateTime(2025, 12, 31), onChanged: (date) {
-            print(date);
-          }, onConfirm: (date) {
-            print(date);
-          }, currentTime: DateTime(2000, 1, 1), locale: LocaleType.jp);
+              maxTime: DateTime(2025, 12, 31),
+              currentTime: DateTime(bdData.year, bdData.month, bdData.day), locale: LocaleType.jp);
         },
       ),
     );
   }
 
   // トレーニング回数
-  Widget _trainingTimesField() {
+  Widget _trainingTimesField(ref) {
     // トレーニング回数
     final trainingTimesList = [];
-    trainingTimesDiv.forEach((k, v) => trainingTimesList.add(TrainingTimes(k, v)));
+    trainingTimesDiv
+        .forEach((k, v) => trainingTimesList.add(TrainingTimes(k, v)));
 
     // 週/月
     final weekOrMonthList = [];
     weekOrMonthDiv.forEach((k, v) => weekOrMonthList.add(WeekOrMonth(k, v)));
 
-    return Card(
-      color: const Color(0xFF565656),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+    return Row(
+      children: [
+        SizedBox(
+          width: 100,
+          child: Card(
+            color: const Color(0xFF565656),
             child: DropdownButton(
+              underline: Container(),
+              isExpanded: true,
               items: [
                 for (var a in trainingTimesList)
                   DropdownMenuItem(
                     value: a.key,
-                    child: Text(a.times),
+                    child: Container(
+                      alignment: Alignment.center,
+                        child: Text(a.times)),
                   )
               ],
               value: userData?['trainingTimes'],
               onChanged: (value) {
+                userData?['trainingTimes'] = value;
+                final notifier = ref.read(userNotifierProvider.notifier);
+                notifier.rewriting();
               },
             ),
           ),
-          const Text('回　/　'),
-          DropdownButton(
-            items: [
-              for (var a in weekOrMonthList)
-                DropdownMenuItem(
-                  value: a.key,
-                  child: Text(a.weekOrMonth),
-                )
-            ],
-            value: userData?['weekOrMonth'],
-            onChanged: (value) {
-            },
+        ),
+        const Text('回　/　'),
+        SizedBox(
+          width: 100,
+          child: Card(
+            color: const Color(0xFF565656),
+            child: DropdownButton(
+              underline: Container(),
+              isExpanded: true,
+              items: [
+                for (var a in weekOrMonthList)
+                  DropdownMenuItem(
+                    value: a.key,
+                    child: Container(
+                        alignment: Alignment.center,
+                        child: Text(a.weekOrMonth)),
+                  )
+              ],
+              value: userData?['weekOrMonth'],
+              onChanged: (value) {
+                userData?['weekOrMonth'] = value;
+                final notifier = ref.read(userNotifierProvider.notifier);
+                notifier.rewriting();
+              },
+            ),
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
