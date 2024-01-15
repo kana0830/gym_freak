@@ -160,16 +160,9 @@ class EditProfile extends ConsumerWidget {
         onTap: () {
           DatePicker.showDatePicker(context,
               showTitleActions: true,
-              onChanged: (date) {
-                userData?['birthday'] = date;
-                final notifier = ref.read(userNotifierProvider.notifier);
-                notifier.rewriting();
-              },
               onConfirm: (date) {
-                userData?['birthday'] = date;
-                initBD = DateFormat('yyyy/MM/dd')
-                    .format(data['birthday'].toDate())
-                    .toString();
+                userData?['birthday'] = date.toString();
+                initBD = userData?['birthday'];
                 final notifier = ref.read(userNotifierProvider.notifier);
                 notifier.rewriting();
               },

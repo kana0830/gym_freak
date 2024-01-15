@@ -13,9 +13,6 @@ class UserRepository {
         .doc('1')
         .get();
 
-    // final data = querySnapshot.data() as Map<String, dynamic>;
-    // final user = User(querySnapshot.data, '1');
-
     return user;
   }
 

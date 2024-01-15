@@ -4,7 +4,7 @@ import 'package:gym_freak/common/division.dart';
 class User {
 
   late String id;
-  late Timestamp birthday;
+  late String birthday;
   late String email;
   late String favoriteMenu;
   late String gender;

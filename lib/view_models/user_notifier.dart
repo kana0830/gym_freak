@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_public_notifier_properties
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
