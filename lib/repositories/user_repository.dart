@@ -18,7 +18,7 @@ class UserRepository {
 
   void updateUser(id, user) async{
     await FirebaseFirestore.instance.collection('user').doc(id).update({
-      'birthday' : user['birthday'],
+      'birthday' : DateTime.parse(user['birthday']),
       'email' : user['email'],
       'favoriteMenu' : user['favoriteMenu'],
       'gender' : user['gender'],

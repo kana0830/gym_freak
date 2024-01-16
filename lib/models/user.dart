@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym_freak/common/division.dart';
+import 'package:intl/intl.dart';
 
 class User {
 
   late String id;
-  late String birthday;
+  late Timestamp birthday;
   late String email;
   late String favoriteMenu;
   late String gender;
@@ -18,7 +19,7 @@ class User {
 
   User(Map<String, dynamic> doc, docId) {
     id = docId;
-    birthday = doc['birthday'];
+    birthday = doc['birthday'] as Timestamp;
     email = doc['email'];
     favoriteMenu = doc['favoriteMenu'];
     gender = doc['gender'];

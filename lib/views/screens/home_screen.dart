@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ナビゲーションバーに表示するページ
   final _pages = [
-    TrainingMemo(),
+    const TrainingMemo(),
     MyCalender(),
     // Ranking(),
     const Profile(),
@@ -62,43 +62,5 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     ));
-  }
-
-  AppBar _appBar() {
-    // 表示用日付を取得
-    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
-
-    final List<Map<String, dynamic>> pagesAppbar = [
-      {
-        'title': today,
-        'icon': const Icon(Icons.add),
-      },
-      {
-        'title': today,
-        'icon': const Icon(Icons.add),
-      },
-  ];
-
-    return AppBar(
-      backgroundColor: const Color(0xFF7b755e),
-      title: Text(pagesAppbar[_currentIndex]['title']),
-      actions: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size(10.0, 10.0),
-            backgroundColor: const Color(0xFF7b755e),
-          ),
-          onPressed: () {
-            switch(_currentIndex) {
-              case 0 :
-                break;
-              case 1 :
-                break;
-            }
-          },
-          child: pagesAppbar[_currentIndex]['icon'],
-        )
-      ],
-    );
   }
 }

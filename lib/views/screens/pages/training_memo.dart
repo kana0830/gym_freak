@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/components/list_content.dart';
 
+import '../../../common/common_data_util.dart';
+
 class TrainingMemo extends StatefulWidget {
+  const TrainingMemo({super.key});
+
   @override
   State<TrainingMemo> createState() => _TrainingMemoState();
 }
@@ -64,9 +68,27 @@ class _TrainingMemoState extends State<TrainingMemo> {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+
+    // 表示用日付を取得
+    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
+
+    return SafeArea(
       child: Scaffold(
-        body: Padding(
+        appBar: AppBar(
+        backgroundColor: const Color(0xFF7b755e),
+        title: Text(today),
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: const Size(10.0, 10.0),
+              backgroundColor: const Color(0xFF7b755e),
+            ),
+            onPressed: () {},
+            child: const Icon(Icons.add),
+          )
+        ],
+      ),
+        body: const Padding(
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: [

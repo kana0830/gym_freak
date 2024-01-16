@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../../common/common_data_util.dart';
 import '../../../common/division.dart';
 import '../../../view_models/user_notifier.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
@@ -150,7 +151,7 @@ class EditProfile extends ConsumerWidget {
         .toString();
     return Card(
       child: TextFormField(
-        initialValue: initBD,
+        controller: TextEditingController(text: initBD),
         focusNode: AlwaysDisabledFocusNode(),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),

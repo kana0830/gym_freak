@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../common/common_data_util.dart';
+
 class MyCalender extends StatefulWidget {
   @override
   State<MyCalender> createState() => _MyCalenderState();
@@ -9,9 +11,28 @@ class MyCalender extends StatefulWidget {
 class _MyCalenderState extends State<MyCalender> {
   @override
   Widget build(BuildContext context) {
+
+    // 表示用日付を取得
+    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
+
     DateTime focusedDay = DateTime.now();
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF7b755e),
+      title: Text(today),
+      actions: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            fixedSize: const Size(10.0, 10.0),
+            backgroundColor: const Color(0xFF7b755e),
+          ),
+          onPressed: () {
+          },
+          child: const Icon(Icons.add),
+        )
+      ],
+    ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
