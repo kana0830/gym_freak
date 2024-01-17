@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/components/list_content.dart';
+import 'package:gym_freak/views/screens/pages/edit_training_memo.dart';
 
 import '../../../common/common_data_util.dart';
 
@@ -83,7 +84,12 @@ class _TrainingMemoState extends State<TrainingMemo> {
               fixedSize: const Size(10.0, 10.0),
               backgroundColor: const Color(0xFF7b755e),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EditTrainingMemo()));
+            },
             child: const Icon(Icons.add),
           )
         ],
