@@ -12,6 +12,7 @@ part 'training_memo_notifier.g.dart';
 
 @riverpod
 class TrainingMemoNotifier extends _$TrainingMemoNotifier {
+
   final _userRepository = UserRepository();
   late DocumentSnapshot<Map<String, dynamic>> trainingMemo;
 

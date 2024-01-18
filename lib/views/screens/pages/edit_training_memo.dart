@@ -62,37 +62,7 @@ class EditTrainingMemo extends ConsumerWidget {
             )
           ],
         ),
-        body: const Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.room),
-                  Text('  Forza神田'),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              Row(
-                children: [
-                  Icon(Icons.access_time),
-                  Text('  20:40~21:30  0:50:00'),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              Row(
-                children: [
-                  Icon(Icons.accessibility),
-                  Text('  腕 / 胸'),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              // listContent.listFrame(menuData!),
-              // listContent.listFrame('ベンチプレス', '8kg', '12'),
-              // listContent.listFrame('サイドベント', '8kg', '12'),
-            ],
-          ),
-        ),
+        body: Container()
       ),
     );
   }
