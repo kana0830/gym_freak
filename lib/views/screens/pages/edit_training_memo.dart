@@ -4,6 +4,7 @@ import 'package:gym_freak/views/components/list_content.dart';
 
 import '../../../common/common_data_util.dart';
 
+// トレーニング編集画面
 class EditTrainingMemo extends ConsumerWidget {
   EditTrainingMemo({
         super.key,

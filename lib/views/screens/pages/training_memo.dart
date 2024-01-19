@@ -4,6 +4,7 @@ import 'package:gym_freak/views/screens/pages/edit_training_memo.dart';
 
 import '../../../common/common_data_util.dart';
 
+// トレーニング記録画面
 class TrainingMemo extends StatefulWidget {
   const TrainingMemo({super.key});
 

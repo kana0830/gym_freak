@@ -8,6 +8,7 @@ import 'package:age_calculator/age_calculator.dart';
 
 import 'edit_profile.dart';
 
+// プロフィール画面
 class Profile extends ConsumerWidget {
   const Profile({
     super.key,
