@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/components/list_content.dart';
 import 'package:gym_freak/views/screens/pages/edit_training_memo.dart';
-
 import '../../../common/common_data_util.dart';
 
 // トレーニング記録画面

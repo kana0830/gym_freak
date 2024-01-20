@@ -6,7 +6,6 @@ import 'package:gym_freak/views/screens/pages/training_memo.dart';
 import 'package:gym_freak/views/screens/pages/my_calender.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
 import '../../common/common_data_util.dart';
 
 class HomeScreen extends StatefulWidget {

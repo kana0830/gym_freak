@@ -5,7 +5,6 @@ import '../../../common/division.dart';
 import '../../../view_models/user_notifier.dart';
 import '../../style/style.dart';
 import 'package:age_calculator/age_calculator.dart';
-
 import 'edit_profile.dart';
 
 // プロフィール画面
