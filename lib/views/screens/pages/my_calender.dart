@@ -4,6 +4,8 @@ import '../../../common/common_data_util.dart';
 
 // カレンダー画面
 class MyCalender extends StatefulWidget {
+  const MyCalender({super.key});
+
   @override
   State<MyCalender> createState() => _MyCalenderState();
 }
