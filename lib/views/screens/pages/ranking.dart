@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ランキング画面
 class Ranking extends StatefulWidget {
   const Ranking({super.key});
 
