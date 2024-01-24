@@ -63,7 +63,46 @@ class EditTrainingMemo extends ConsumerWidget {
             )
           ],
         ),
-        body: Container()
+        body: SingleChildScrollView(
+          child:
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('場所'),
+                _textField(1, 'Forza神田'),
+                const Text('日時'),
+                _textField(1, '2024/01/24 20:00'),
+                const Text('部位'),
+                _textField(1, '胸/肩'),
+                const Text('種目'),
+                _textField(1, 'ベンチプレス'),
+                const Text('重量'),
+                _textField(1, '20kg'),
+                const Text('Rep'),
+                _textField(1, '10'),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // 名前/職業/自己紹介/好きな種目/大会実績
+  Widget _textField(int lines, initValue) {
+    return Card(
+      child: TextField(
+        controller: TextEditingController(text: initValue),
+        decoration: const InputDecoration(
+          floatingLabelStyle: TextStyle(color: Colors.white),
+          filled: true,
+          border: InputBorder.none,
+        ),
+        maxLines: lines,
+        onChanged: (value) {
+        },
       ),
     );
   }
