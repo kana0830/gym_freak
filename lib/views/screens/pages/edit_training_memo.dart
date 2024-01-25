@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gym_freak/views/components/list_content.dart';
+import 'package:intl/intl.dart';
 
 import '../../../common/common_data_util.dart';
+import 'edit_profile.dart';
 
 // トレーニング編集画面
 class EditTrainingMemo extends ConsumerWidget {
@@ -73,7 +75,7 @@ class EditTrainingMemo extends ConsumerWidget {
                 const Text('場所'),
                 _textField(1, 'Forza神田'),
                 const Text('日時'),
-                _textField(1, '2024/01/24 20:00'),
+                _dateAndTime(context, '2020-11-12', ref),
                 const Text('部位'),
                 _textField(1, '胸/肩'),
                 const Text('種目'),
@@ -102,6 +104,53 @@ class EditTrainingMemo extends ConsumerWidget {
         ),
         maxLines: lines,
         onChanged: (value) {
+        },
+      ),
+    );
+  }
+
+  // 日時フォーム
+  Widget _dateAndTime(context, data, ref) {
+    // var bdData = data['birthday'].toDate();
+    // var initBD = DateFormat('yyyy/MM/dd')
+    //     .format(bdData)
+    //     .toString();
+    return Card(
+      child: Row(
+        children: [
+          _dateAndTimeField(context, data, ref),
+          const Text('〜'),
+          _dateAndTimeField(context, data, ref),
+        ],
+      ),
+    );
+  }
+
+  // 日時入力
+  Widget _dateAndTimeField(context, data, ref) {
+    return SizedBox(
+      width: 170.0,
+      child: TextFormField(
+        controller: TextEditingController(text: data),
+        focusNode: AlwaysDisabledFocusNode(),
+        decoration: const InputDecoration(
+          floatingLabelStyle: TextStyle(color: Colors.white),
+          filled: true,
+          border: InputBorder.none,
+        ),
+        onTap: () {
+          DatePicker.showDateTimePicker(context,
+              showTitleActions: true,
+              onConfirm: (date) {
+                // userData?['birthday'] = date.toString();
+                // initBD = userData?['birthday'];
+                // final notifier = ref.read(userNotifierProvider.notifier);
+                // notifier.rewriting();
+              },
+              minTime: DateTime(1960, 1, 1),
+              maxTime: DateTime(2025, 12, 31),
+              // currentTime: DateTime(bdData.year, bdData.month, bdData.day),
+              locale: LocaleType.jp);
         },
       ),
     );
