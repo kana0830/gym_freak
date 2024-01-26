@@ -9,8 +9,8 @@ import 'edit_profile.dart';
 // トレーニング編集画面
 class EditTrainingMemo extends ConsumerWidget {
   EditTrainingMemo({
-        super.key,
-      });
+    super.key,
+  });
 
   Map<String, dynamic>? userData = {};
 
@@ -66,11 +66,10 @@ class EditTrainingMemo extends ConsumerWidget {
           ],
         ),
         body: SingleChildScrollView(
-          child:
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('場所'),
                 _textField(1, 'Forza神田'),
@@ -78,12 +77,7 @@ class EditTrainingMemo extends ConsumerWidget {
                 _dateAndTime(context, '2020-11-12', ref),
                 const Text('部位'),
                 _textField(1, '胸/肩'),
-                const Text('種目'),
-                _textField(1, 'ベンチプレス'),
-                const Text('重量'),
-                _textField(1, '20kg'),
-                const Text('Rep'),
-                _textField(1, '10'),
+                _trainingMenu(),
               ],
             ),
           ),
@@ -92,7 +86,23 @@ class EditTrainingMemo extends ConsumerWidget {
     );
   }
 
-  // 名前/職業/自己紹介/好きな種目/大会実績
+  // トレーニング種目
+  Widget _trainingMenu() {
+    return Card(
+      child: Column(
+        children: [
+          const Text('種目'),
+          _textField(1, 'ベンチプレス'),
+          const Text('重量'),
+          _textField(1, '20kg'),
+          const Text('Rep'),
+          _textField(1, '10'),
+        ],
+      )
+    );
+  }
+
+  // 入力欄
   Widget _textField(int lines, initValue) {
     return Card(
       child: TextField(
@@ -103,8 +113,7 @@ class EditTrainingMemo extends ConsumerWidget {
           border: InputBorder.none,
         ),
         maxLines: lines,
-        onChanged: (value) {
-        },
+        onChanged: (value) {},
       ),
     );
   }
@@ -115,14 +124,12 @@ class EditTrainingMemo extends ConsumerWidget {
     // var initBD = DateFormat('yyyy/MM/dd')
     //     .format(bdData)
     //     .toString();
-    return Card(
-      child: Row(
-        children: [
-          _dateAndTimeField(context, data, ref),
-          const Text('〜'),
-          _dateAndTimeField(context, data, ref),
-        ],
-      ),
+    return Row(
+      children: [
+        _dateAndTimeField(context, data, ref),
+        const Text('〜'),
+        _dateAndTimeField(context, data, ref),
+      ],
     );
   }
 
@@ -130,28 +137,29 @@ class EditTrainingMemo extends ConsumerWidget {
   Widget _dateAndTimeField(context, data, ref) {
     return SizedBox(
       width: 170.0,
-      child: TextFormField(
-        controller: TextEditingController(text: data),
-        focusNode: AlwaysDisabledFocusNode(),
-        decoration: const InputDecoration(
-          floatingLabelStyle: TextStyle(color: Colors.white),
-          filled: true,
-          border: InputBorder.none,
+      child: Card(
+        child: TextFormField(
+          controller: TextEditingController(text: data),
+          focusNode: AlwaysDisabledFocusNode(),
+          decoration: const InputDecoration(
+            floatingLabelStyle: TextStyle(color: Colors.white),
+            filled: true,
+            border: InputBorder.none,
+          ),
+          onTap: () {
+            DatePicker.showDateTimePicker(context, showTitleActions: true,
+                onConfirm: (date) {
+              // userData?['birthday'] = date.toString();
+              // initBD = userData?['birthday'];
+              // final notifier = ref.read(userNotifierProvider.notifier);
+              // notifier.rewriting();
+            },
+                minTime: DateTime(1960, 1, 1),
+                maxTime: DateTime(2025, 12, 31),
+                // currentTime: DateTime(bdData.year, bdData.month, bdData.day),
+                locale: LocaleType.jp);
+          },
         ),
-        onTap: () {
-          DatePicker.showDateTimePicker(context,
-              showTitleActions: true,
-              onConfirm: (date) {
-                // userData?['birthday'] = date.toString();
-                // initBD = userData?['birthday'];
-                // final notifier = ref.read(userNotifierProvider.notifier);
-                // notifier.rewriting();
-              },
-              minTime: DateTime(1960, 1, 1),
-              maxTime: DateTime(2025, 12, 31),
-              // currentTime: DateTime(bdData.year, bdData.month, bdData.day),
-              locale: LocaleType.jp);
-        },
       ),
     );
   }
