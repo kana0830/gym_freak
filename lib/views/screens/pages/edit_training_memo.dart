@@ -89,17 +89,59 @@ class EditTrainingMemo extends ConsumerWidget {
   // トレーニング種目
   Widget _trainingMenu() {
     return Card(
-      child: Column(
-        children: [
-          const Text('種目'),
-          _textField(1, 'ベンチプレス'),
-          const Text('重量'),
-          _textField(1, '20kg'),
-          const Text('Rep'),
-          _textField(1, '10'),
-        ],
-      )
-    );
+        shadowColor: Colors.transparent,
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(color: Color(0xFFFFF176), width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  child: Column(
+                children: [
+                  const Text('種目'),
+                  _textField(1, 'ベンチプレス'),
+                ],
+              )),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      const Text('重量'),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(width: 100, child: _textField(1, '20kg')),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 2.0, bottom: 8.0),
+                            child: Text('kg'),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 18.0),
+                    child: Text('×', style: TextStyle(fontSize: 40.0)),
+                  ),
+                  Container(
+                      width: 100,
+                      child: Column(
+                        children: [
+                          const Text('Rep'),
+                          _textField(1, '10'),
+                        ],
+                      )),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 
   // 入力欄
