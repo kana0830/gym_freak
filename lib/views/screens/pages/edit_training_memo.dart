@@ -102,6 +102,7 @@ class EditTrainingMemo extends ConsumerWidget {
             children: [
               Container(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('種目'),
                   _textField(1, 'ベンチプレス'),
@@ -115,7 +116,7 @@ class EditTrainingMemo extends ConsumerWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(width: 100, child: _textField(1, '20kg')),
+                          Container(width: 100, child: _textField(1, '20')),
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 2.0, bottom: 8.0),
@@ -126,17 +127,19 @@ class EditTrainingMemo extends ConsumerWidget {
                     ],
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 18.0),
+                    padding:
+                        EdgeInsets.only(left: 30.0, right: 30.0, top: 18.0),
                     child: Text('×', style: TextStyle(fontSize: 40.0)),
                   ),
                   Container(
-                      width: 100,
-                      child: Column(
-                        children: [
-                          const Text('Rep'),
-                          _textField(1, '10'),
-                        ],
-                      )),
+                    width: 100,
+                    child: Column(
+                      children: [
+                        const Text('Rep'),
+                        _textField(1, '10'),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
