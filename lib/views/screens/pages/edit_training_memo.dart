@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../common/common_data_util.dart';
 import 'edit_profile.dart';
@@ -116,10 +115,10 @@ class EditTrainingMemo extends ConsumerWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(width: 100, child: _textField(1, '20')),
-                          Padding(
+                          SizedBox(width: 100, child: _textField(1, '20')),
+                          const Padding(
                             padding:
-                                const EdgeInsets.only(left: 2.0, bottom: 8.0),
+                                EdgeInsets.only(left: 2.0, bottom: 8.0),
                             child: Text('kg'),
                           )
                         ],
@@ -128,8 +127,8 @@ class EditTrainingMemo extends ConsumerWidget {
                   ),
                   Container(
                     padding:
-                        EdgeInsets.only(left: 30.0, right: 30.0, top: 18.0),
-                    child: Text('×', style: TextStyle(fontSize: 40.0)),
+                        const EdgeInsets.only(left: 30.0, right: 30.0, top: 18.0),
+                    child: const Text('×', style: TextStyle(fontSize: 40.0)),
                   ),
                   Container(
                     width: 100,
