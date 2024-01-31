@@ -10,25 +10,19 @@ class TrainingMemoRepository {
     final db = FirebaseFirestore.instance;
     final user = db
         .collection('trainingMemo')
-        .doc('1')
+        .doc()
         .get();
 
     return user;
   }
 
-  void updateUser(id, user) async{
-    await FirebaseFirestore.instance.collection('user').doc(id).update({
-      'birthday' : DateTime.parse(user['birthday']),
-      'email' : user['email'],
-      'favoriteMenu' : user['favoriteMenu'],
-      'gender' : user['gender'],
-      'introduction' : user['introduction'],
-      'job' : user['job'],
-      'profileUrl' : user['profileUrl'],
-      'tournamentResults' : user['tournamentResults'],
-      'trainingTimes' : user['trainingTimes'],
-      'userName' : user['userName'],
-      'weekOrMonth' : user['weekOrMonth'],
+  void updateTrainingMemo(id, trainingMemo) async{
+    await FirebaseFirestore.instance.collection('TrainingMemo').doc().set({
+      'spot' : trainingMemo['spot'],
+      'startTime' : trainingMemo['startTime'],
+      'endTime' : trainingMemo['endTime'],
+      'part' : trainingMemo['part'],
+      'menu' : trainingMemo['menu'],
     });
   }
 }
