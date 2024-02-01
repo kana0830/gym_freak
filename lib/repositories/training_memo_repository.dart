@@ -8,12 +8,12 @@ class TrainingMemoRepository {
   Future<DocumentSnapshot<Map<String, dynamic>>> getTrainingMemo() async {
     // final querySnapshot = await FirebaseFirestore.instance.collection('user').where('1').get();
     final db = FirebaseFirestore.instance;
-    final user = db
-        .collection('trainingMemo')
+    final trainingMemo = db
+        .collection('TrainingMemo')
         .doc()
         .get();
 
-    return user;
+    return trainingMemo;
   }
 
   void updateTrainingMemo(id, trainingMemo) async{

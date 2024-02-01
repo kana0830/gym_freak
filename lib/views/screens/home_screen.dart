@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // ナビゲーションバーに表示するページ
   final _pages = [
     const TrainingMemo(),
-    MyCalender(),
+    const MyCalender(),
     // Ranking(),
     const Profile(),
   ];
