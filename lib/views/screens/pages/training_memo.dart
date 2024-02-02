@@ -43,7 +43,7 @@ class TrainingMemo extends ConsumerWidget {
         error: (error, stacktrace) => Text('エラー $error'),
         data: (data) {
           if (data == null || data.data() == null) {
-            return Text('今日のトレーニング記録はまだありません');
+            return const Text('今日のトレーニング記録はまだありません');
           } else {
             trainingMemoData = data.data();
             return Padding(
@@ -52,32 +52,32 @@ class TrainingMemo extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.room),
+                      const Icon(Icons.room),
                       Text(data?['spot']),
                     ],
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Row(
                     children: [
-                      Icon(Icons.access_time),
+                      const Icon(Icons.access_time),
                       Text(DateFormat('MM/dd kk:mm')
                           .format(data!['startTime'].toDate())
                           .toString()),
-                      Text('　〜　'),
+                      const Text('　〜　'),
                       Text(DateFormat('MM/dd kk:mm')
                           .format(data!['endTime'].toDate())
                           .toString()),
                       // Text(data['startTime'].difference(data['startTime']).toString()),
                     ],
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Row(
                     children: [
-                      Icon(Icons.accessibility),
+                      const Icon(Icons.accessibility),
                       Text(data?['part']),
                     ],
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   // listContent.listFrame(menuData!),
                   // listContent.listFrame('ベンチプレス', '8kg', '12'),
                   // listContent.listFrame('サイドベント', '8kg', '12'),
