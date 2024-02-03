@@ -10,7 +10,7 @@ class TrainingMemoRepository {
     final db = FirebaseFirestore.instance;
     final trainingMemo = db
         .collection('TrainingMemo')
-        .doc()
+        .doc('N7UlCMWVpEPGnOlrRSva')
         .get();
 
     return trainingMemo;
@@ -22,7 +22,7 @@ class TrainingMemoRepository {
       'startTime' : trainingMemo['startTime'],
       'endTime' : trainingMemo['endTime'],
       'part' : trainingMemo['part'],
-      'menu' : trainingMemo['menu'],
+      'record' : trainingMemo['record'],
     });
   }
 }

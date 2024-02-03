@@ -78,9 +78,7 @@ class TrainingMemo extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 10.0),
-                  // listContent.listFrame(menuData!),
-                  // listContent.listFrame('ベンチプレス', '8kg', '12'),
-                  // listContent.listFrame('サイドベント', '8kg', '12'),
+                  _listContent(data?['record']),
                 ],
               ),
             );
@@ -111,6 +109,40 @@ class TrainingMemo extends ConsumerWidget {
         ),
         body: trainingMemoInfo,
       ),
+    );
+  }
+
+
+  // 文章系表示部分のwidget表示
+  Widget _listContent(Map<String, dynamic> record) {
+    var weigh = '';
+    if (record['weight'] != null) {
+      weigh = record['weight'];
+    }
+    return Card(
+      child: ListTile(
+        title: _textTitle(record['menu']),
+        subtitle: Row(
+          children: [
+            Text(weigh),
+            Text('×'),
+            Text('${record['reps']}'),
+            Text('×'),
+            Text('${record['sets']}'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 横並び部分タイトルスタイル
+  Widget _textTitle(String textTitle) {
+    return Text(
+      textTitle,
+      style: const TextStyle(
+          fontSize: 16.0,
+          color: Color(0xFFFFF59D),
+          fontWeight: FontWeight.bold),
     );
   }
 }

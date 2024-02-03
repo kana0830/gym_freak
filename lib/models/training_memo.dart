@@ -9,7 +9,7 @@ class TrainingMemo {
   late Timestamp startTime;
   late Timestamp endTime;
   late String part;
-  late Map<String, dynamic> menu;
+  late Map<String, dynamic> record;
 
   TrainingMemo(Map<String, dynamic> doc, docId) {
     id = docId;
@@ -17,7 +17,8 @@ class TrainingMemo {
     startTime = doc['startTime'] as Timestamp;
     endTime = doc['endTime'] as Timestamp;
     part = doc['part'];
-    menu = {
+    record = {
+      "menu": 'プッシュアップ',
       "weight": 20,
       "reps": 10,
       "sets": 3,
@@ -31,7 +32,7 @@ class TrainingMemo {
       'startTime' : value['startTime'],
       'endTime' : value['endTime'],
       'part' : value['part'],
-      'menu' : value['menu'],
+      'record' : value['record'],
     });
   }
 
@@ -41,7 +42,7 @@ class TrainingMemo {
       'startTime' : value['startTime'],
       'endTime' : value['endTime'],
       'part' : value['part'],
-      'menu' : value['menu'],
+      'record' : value['record'],
     });
   }
 }
