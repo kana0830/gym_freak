@@ -5,8 +5,7 @@ import '../models/user.dart';
 class UserRepository {
 
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUser() async {
-    // final querySnapshot = await FirebaseFirestore.instance.collection('user').where('1').get();
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUser(id) async {
     final db = FirebaseFirestore.instance;
     final user = db
         .collection('user')
@@ -16,9 +15,9 @@ class UserRepository {
     return user;
   }
 
-  void updateUser(id, user) async{
-    await FirebaseFirestore.instance.collection('user').doc(id).update({
-      'birthday' : DateTime.parse(user['birthday']),
+  void updateUser(user) async{
+    await FirebaseFirestore.instance.collection('user').doc(user['id']).update({
+      'birthday' : user['birthday'],
       'email' : user['email'],
       'favoriteMenu' : user['favoriteMenu'],
       'gender' : user['gender'],

@@ -5,25 +5,19 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../views/screens/home_screen.dart';
 
 class AuthService {
+  static var email = '';
+
+  // サインイン
   Future<void> sighIn(context) async {
-    print('サービスクラスが動きました');
-
-    const clientId =
-        '437282078150-ah80jvlernp1e82t1q70n6fddqf4hl93.apps.googleusercontent.com';
-
-    const scope = [
-      'openid',
-      'profile',
-      'email',
-    ];
 
     // Googleサインイン画面へ飛ばす
-    final request = GoogleSignIn(clientId: clientId, scopes: scope);
-    final response = await request.signIn();
+    final googleUser = await GoogleSignIn(scopes: [
+      'email',
+    ]).signIn();
 
     // responseデータからアクセストークンと取得
-    final authn = await response?.authentication;
-    final accessToken = authn?.accessToken;
+    final googleAuth = await googleUser?.authentication;
+    final accessToken = googleAuth?.accessToken;
 
     // アクセストークンが取得できない場合は中止
     if (accessToken == null) {
@@ -36,15 +30,19 @@ class AuthService {
     );
     final userCred =
         await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
-    final idToken = await userCred.user?.getIdToken();
+    if(userCred.user != null) {
+      AuthService.email = userCred.user!.email ?? '';
+    }
+    // AuthService.idToken = (await userCred.user?.getIdToken())!;
 
-
+    // ホームスクリーンへ遷移
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomeScreen()));
+            builder: (context) => HomeScreen(email)));
   }
 
+  // サインアウト
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }

@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../../common/common_data_util.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen(idToken, {super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

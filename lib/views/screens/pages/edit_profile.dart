@@ -62,7 +62,7 @@ class EditProfile extends ConsumerWidget {
                 ),
                 onPressed: () {
                   final notifier = ref.read(userNotifierProvider.notifier);
-                  notifier.updateState('1', userData);
+                  notifier.updateState(userData);
                 },
                 child: const Text('保存'),
               )

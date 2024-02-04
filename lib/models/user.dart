@@ -34,7 +34,7 @@ class User {
 
 
   void updateTodo(id, value) async{
-    await FirebaseFirestore.instance.collection('user').doc('1').update({
+    await FirebaseFirestore.instance.collection('user').doc(id).update({
       'birthday' : value['birthday'],
       'email' : value['email'],
       'favoriteMenu' : value['favoriteMenu'],
