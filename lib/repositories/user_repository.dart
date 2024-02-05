@@ -5,13 +5,14 @@ import '../models/user.dart';
 class UserRepository {
 
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUser(id) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getUser(email) async {
     final db = FirebaseFirestore.instance;
-    final user = db
+    final userSnapShot = db
         .collection('user')
-        .doc('1')
+        .where('email', isEqualTo: email)
         .get();
-
+    QuerySnapshot<Map<String, dynamic>> user;
+    userSnapShot.then((value) =>  user = value!);
     return user;
   }
 
