@@ -5,15 +5,16 @@ import '../models/user.dart';
 class UserRepository {
 
   @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getUser(email) async {
-    final db = FirebaseFirestore.instance;
-    final userSnapShot = db
-        .collection('user')
-        .where('email', isEqualTo: email)
-        .get();
-    QuerySnapshot<Map<String, dynamic>> user;
-    userSnapShot.then((value) =>  user = value!);
-    return user;
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>> getUser(email) async {
+
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> users = [];
+    await FirebaseFirestore.instance.collection('user')
+        .where("email", isEqualTo: email)
+        .get()
+        .then((querySnapshot) => {
+      users = querySnapshot.docs
+    });
+    return users.first;
   }
 
   void updateUser(user) async{

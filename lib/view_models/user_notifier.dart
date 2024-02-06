@@ -15,10 +15,10 @@ part 'user_notifier.g.dart';
 class UserNotifier extends _$UserNotifier {
 
   final _userRepository = UserRepository();
-  late DocumentSnapshot<Map<String, dynamic>> user;
+  late QueryDocumentSnapshot<Map<String, dynamic>> user;
 
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> build() async {
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>> build() async {
     var user = await _userRepository.getUser(AuthService.email);
     return user;
   }
