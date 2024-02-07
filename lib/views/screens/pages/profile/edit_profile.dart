@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../../common/division.dart';
-import '../../../view_models/user_notifier.dart';
+import '../../../../common/division.dart';
+import '../../../../view_models/user_notifier/user_notifier.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 // プロフィール編集画面
@@ -13,6 +14,7 @@ class EditProfile extends ConsumerWidget {
     super.key,
   });
 
+  // final QueryDocumentSnapshot<Map<String, dynamic>> userData;
   Map<String, dynamic>? userData = {};
 
   @override

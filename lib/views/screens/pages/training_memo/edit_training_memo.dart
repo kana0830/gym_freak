@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../common/common_data_util.dart';
-import '../../../view_models/training_memo_notifier.dart';
-import 'edit_profile.dart';
+import '../../../../common/common_data_util.dart';
+import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
+import '../profile/edit_profile.dart';
 
 // トレーニング編集画面
 class EditTrainingMemo extends ConsumerWidget {

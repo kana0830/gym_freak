@@ -1,15 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_freak/views/screens/pages/edit_profile.dart';
-import 'package:gym_freak/views/screens/pages/profile.dart';
+import 'package:gym_freak/views/screens/pages/profile/edit_profile.dart';
+import 'package:gym_freak/views/screens/pages/profile/profile.dart';
 import 'package:gym_freak/views/screens/pages/ranking.dart';
-import 'package:gym_freak/views/screens/pages/training_memo.dart';
+import 'package:gym_freak/views/screens/pages/training_memo/training_memo.dart';
 import 'package:gym_freak/views/screens/pages/my_calender.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
-import '../../common/common_data_util.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen(idToken, {super.key});
+  final QueryDocumentSnapshot<Map<String, dynamic>> user;
+  const HomeScreen({super.key, required this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,14 +16,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-
+  var _pages = [];
+  void initState() {
+    _pages = [
+      const TrainingMemo(),
+      const MyCalender(),
+      // Ranking(),
+      Profile(user: widget.user),
+    ];
+  }
   // ナビゲーションバーに表示するページ
-  final _pages = [
-    const TrainingMemo(),
-    const MyCalender(),
-    // Ranking(),
-    const Profile(),
-  ];
+  // final _pages = [
+  //   const TrainingMemo(),
+  //   const MyCalender(),
+  //   // Ranking(),
+  //   Profile(user: widget.user),
+  // ];
 
   @override
   Widget build(BuildContext context) {

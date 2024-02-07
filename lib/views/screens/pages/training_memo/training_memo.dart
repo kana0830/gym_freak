@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gym_freak/view_models/training_memo_notifier.dart';
 import 'package:gym_freak/views/components/list_content.dart';
-import 'package:gym_freak/views/screens/pages/edit_training_memo.dart';
+import 'package:gym_freak/views/screens/pages/training_memo/edit_training_memo.dart';
 import 'package:intl/intl.dart';
-import '../../../common/common_data_util.dart';
+import '../../../../common/common_data_util.dart';
+import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
 // トレーニング記録画面
 class TrainingMemo extends ConsumerWidget {
@@ -13,26 +13,6 @@ class TrainingMemo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
-    Map<String, dynamic>? trainingMemoData = {
-      'menu': 'カール',
-      'data': [
-        {
-          'set': '1',
-          'weight': '10',
-          'times': '12',
-        },
-        {
-          'set': '2',
-          'weight': '10',
-          'times': '10',
-        },
-        {
-          'set': '3',
-          'weight': '10',
-          'times': '10',
-        },
-      ],
-    };
 
     // 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
@@ -45,7 +25,6 @@ class TrainingMemo extends ConsumerWidget {
           if (data == null || data.data() == null) {
             return const Text('今日のトレーニング記録はまだありません');
           } else {
-            trainingMemoData = data.data();
             return Padding(
               padding: EdgeInsets.all(10.0),
               child: Column(
@@ -89,6 +68,7 @@ class TrainingMemo extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFF7b755e),
           title: Text(today),
           actions: [

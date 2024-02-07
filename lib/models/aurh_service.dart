@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../repositories/user_repository.dart';
 import '../views/screens/home_screen.dart';
 
 class AuthService {
@@ -35,11 +36,14 @@ class AuthService {
     }
     // AuthService.idToken = (await userCred.user?.getIdToken())!;
 
+    final userRepository = UserRepository();
+    final user = await userRepository.getUser(email);
+
     // ホームスクリーンへ遷移
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomeScreen(email)));
+            builder: (context) => HomeScreen(user: user)));
   }
 
   // サインアウト

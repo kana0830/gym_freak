@@ -21,6 +21,7 @@ class _MyCalenderState extends State<MyCalender> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFF7b755e),
       title: Text(today),
       actions: [
