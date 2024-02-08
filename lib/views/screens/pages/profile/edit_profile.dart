@@ -15,7 +15,8 @@ class EditProfile extends ConsumerWidget {
   });
 
   // final QueryDocumentSnapshot<Map<String, dynamic>> userData;
-  Map<String, dynamic>? userData = {};
+
+  Map<String, dynamic>? userData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -167,7 +168,6 @@ class EditProfile extends ConsumerWidget {
                 userData?['birthday'] = date.toString();
                 initBD = userData?['birthday'];
                 final notifier = ref.read(userNotifierProvider.notifier);
-                notifier.rewriting();
               },
               minTime: DateTime(1960, 1, 1),
               maxTime: DateTime(2025, 12, 31),

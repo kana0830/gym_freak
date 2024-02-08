@@ -31,21 +31,21 @@ class User {
     userName = doc['userName'];
     weekOrMonth = doc['weekOrMonth'];
   }
-
-
-  void updateTodo(id, value) async{
-    await FirebaseFirestore.instance.collection('user').doc(id).update({
-      'birthday' : value['birthday'],
-      'email' : value['email'],
-      'favoriteMenu' : value['favoriteMenu'],
-      'gender' : value['gender'],
-      'introduction' : value['introduction'],
-      'job' : value['job'],
-      'profileUrl' : value['profileUrl'],
-      'tournamentResults' : value['tournamentResults'],
-      'trainingTimes' : value['trainingTimes'],
-      'userName' : value['userName'],
-      'weekOrMonth' : value['weekOrMonth'],
-    });
-  }
+  //
+  //
+  // void updateUser(id, value) async{
+  //   await FirebaseFirestore.instance.collection('user').doc(id).update({
+  //     'birthday' : value['birthday'] as Timestamp,
+  //     'email' : value['email'],
+  //     'favoriteMenu' : value['favoriteMenu'],
+  //     'gender' : value['gender'],
+  //     'introduction' : value['introduction'],
+  //     'job' : value['job'],
+  //     'profileUrl' : value['profileUrl'],
+  //     'tournamentResults' : value['tournamentResults'],
+  //     'trainingTimes' : value['trainingTimes'],
+  //     'userName' : value['userName'],
+  //     'weekOrMonth' : value['weekOrMonth'],
+  //   });
+  // }
 }

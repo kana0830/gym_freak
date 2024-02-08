@@ -24,7 +24,15 @@ class UserNotifier extends _$UserNotifier {
   }
 
   // update
-  void updateState(value) async {
+  void updateState(value) {
     _userRepository.updateUser(value);
+  }
+
+
+  // update
+  void rewriting(value) async {
+    var updatedUser = await _userRepository.getUser(AuthService.email);
+    user = updatedUser;
+    state = user as AsyncValue<QueryDocumentSnapshot<Map<String, dynamic>>>;
   }
 }

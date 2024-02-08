@@ -14,7 +14,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic>? userData = {};
+    Map<String, dynamic>? userData = user.data();
 
     return SafeArea(
       child: Scaffold(
@@ -60,7 +60,7 @@ class Profile extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${_getAge(user['birthday'])}歳'),
+                      Text('${_getAge(user['birthday'] as Timestamp)}歳'),
                       const Text('  /  '),
                       Text(genderDiv[user['gender']]!),
                       const Text('  /  '),

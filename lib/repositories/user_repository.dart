@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/user.dart';
-
 class UserRepository {
 
   @override
-  Future<QueryDocumentSnapshot<Map<String, dynamic>>> getUser(email) async {
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>> getUser(String email) async {
 
     List<QueryDocumentSnapshot<Map<String, dynamic>>> users = [];
     await FirebaseFirestore.instance.collection('user')
@@ -17,9 +15,9 @@ class UserRepository {
     return users.first;
   }
 
-  void updateUser(user) async{
-    await FirebaseFirestore.instance.collection('user').doc(user['id']).update({
-      'birthday' : user['birthday'],
+  void updateUser(Map<String, dynamic> user) async{
+    await FirebaseFirestore.instance.collection('user').doc('1').update({
+      'birthday' : user['birthday'] as Timestamp,
       'email' : user['email'],
       'favoriteMenu' : user['favoriteMenu'],
       'gender' : user['gender'],
