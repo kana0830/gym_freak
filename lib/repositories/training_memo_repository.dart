@@ -5,15 +5,17 @@ import '../models/user.dart';
 class TrainingMemoRepository {
 
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getTrainingMemo() async {
-    // final querySnapshot = await FirebaseFirestore.instance.collection('user').where('1').get();
-    final db = FirebaseFirestore.instance;
-    final trainingMemo = db
-        .collection('TrainingMemo')
-        .doc('N7UlCMWVpEPGnOlrRSva')
-        .get();
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>> getTrainingMemo(String userIdKey) async {
 
-    return trainingMemo;
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> trainings = [];
+
+    await FirebaseFirestore.instance.collection('TrainingMemo')
+        .where("userIdKey", isEqualTo: userIdKey)
+        .get()
+        .then((querySnapshot) => {
+      trainings = querySnapshot.docs
+    });
+    return trainings.first;
   }
 
   void updateTrainingMemo(id, trainingMemo) async{

@@ -7,6 +7,7 @@ import '../views/screens/home_screen.dart';
 
 class AuthService {
   static var email = '';
+  static var userId = '';
 
   // サインイン
   Future<void> sighIn(context) async {
@@ -38,6 +39,7 @@ class AuthService {
 
     final userRepository = UserRepository();
     final user = await userRepository.getUser(email);
+    AuthService.userId = user.id;
 
     // ホームスクリーンへ遷移
     Navigator.push(

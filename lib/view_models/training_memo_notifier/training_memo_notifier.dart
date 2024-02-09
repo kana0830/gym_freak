@@ -3,6 +3,8 @@ import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gym_freak/common/common_data_util.dart';
+import 'package:gym_freak/models/aurh_service.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,7 +22,8 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
 
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> build() async {
-    var trainingMemo = await _trainingMemoRepository.getTrainingMemo();
+    var a = AuthService.userId + CommonDataUtil.getDate();
+    var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDate());
     return trainingMemo;
   }
 

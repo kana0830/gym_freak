@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym_freak/common/division.dart';
 import 'package:intl/intl.dart';
 
+import '../common/common_data_util.dart';
+
 class TrainingMemo {
 
   late String id;
+  late String userIdKey;
   late String spot;
   late Timestamp startTime;
   late Timestamp endTime;
@@ -13,6 +16,7 @@ class TrainingMemo {
 
   TrainingMemo(Map<String, dynamic> doc, docId) {
     id = docId;
+    userIdKey = doc['userIdKey'] + CommonDataUtil.getDate();
     spot = doc['spot'];
     startTime = doc['startTime'] as Timestamp;
     endTime = doc['endTime'] as Timestamp;
