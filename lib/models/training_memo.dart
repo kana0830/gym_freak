@@ -8,33 +8,24 @@ class TrainingMemo {
 
   late String id;
   late String userIdKey;
-  late String spot;
-  late Timestamp startTime;
-  late Timestamp endTime;
   late String part;
   late Map<String, dynamic> record;
 
   TrainingMemo(Map<String, dynamic> doc, docId) {
     id = docId;
     userIdKey = doc['userIdKey'] + CommonDataUtil.getDate();
-    spot = doc['spot'];
-    startTime = doc['startTime'] as Timestamp;
-    endTime = doc['endTime'] as Timestamp;
     part = doc['part'];
     record = {
-      "menu": 'プッシュアップ',
-      "weight": 20,
-      "reps": 10,
-      "sets": 3,
+      "menu": doc['record']['menu'],
+      "weight": doc['record']['weight'],
+      "reps": doc['record']['reps'],
+      "sets": doc['record']['sets'],
     };
   }
 
 
   void insertTrainingMemo(value) async{
     await FirebaseFirestore.instance.collection('TrainingMemo').doc().set({
-      'spot' : value['spot'],
-      'startTime' : value['startTime'],
-      'endTime' : value['endTime'],
       'part' : value['part'],
       'record' : value['record'],
     });
@@ -42,11 +33,8 @@ class TrainingMemo {
 
   void updateTrainingMemo(id, value) async{
     await FirebaseFirestore.instance.collection('TrainingMemo').doc().set({
-      'spot' : value['spot'],
-      'startTime' : value['startTime'],
-      'endTime' : value['endTime'],
       'part' : value['part'],
       'record' : value['record'],
-    });
+    },);
   }
 }

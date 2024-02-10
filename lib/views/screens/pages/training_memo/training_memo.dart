@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gym_freak/views/components/list_content.dart';
-import 'package:gym_freak/views/screens/pages/training_memo/edit_training_memo.dart';
-import 'package:intl/intl.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
@@ -17,8 +14,13 @@ class TrainingMemo extends ConsumerWidget {
     // 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
-    // ユーザー情報表示部分
-    final trainingMemoInfo = trainingMemo.when(
+    // トレーニング記録表示ウィジェット
+    final Widget trainingMemoInfo;
+
+    // 今日のトレーニング記録がある場合
+    if (trainingMemo.hasValue) {
+      // ユーザー情報表示部分
+      trainingMemoInfo = trainingMemo.when(
         loading: () => const CircularProgressIndicator(),
         error: (error, stacktrace) => Text('エラー $error'),
         data: (data) {
@@ -26,43 +28,41 @@ class TrainingMemo extends ConsumerWidget {
             return const Text('今日のトレーニング記録はまだありません');
           } else {
             return Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.room),
-                      Text(data?['spot']),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Row(
-                    children: [
-                      const Icon(Icons.access_time),
-                      Text(DateFormat('MM/dd kk:mm')
-                          .format(data!['startTime'].toDate())
-                          .toString()),
-                      const Text('　〜　'),
-                      Text(DateFormat('MM/dd kk:mm')
-                          .format(data!['endTime'].toDate())
-                          .toString()),
-                      // Text(data['startTime'].difference(data['startTime']).toString()),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Row(
-                    children: [
-                      const Icon(Icons.accessibility),
-                      Text(data?['part']),
-                    ],
-                  ),
                   const SizedBox(height: 10.0),
                   _listContent(data?['record']),
                 ],
               ),
             );
           }
-        },);
+        },
+      );
+      // 今日のトレーニング記録がない場合
+    } else {
+      trainingMemoInfo = const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text('今日のトレーニング記録はまだありません'),
+      );
+    }
+
+    // ヘッダ部位表示
+    final Widget part = trainingMemo.when(
+      loading: () => const CircularProgressIndicator(),
+      error: (error, stacktrace) => Text('エラー $error'),
+      data: (data) {
+        return Row(
+          children: [
+            const Icon(Icons.accessibility),
+            Text(data['part']),
+          ],
+        );
+      },
+    );
+
+    final Dialog dialog = Dialog(
+    );
 
     // プロフィール画面
     return SafeArea(
@@ -70,46 +70,111 @@ class TrainingMemo extends ConsumerWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFF7b755e),
-          title: Text(today),
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size(10.0, 10.0),
-                backgroundColor: const Color(0xFF7b755e),
+          title: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Text(today),
               ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EditTrainingMemo()));
-              },
-              child: const Icon(Icons.add),
-            )
-          ],
+              Expanded(
+                flex: 1,
+                child: part,
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+          backgroundColor: const Color(0xFFFFF59D),
+          child: const Icon(Icons.add),
         ),
         body: trainingMemoInfo,
       ),
     );
   }
 
-
   // 文章系表示部分のwidget表示
   Widget _listContent(Map<String, dynamic> record) {
-    var weigh = '';
-    if (record['weight'] != null) {
-      weigh = record['weight'];
-    }
+
     return Card(
       child: ListTile(
         title: _textTitle(record['menu']),
-        subtitle: Row(
-          children: [
-            Text(weigh),
-            Text('×'),
-            Text('${record['reps']}'),
-            Text('×'),
-            Text('${record['sets']}'),
-          ],
+        subtitle: Padding(
+          padding: const EdgeInsets.only(left: 80.0),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    record['weight'],
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(record['weight'] == '' ? '' : 'kg'),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  record['weight'] == '' ? '' : '×',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${record['reps']}',
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+              const Expanded(
+                flex: 2,
+                child: Text('rep'),
+              ),
+              const Expanded(
+                flex: 2,
+                child: Text(
+                  '×',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${record['sets']}',
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+              const Expanded(
+                flex: 2,
+                child: Text('set'),
+              ),
+            ],
+          ),
         ),
       ),
     );
