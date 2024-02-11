@@ -10,6 +10,13 @@ class CommonDataUtil{
     return outputFormat.format(now);
   }
 
+  // 今日の日付取得(yyyyMMdd)
+  static String getDateNoSlash(){
+    DateTime now = DateTime.now();
+    DateFormat outputFormat = DateFormat('yyyyMMdd');
+    return outputFormat.format(now);
+  }
+
   // 今日の曜日取得('(月)')
   static String getDayOfWeek(){
     initializeDateFormatting("ja");

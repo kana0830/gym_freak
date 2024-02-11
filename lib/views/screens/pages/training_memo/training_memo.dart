@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
+import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 // トレーニング記録画面
 class TrainingMemo extends ConsumerWidget {
@@ -9,6 +11,7 @@ class TrainingMemo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final trainingPart = ref.watch(trainingPartNotifierProvider);
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
 
     // 表示用日付を取得
@@ -24,7 +27,7 @@ class TrainingMemo extends ConsumerWidget {
         loading: () => const CircularProgressIndicator(),
         error: (error, stacktrace) => Text('エラー $error'),
         data: (data) {
-          if (data == null || data.data() == null) {
+          if (data.isEmpty) {
             return const Text('今日のトレーニング記録はまだありません');
           } else {
             return Padding(
@@ -32,7 +35,7 @@ class TrainingMemo extends ConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 10.0),
-                  _listContent(data?['record']),
+                  _listContent(data),
                 ],
               ),
             );
@@ -48,7 +51,7 @@ class TrainingMemo extends ConsumerWidget {
     }
 
     // ヘッダ部位表示
-    final Widget part = trainingMemo.when(
+    final Widget part = trainingPart.when(
       loading: () => const CircularProgressIndicator(),
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
@@ -61,8 +64,7 @@ class TrainingMemo extends ConsumerWidget {
       },
     );
 
-    final Dialog dialog = Dialog(
-    );
+    final Dialog dialog = Dialog();
 
     // プロフィール画面
     return SafeArea(
@@ -96,87 +98,101 @@ class TrainingMemo extends ConsumerWidget {
   }
 
   // 文章系表示部分のwidget表示
-  Widget _listContent(Map<String, dynamic> record) {
-
-    return Card(
-      child: ListTile(
-        title: _textTitle(record['menu']),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(left: 80.0),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    record['weight'],
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+  Widget _listContent(List<QueryDocumentSnapshot<Map<String, dynamic>>> menus) {
+    return Expanded(
+      child: ListView(children: [
+        for (var menu in menus)
+          Card(
+            child: ListTile(
+              title: _textTitle(menu.id),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(left: 80.0),
+                child: Column(
+                  children: [
+                    for (int i = 0; i < menu.data().length; i++)
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                menu.data()[(i + 1).toString()]['weight'],
+                                textAlign: TextAlign.right,
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                                menu.data()[(i + 1).toString()]['weight'] == ''
+                                    ? ''
+                                    : 'kg'),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              menu.data()[(i + 1).toString()]['weight'] == ''
+                                  ? ''
+                                  : '×',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                '${menu.data()[(i + 1).toString()]['reps']}',
+                                textAlign: TextAlign.right,
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Expanded(
+                            flex: 2,
+                            child: Text('rep'),
+                          ),
+                          const Expanded(
+                            flex: 2,
+                            child: Text(
+                              '×',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                '${menu.data()[(i + 1).toString()]['sets']}',
+                                textAlign: TextAlign.right,
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Expanded(
+                            flex: 2,
+                            child: Text('set'),
+                          ),
+                        ],
+                      )
+                  ],
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Text(record['weight'] == '' ? '' : 'kg'),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  record['weight'] == '' ? '' : '×',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    '${record['reps']}',
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Text('rep'),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Text(
-                  '×',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    '${record['sets']}',
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Text('set'),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+      ]),
     );
   }
 

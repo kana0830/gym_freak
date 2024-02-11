@@ -1,5 +1,8 @@
 // ignore_for_file: avoid_public_notifier_properties
 import 'dart:collection';
+import 'dart:core';
+import 'dart:core';
+import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,18 +15,18 @@ import '../../models/user.dart';
 import '../../repositories/training_memo_repository.dart';
 import '../../repositories/user_repository.dart';
 
-part 'training_memo_notifier.g.dart';
+part 'training_part_notifier.g.dart';
 
 @riverpod
-class TrainingMemoNotifier extends _$TrainingMemoNotifier {
+class TrainingPartNotifier extends _$TrainingPartNotifier {
 
   final _trainingMemoRepository = TrainingMemoRepository();
   late DocumentSnapshot<Map<String, dynamic>> trainingMemo;
 
   @override
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> build() async {
-    var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDateNoSlash());
-    return trainingMemo;
+  Future<Map<String, dynamic>> build() async {
+    var trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
+    return trainingPart;
   }
 
   // update
