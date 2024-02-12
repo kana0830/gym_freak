@@ -21,16 +21,19 @@ part 'training_part_notifier.g.dart';
 class TrainingPartNotifier extends _$TrainingPartNotifier {
 
   final _trainingMemoRepository = TrainingMemoRepository();
-  late DocumentSnapshot<Map<String, dynamic>> trainingMemo;
+  late Map<String, dynamic> trainingPart;
 
   @override
   Future<Map<String, dynamic>> build() async {
-    var trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
+    // var trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
+    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + '20240211');
     return trainingPart;
   }
 
   // update
-  void updateState(id, value) async {
-    _trainingMemoRepository.updateTrainingMemo(id, value);
+  void updateState(userIdKye, value) async {
+    _trainingMemoRepository.updateTrainingMemo(AuthService.userId + '20240211', value);
+    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + '20240211');
+    state = AsyncData<Map<String, dynamic>>(trainingPart);
   }
 }

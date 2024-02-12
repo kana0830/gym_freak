@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _pages = [];
   void initState() {
     _pages = [
-      const TrainingMemo(),
+      TrainingMemo(),
       const MyCalender(),
       // Ranking(),
       Profile(user: widget.user),

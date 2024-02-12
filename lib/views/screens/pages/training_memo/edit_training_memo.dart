@@ -23,23 +23,99 @@ class EditTrainingMemo extends ConsumerWidget {
     final trainingMemoInfo = trainingMemo.when(
       loading: () => const CircularProgressIndicator(),
       error: (error, stacktrace) => Text('エラー $error'),
-      data: (data) => SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('場所'),
-              _textField(1, 'Forza神田', 0),
-              const Text('日時'),
-              _dateAndTime(context, '2020-11-12', ref),
-              const Text('部位'),
-              _textField(1, '胸/肩', 0),
-              _trainingMenu(),
-            ],
-          ),
-        ),
-      ),
+      data: (data) => Dialog(
+
+            child: Card(
+              shadowColor: Colors.transparent,
+              elevation: 0,
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(color: Color(0xFFFFF176), width: 1),
+                borderRadius: BorderRadius.all(Radius.circular(6)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('種目'),
+                        _textField(1, 'ベンチプレス', 0),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Text('重量'),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  child: _textField(1, '20', 1),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                                  child: Text('kg'),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding:
+                          const EdgeInsets.only(left: 4.0, right: 4.0, top: 18.0),
+                          child: const Text('×', style: TextStyle(fontSize: 20.0)),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                              child: Column(
+                                children: [
+                                  const Text('Rep'),
+                                  _textField(1, '10', 1),
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                              child: Text('rep'),
+                            ),
+                          ],
+                        ),Container(
+                          padding:
+                          const EdgeInsets.only(left: 4.0, right: 4.0, top: 18.0),
+                          child: const Text('×', style: TextStyle(fontSize: 20.0)),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                              child: Column(
+                                children: [
+                                  const Text('Set'),
+                                  _textField(1, '10', 1),
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                              child: Text('set'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
     );
 
     // 表示用日付を取得
@@ -65,6 +141,119 @@ class EditTrainingMemo extends ConsumerWidget {
         body: trainingMemoInfo
       ),
     );
+  }
+
+  Future trainingMemoDialog(BuildContext context) async {
+    // (2) showDialogでダイアログを表示する
+    var ret = await showDialog(
+        context: context,
+        // (3) AlertDialogを作成する
+        builder: (context) => Dialog(
+
+          child: Card(
+            shadowColor: Colors.transparent,
+            elevation: 0,
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(color: Color(0xFFFFF176), width: 1),
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('種目'),
+                      _textField(1, 'ベンチプレス', 0),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          const Text('重量'),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                width: 60,
+                                child: _textField(1, '20', 1),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                                child: Text('kg'),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding:
+                        const EdgeInsets.only(left: 4.0, right: 4.0, top: 18.0),
+                        child: const Text('×', style: TextStyle(fontSize: 20.0)),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            child: Column(
+                              children: [
+                                const Text('Rep'),
+                                _textField(1, '10', 1),
+                              ],
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                            child: Text('rep'),
+                          ),
+                        ],
+                      ),Container(
+                        padding:
+                        const EdgeInsets.only(left: 4.0, right: 4.0, top: 18.0),
+                        child: const Text('×', style: TextStyle(fontSize: 20.0)),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            child: Column(
+                              children: [
+                                const Text('Set'),
+                                _textField(1, '10', 1),
+                              ],
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                            child: Text('set'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+    // (6) ダイアログが閉じたときの結果
+    if(ret != null) {
+      if (ret == true) {
+        print("---- YES -----");
+      }
+      else {
+        print("---- NO -----");
+      }
+    }
+    else{
+      //  (7) 選択せずに閉じた場合
+      print("---- NULL ----");
+    }
   }
 
   // トレーニング種目

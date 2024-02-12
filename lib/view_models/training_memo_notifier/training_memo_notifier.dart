@@ -18,16 +18,19 @@ part 'training_memo_notifier.g.dart';
 class TrainingMemoNotifier extends _$TrainingMemoNotifier {
 
   final _trainingMemoRepository = TrainingMemoRepository();
-  late DocumentSnapshot<Map<String, dynamic>> trainingMemo;
+  late List<QueryDocumentSnapshot<Map<String, dynamic>>> trainingMemo;
 
   @override
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> build() async {
-    var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDateNoSlash());
+    // var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDateNoSlash());
+    trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
     return trainingMemo;
   }
 
   // update
-  void updateState(id, value) async {
-    _trainingMemoRepository.updateTrainingMemo(id, value);
+  void updateState(userIdKye, value) async {
+    _trainingMemoRepository.updateTrainingMemo(userIdKye, value);
+    trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
+    state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 }

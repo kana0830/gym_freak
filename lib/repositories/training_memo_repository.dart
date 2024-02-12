@@ -25,17 +25,30 @@ class TrainingMemoRepository {
   // トレーニング部位取得
   Future<Map<String, dynamic>> getTrainingPart(String userIdKey) async {
 
-    Map<String, dynamic> trainings = {};
+    Map<String, dynamic> trainingPart = {};
     await FirebaseFirestore.instance.collection('trainingMemo')
         .doc(userIdKey).get().then(
             (DocumentSnapshot doc) {
-              trainings = doc.data() as Map<String, dynamic>;
+              trainingPart = doc.data() as Map<String, dynamic>;
         });
 
-    return trainings;
+    return trainingPart;
   }
 
-  void updateTrainingMemo(id, trainingMemo) async{
+  void insertTrainingMemo(userIdKey, partValue) async{
+    await FirebaseFirestore.instance.collection('trainingMemo').doc(userIdKey).set({
+      'part' : partValue,
+    });
+    getTrainingMemo(userIdKey);
+  }
+
+  void updateTrainingMemo(userIdKey, partValue) async{
+    await FirebaseFirestore.instance.collection('trainingMemo').doc('120240211').set({
+      'part' : partValue,
+    });
+  }
+
+  void updateTrainingPart(id, trainingMemo) async{
     await FirebaseFirestore.instance.collection('trainingMemo').doc().set({
       'part' : trainingMemo['part'],
       // 'record' : trainingMemo['record'],
