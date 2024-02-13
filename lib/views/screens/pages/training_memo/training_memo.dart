@@ -98,13 +98,14 @@ class TrainingMemo extends ConsumerWidget {
     );
   }
 
+  // トレーニング部位ヘッダ部
   Widget headerPart(part, context, ref) {
     if (part == null) {
       return ElevatedButton(
         onPressed: () {
           trainingPartDialog(context, ref, 0, part);
         },
-        child: null,
+        child: const Text('今日鍛える部位の登録'),
       );
     } else {
       return InkWell(
@@ -121,13 +122,11 @@ class TrainingMemo extends ConsumerWidget {
     }
   }
 
-  // トレーニング記録ダイアログ
+  // トレーニング部位ダイアログ
   Future trainingPartDialog(BuildContext context, ref, int edit, part) async {
     String partValue = part;
-    // (2) showDialogでダイアログを表示する
     var ret = await showDialog(
       context: context,
-      // (3) AlertDialogを作成する
       builder: (context) => Dialog(
         child: SizedBox(
           height: 160,
@@ -193,151 +192,135 @@ class TrainingMemo extends ConsumerWidget {
   }
 
   // トレーニング記録ダイアログ
-  Future trainingMemoDialog(BuildContext context, ref, int edit, trainingMemoData) async {
-    // (2) showDialogでダイアログを表示する
+  Future trainingMemoDialog(
+      BuildContext context, ref, int edit, menu) async {
     var ret = await showDialog(
-        context: context,
-        // (3) AlertDialogを作成する
-        builder: (context) => Dialog(
-              child: SizedBox(
-                height: 240,
-                child: Card(
-                  shadowColor: Colors.transparent,
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    side: BorderSide(color: Color(0xFFFFF176), width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
+      context: context,
+      builder: (context) => Dialog(
+        child: SizedBox(
+          height: 240,
+          child: Card(
+            shadowColor: Colors.transparent,
+            elevation: 0,
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(color: Color(0xFFFFF176), width: 1),
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('種目'),
+                      _textField(1, 'ベンチプレス', 0, menu),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  for (int i = 0; i < menu.data()['memo'].length; i++)
+                    Row(
                       children: [
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('種目'),
-                            _textField(1, 'ベンチプレス', 0, trainingMemoData),
+                            const Text('重量'),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  child: _textField(1, '20', 1, menu.data()['memo'][i]['weight']),
+                                ),
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 2.0, bottom: 8.0),
+                                  child: Text('kg'),
+                                )
+                              ],
+                            ),
                           ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 4.0, right: 4.0, top: 18.0),
+                          child:
+                              const Text('×', style: TextStyle(fontSize: 20.0)),
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Column(
-                              children: [
-                                const Text('重量'),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    SizedBox(
-                                      width: 60,
-                                      child: _textField(1, '20', 1, trainingMemoData),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 2.0, bottom: 8.0),
-                                      child: Text('kg'),
-                                    )
-                                  ],
-                                ),
-                              ],
+                            SizedBox(
+                              width: 60,
+                              child: Column(
+                                children: [
+                                  const Text('Rep'),
+                                  _textField(1, '10', 1, menu.data()['memo'][i]['reps']),
+                                ],
+                              ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 4.0, right: 4.0, top: 18.0),
-                              child: const Text('×',
-                                  style: TextStyle(fontSize: 20.0)),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: 60,
-                                  child: Column(
-                                    children: [
-                                      const Text('Rep'),
-                                      _textField(1, '10', 1, trainingMemoData),
-                                    ],
-                                  ),
-                                ),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 2.0, bottom: 8.0),
-                                  child: Text('rep'),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 4.0, right: 4.0, top: 18.0),
-                              child: const Text('×',
-                                  style: TextStyle(fontSize: 20.0)),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: 60,
-                                  child: Column(
-                                    children: [
-                                      const Text('Set'),
-                                      _textField(1, '10', 1, trainingMemoData),
-                                    ],
-                                  ),
-                                ),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 2.0, bottom: 8.0),
-                                  child: Text('set'),
-                                ),
-                              ],
+                            const Padding(
+                              padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                              child: Text('rep'),
                             ),
                           ],
                         ),
-                        Expanded(child: Container()),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFFFF59D),
-                            ),
-                            onPressed: () {
-                              final notifier = ref
-                                  .read(trainingMemoNotifierProvider.notifier);
-                              if (edit == 0) {
-                                notifier.insertState(userIdKey);
-                              } else {
-                                notifier.updateState(userIdKey);
-                              }
-                            },
-                            child: Text(
-                              edit == 0 ? '登録' : '更新',
-                              style: const TextStyle(
-                                color: Colors.black,
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 4.0, right: 4.0, top: 18.0),
+                          child:
+                              const Text('×', style: TextStyle(fontSize: 20.0)),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                              child: Column(
+                                children: [
+                                  const Text('Set'),
+                                  _textField(1, '10', 1, menu.data()['memo'][i]['sets']),
+                                ],
                               ),
                             ),
-                          ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
+                              child: Text('set'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
+                  Expanded(child: Container()),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFF59D),
+                      ),
+                      onPressed: () {
+                        final notifier =
+                            ref.read(trainingMemoNotifierProvider.notifier);
+                        notifier.updateState(userIdKey);
+                      },
+                      child: Text(
+                        edit == 0 ? '登録' : '更新',
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ));
-    // (6) ダイアログが閉じたときの結果
-    if (ret != null) {
-      if (ret == true) {
-        print("---- YES -----");
-      } else {
-        print("---- NO -----");
-      }
-    } else {
-      //  (7) 選択せずに閉じた場合
-      print("---- NULL ----");
-    }
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   // 入力欄
-  Widget _textField(int lines, initValue, int alignFlg, menus) {
+  Widget _textField(int lines, initValue, int alignFlg, menu) {
     return Card(
       child: TextField(
         textAlign: alignFlg == 1 ? TextAlign.end : TextAlign.start,
@@ -349,18 +332,18 @@ class TrainingMemo extends ConsumerWidget {
         ),
         maxLines: lines,
         onChanged: (value) {
-          switch(lines) {
+          switch (lines) {
             case 1:
-              menus.id = value;
+              menu.id = value;
               break;
             case 2:
-              menus.id = value;
+              menu = value;
               break;
             case 3:
-              menus.id = value;
+              menu = value;
               break;
             case 4:
-              menus.id = value;
+              menu = value;
               break;
           }
         },
@@ -368,108 +351,110 @@ class TrainingMemo extends ConsumerWidget {
     );
   }
 
-  // 文章系表示部分のwidget表示
+  // メインwidget表示
   Widget _listContent(
       List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref) {
-
     return Expanded(
-      child: ListView(children: [
-        for (var menu in menus)
-          InkWell(
-            onTap: () {
-              trainingMemoDialog(context, ref, 0, menus);
-            },
-            child: Card(
-              child: ListTile(
-                title: _textTitle(menu.id),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(left: 80.0),
-                  child: Column(
-                    children: [
-                      for (int i = 0; i < menu.data()['memo'].length; i++)
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Text(
-                                  menu.data()['memo'][i]['weight'],
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w800,
+      child: ListView(
+        children: [
+          for (var menu in menus)
+            InkWell(
+              onTap: () {
+                trainingMemoDialog(context, ref, 0, menu);
+              },
+              child: Card(
+                child: ListTile(
+                  title: _textTitle(menu.id),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(left: 80.0),
+                    child: Column(
+                      children: [
+                        for (int i = 0; i < menu.data()['memo'].length; i++)
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    menu.data()['memo'][i]['weight'],
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(menu.data()['memo'][i]['weight'] == ''
-                                  ? ''
-                                  : 'kg'),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                menu.data()['memo'][i]['weight'] == ''
-                                    ? ''
-                                    : '×',
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
+                              Expanded(
+                                flex: 2,
                                 child: Text(
-                                  '${menu.data()['memo'][i]['reps']}',
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w800,
+                                    menu.data()['memo'][i]['weight'] == ''
+                                        ? ''
+                                        : 'kg'),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  menu.data()['memo'][i]['weight'] == ''
+                                      ? ''
+                                      : '×',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    '${menu.data()['memo'][i]['reps']}',
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const Expanded(
-                              flex: 2,
-                              child: Text('rep'),
-                            ),
-                            const Expanded(
-                              flex: 2,
-                              child: Text(
-                                '×',
-                                textAlign: TextAlign.center,
+                              const Expanded(
+                                flex: 2,
+                                child: Text('rep'),
                               ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
+                              const Expanded(
+                                flex: 2,
                                 child: Text(
-                                  '${menu.data()['memo'][i]['sets']}',
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w800,
+                                  '×',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    '${menu.data()['memo'][i]['sets']}',
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const Expanded(
-                              flex: 2,
-                              child: Text('set'),
-                            ),
-                          ],
-                        )
-                    ],
+                              const Expanded(
+                                flex: 2,
+                                child: Text('set'),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-      ]),
+        ],
+      ),
     );
   }
 
