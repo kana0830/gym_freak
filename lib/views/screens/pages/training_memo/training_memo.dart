@@ -192,13 +192,16 @@ class TrainingMemo extends ConsumerWidget {
   }
 
   // トレーニング記録ダイアログ
-  Future trainingMemoDialog(
-      BuildContext context, ref, int edit, menu) async {
+  Future trainingMemoDialog(BuildContext context, ref, int edit, menu) async {
+    var _screenSize = MediaQuery.of(context).size;
     var ret = await showDialog(
       context: context,
       builder: (context) => Dialog(
-        child: SizedBox(
-          height: 240,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: _screenSize.height * 0.4,
+            maxHeight: _screenSize.height * 0.8,
+          ),
           child: Card(
             shadowColor: Colors.transparent,
             elevation: 0,
@@ -218,75 +221,64 @@ class TrainingMemo extends ConsumerWidget {
                       _textField(1, 'ベンチプレス', 0, menu),
                     ],
                   ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 6,
+                          child: Text('重量',),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Text('回数'),
+                        ),
+                        Expanded(
+                          flex: 5,
+                          child: Text('セット数'),
+                        ),
+                      ],
+                    ),
+                  ),
                   for (int i = 0; i < menu.data()['memo'].length; i++)
                     Row(
                       children: [
-                        Column(
-                          children: [
-                            const Text('重量'),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: 60,
-                                  child: _textField(1, '20', 1, menu.data()['memo'][i]['weight']),
-                                ),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 2.0, bottom: 8.0),
-                                  child: Text('kg'),
-                                )
-                              ],
-                            ),
-                          ],
+                        Expanded(
+                          flex: 3,
+                          child: _textField(1, '20', 1,
+                              menu.data()['memo'][i]['weight']),
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                              left: 4.0, right: 4.0, top: 18.0),
+                        const Expanded(
+                          flex: 2,
+                          child: Text('kg'),
+                        ),
+                        const Expanded(
+                          flex: 1,
                           child:
-                              const Text('×', style: TextStyle(fontSize: 20.0)),
+                              Text('×', style: TextStyle(fontSize: 20.0)),
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              width: 60,
-                              child: Column(
-                                children: [
-                                  const Text('Rep'),
-                                  _textField(1, '10', 1, menu.data()['memo'][i]['reps']),
-                                ],
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
-                              child: Text('rep'),
-                            ),
-                          ],
+                        Expanded(
+                          flex: 3,
+                          child: _textField(1, '10', 1,
+                              menu.data()['memo'][i]['reps']),
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                              left: 4.0, right: 4.0, top: 18.0),
+                        const Expanded(
+                          flex: 2,
+                          child: Text('rep'),
+                        ),
+                        const Expanded(
+                          flex: 1,
                           child:
-                              const Text('×', style: TextStyle(fontSize: 20.0)),
+                              Text('×', style: TextStyle(fontSize: 20.0)),
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              width: 60,
-                              child: Column(
-                                children: [
-                                  const Text('Set'),
-                                  _textField(1, '10', 1, menu.data()['memo'][i]['sets']),
-                                ],
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 2.0, bottom: 8.0),
-                              child: Text('set'),
-                            ),
-                          ],
+                        Expanded(
+                          flex: 3,
+                          child: _textField(1, '10', 1,
+                              menu.data()['memo'][i]['sets']),
+                        ),
+                        const Expanded(
+                          flex: 2,
+                          child: Text('set'),
                         ),
                       ],
                     ),
