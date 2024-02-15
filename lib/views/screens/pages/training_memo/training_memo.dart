@@ -227,7 +227,9 @@ class TrainingMemo extends ConsumerWidget {
                       children: [
                         Expanded(
                           flex: 6,
-                          child: Text('重量',),
+                          child: Text(
+                            '重量',
+                          ),
                         ),
                         Expanded(
                           flex: 6,
@@ -244,37 +246,43 @@ class TrainingMemo extends ConsumerWidget {
                     Row(
                       children: [
                         Expanded(
-                          flex: 3,
-                          child: _textField(1, '20', 1,
-                              menu.data()['memo'][i]['weight']),
+                          flex: 5,
+                          child: _textField(
+                              1, '20', 1, menu.data()['memo'][i]['weight']),
                         ),
                         const Expanded(
                           flex: 2,
                           child: Text('kg'),
                         ),
                         const Expanded(
-                          flex: 1,
-                          child:
-                              Text('×', style: TextStyle(fontSize: 20.0)),
+                          flex: 2,
+                          child: Text(
+                            '×',
+                            style: TextStyle(fontSize: 20.0),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                         Expanded(
-                          flex: 3,
-                          child: _textField(1, '10', 1,
-                              menu.data()['memo'][i]['reps']),
+                          flex: 5,
+                          child: _textField(
+                              1, '10', 1, menu.data()['memo'][i]['reps']),
                         ),
                         const Expanded(
                           flex: 2,
                           child: Text('rep'),
                         ),
                         const Expanded(
-                          flex: 1,
-                          child:
-                              Text('×', style: TextStyle(fontSize: 20.0)),
+                          flex: 2,
+                          child: Text(
+                            '×',
+                            style: TextStyle(fontSize: 20.0),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                         Expanded(
-                          flex: 3,
-                          child: _textField(1, '10', 1,
-                              menu.data()['memo'][i]['sets']),
+                          flex: 5,
+                          child: _textField(
+                              1, '10', 1, menu.data()['memo'][i]['sets']),
                         ),
                         const Expanded(
                           flex: 2,
