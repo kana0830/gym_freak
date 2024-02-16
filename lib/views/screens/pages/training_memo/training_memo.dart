@@ -226,17 +226,17 @@ class TrainingMemo extends ConsumerWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 6,
+                          flex: 7,
                           child: Text(
                             '重量',
                           ),
                         ),
                         Expanded(
-                          flex: 6,
+                          flex: 7,
                           child: Text('回数'),
                         ),
                         Expanded(
-                          flex: 5,
+                          flex: 8,
                           child: Text('セット数'),
                         ),
                       ],
@@ -246,16 +246,16 @@ class TrainingMemo extends ConsumerWidget {
                     Row(
                       children: [
                         Expanded(
-                          flex: 5,
+                          flex: 4,
                           child: _textField(
-                              1, '20', 1, menu.data()['memo'][i]['weight']),
+                              2, '20', 1, menu.data()['memo'][i]['weight']),
                         ),
                         const Expanded(
                           flex: 2,
                           child: Text('kg'),
                         ),
                         const Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Text(
                             '×',
                             style: TextStyle(fontSize: 20.0),
@@ -263,16 +263,16 @@ class TrainingMemo extends ConsumerWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 5,
+                          flex: 4,
                           child: _textField(
-                              1, '10', 1, menu.data()['memo'][i]['reps']),
+                              3, '10', 1, menu.data()['memo'][i]['reps']),
                         ),
                         const Expanded(
                           flex: 2,
                           child: Text('rep'),
                         ),
                         const Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Text(
                             '×',
                             style: TextStyle(fontSize: 20.0),
@@ -280,14 +280,18 @@ class TrainingMemo extends ConsumerWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 5,
+                          flex: 4,
                           child: _textField(
-                              1, '10', 1, menu.data()['memo'][i]['sets']),
+                              4, '10', 1, menu.data()['memo'][i]['sets']),
                         ),
                         const Expanded(
                           flex: 2,
                           child: Text('set'),
                         ),
+                        const Expanded(
+                          flex: 2,
+                          child: Icon(Icons.delete),
+                        )
                       ],
                     ),
                   Expanded(child: Container()),
@@ -330,7 +334,6 @@ class TrainingMemo extends ConsumerWidget {
           filled: true,
           border: InputBorder.none,
         ),
-        maxLines: lines,
         onChanged: (value) {
           switch (lines) {
             case 1:
