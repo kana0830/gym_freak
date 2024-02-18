@@ -23,13 +23,21 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
   @override
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> build() async {
     // var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDateNoSlash());
-    trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
+    trainingMemo = await _trainingMemoRepository.getTrainingMemo(
+        AuthService.userId + '20240211');
     return trainingMemo;
   }
 
   // update
-  void updateState(userIdKye, value) async {
-    _trainingMemoRepository.updateTrainingMemo(userIdKye, value);
+  void updateState(userId, menuId, menus) async {
+    _trainingMemoRepository.updateTrainingMemo(userId, menuId, menus);
+    trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
+    state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
+  }
+
+  // delete
+  void deleteMenuState(userId, menuId, i) async {
+    _trainingMemoRepository.deleteTrainingMemo(userId, menuId, i);
     trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }

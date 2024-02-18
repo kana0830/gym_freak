@@ -32,7 +32,7 @@ class TrainingPartNotifier extends _$TrainingPartNotifier {
 
   // update
   void updateState(userIdKye, value) async {
-    _trainingMemoRepository.updateTrainingMemo(AuthService.userId + '20240211', value);
+    _trainingMemoRepository.updateTrainingPart(AuthService.userId + '20240211', value);
     trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + '20240211');
     state = AsyncData<Map<String, dynamic>>(trainingPart);
   }

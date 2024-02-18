@@ -15,12 +15,6 @@ class TrainingMemo {
     id = docId;
     userIdKey = doc['userIdKey'] + CommonDataUtil.getDateNoSlash();
     part = doc['part'];
-    // record = {
-    //   "menu": doc['record']['menu'],
-    //   "weight": doc['record']['weight'],
-    //   "reps": doc['record']['reps'],
-    //   "sets": doc['record']['sets'],
-    // };
   }
 
 

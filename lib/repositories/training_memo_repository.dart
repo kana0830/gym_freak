@@ -4,54 +4,85 @@ import 'package:gym_freak/models/training_memo.dart';
 import '../models/user.dart';
 
 class TrainingMemoRepository {
-
   @override
   // トレーニング記録取得
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getTrainingMemo(String userIdKey) async {
-
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getTrainingMemo(
+      String userIdKey) async {
     List<QueryDocumentSnapshot<Map<String, dynamic>>> trainings = [];
 
-    await FirebaseFirestore.instance.collection('trainingMemo')
+    await FirebaseFirestore.instance
+        .collection('trainingMemo')
         .doc(userIdKey)
         .collection('menus')
         .get()
-        .then((querySnapshot) => {
-      trainings.addAll(querySnapshot.docs)
-    });
+        .then((querySnapshot) => {trainings.addAll(querySnapshot.docs)});
 
     return trainings;
   }
 
-  // トレーニング部位取得
-  Future<Map<String, dynamic>> getTrainingPart(String userIdKey) async {
-
-    Map<String, dynamic> trainingPart = {};
-    await FirebaseFirestore.instance.collection('trainingMemo')
-        .doc(userIdKey).get().then(
-            (DocumentSnapshot doc) {
-              trainingPart = doc.data() as Map<String, dynamic>;
-        });
-
-    return trainingPart;
-  }
-
-  void insertTrainingMemo(userIdKey, partValue) async{
-    await FirebaseFirestore.instance.collection('trainingMemo').doc(userIdKey).set({
-      'part' : partValue,
+  void insertTrainingMemo(userIdKey, partValue) async {
+    await FirebaseFirestore.instance
+        .collection('trainingMemo')
+        .doc(userIdKey)
+        .set({
+      'part': partValue,
     });
     getTrainingMemo(userIdKey);
   }
 
-  void updateTrainingMemo(userIdKey, partValue) async{
-    await FirebaseFirestore.instance.collection('trainingMemo').doc('120240211').set({
-      'part' : partValue,
-    });
+  void updateTrainingMemo(userId, menuId, menus) async {
+    await FirebaseFirestore.instance
+        .collection('trainingMemo')
+        .doc('120240211')
+        .collection('menus')
+        .doc(menuId)
+        .set({'memo': menus});
   }
 
-  void updateTrainingPart(id, trainingMemo) async{
-    await FirebaseFirestore.instance.collection('trainingMemo').doc().set({
-      'part' : trainingMemo['part'],
-      // 'record' : trainingMemo['record'],
+  void deleteTrainingMemo(userId, menuId, i) async {
+    // final updates = <String, dynamic>{
+    //   "memo": [i]{
+    //     FieldValue.arrayRemove([
+    //       {i}
+    //     ])
+    //   }
+    // };
+
+    final docRef = FirebaseFirestore.instance
+        .collection('trainingMemo')
+        .doc('120240211')
+        .collection('menus')
+        .doc(menuId)
+        .update({
+      "memo": FieldValue.arrayRemove([
+        {
+          'reps': '10',
+          'sets': '10',
+          'weight': '',
+        }
+      ])
     });
+    // docRef.update(updates);
+  }
+
+  // トレーニング部位取得
+  Future<Map<String, dynamic>> getTrainingPart(String userIdKey) async {
+    Map<String, dynamic> trainingPart = {};
+    await FirebaseFirestore.instance
+        .collection('trainingMemo')
+        .doc(userIdKey)
+        .get()
+        .then((DocumentSnapshot doc) {
+      trainingPart = doc.data() as Map<String, dynamic>;
+    });
+
+    return trainingPart;
+  }
+
+  void updateTrainingPart(id, partValue) async {
+    await FirebaseFirestore.instance
+        .collection('trainingMemo')
+        .doc('120240211')
+        .set({'part': partValue});
   }
 }
