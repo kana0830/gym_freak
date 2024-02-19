@@ -19,14 +19,15 @@ class TrainingMemoDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var menu = this.menu;
+    final String menuId;
     for(var memo in menu?.data()['memo']) {
       menus.add(memo);
     }
     if (menu != null) {
       menusId = menu.id;
     }
+    final trainingMemo = ref.watch(trainingMemoNotifierProvider);
 
-    // final trainingMemo = ref.watch(trainingMemoNotifierProvider);
     var screenSize = MediaQuery.of(context).size;
     // トレーニング記録ダイアログ
     return Dialog(
@@ -88,7 +89,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: ListView(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     children: [
-                      edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menu),
+                      edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menus),
                       Expanded(child: Container(height: 10.0,)),
                     ],
                   ),
@@ -182,14 +183,14 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   // 更新用記録入力ウィジェット
-  Widget _updateWidget(ref, menu) {
+  Widget _updateWidget(ref, menus) {
     return Column(
       children: [
-        for (int i = 0; i < menu?.data()['memo'].length; i++)
+        for (int i = 0; i < menus.length; i++)
           Row(children: [
             Expanded(
               flex: 4,
-              child: _textField(2, menu?.data()['memo'][i]['weight'], 1, i),
+              child: _textField(2, menus[i]['weight'], 1, i),
             ),
             const Expanded(
               flex: 2,
@@ -205,7 +206,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             ),
             Expanded(
               flex: 4,
-              child: _textField(3, menu?.data()['memo'][i]['reps'], 1, i),
+              child: _textField(3, menus[i]['reps'], 1, i),
             ),
             const Expanded(
               flex: 2,
@@ -221,7 +222,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             ),
             Expanded(
               flex: 4,
-              child: _textField(4, menu?.data()['memo'][i]['sets'], 1, i),
+              child: _textField(4, menus[i]['sets'], 1, i),
             ),
             const Expanded(
               flex: 2,
@@ -235,9 +236,9 @@ class TrainingMemoDialog extends ConsumerWidget {
                   final notifier =
                       ref.read(trainingMemoNotifierProvider.notifier);
                   // notifier.deleteMenuState(userIdKey, menusId, i);
-                  var a = menu.data();
-                  var c = menu.data()['memo'].removeAt(i);
-                  var b = menu.data()['memo'];
+                  var a = menus;
+                  var c = menus.removeAt(i);
+                  var b = menus;
                   var d = menu?.data();
                 },
               ),
