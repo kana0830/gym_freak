@@ -3,32 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
+import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
 class TrainingMemoDialog extends ConsumerWidget {
-  TrainingMemoDialog({this.menu, required this.edit, super.key});
+  TrainingMemoDialog({this.menu, this.menuId, required this.edit, super.key});
 
   QueryDocumentSnapshot<Map<String, dynamic>>? menu;
-  List<Map<String, dynamic>> menus = [];
-  String menusId = '';
+  String? menuId = '';
   int edit;
+
+
+  // List<Map<String, dynamic>> menus = [];
 
   // ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var menu = this.menu;
-    final String menuId;
-    for(var memo in menu?.data()['memo']) {
-      menus.add(memo);
-    }
-    if (menu != null) {
-      menusId = menu.id;
-    }
-    final trainingMemo = ref.watch(trainingMemoNotifierProvider);
+
+    final menu = ref.watch(menuNotifierProvider);
 
     var screenSize = MediaQuery.of(context).size;
+
     // トレーニング記録ダイアログ
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
@@ -53,11 +50,11 @@ class TrainingMemoDialog extends ConsumerWidget {
                   children: [
                     edit == 0 ? const Text('種目') : Container(),
                     edit == 0
-                        ? _textField(1, menu?.id, 0, 0)
+                        ? _textField(1, menuId, 0, 0, ref)
                         : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        menu!.id,
+                        menuId!,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
@@ -87,9 +84,9 @@ class TrainingMemoDialog extends ConsumerWidget {
                 ),
                 Expanded(
                   child: ListView(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
                     children: [
-                      edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menus),
+                      edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menu),
                       Expanded(child: Container(height: 10.0,)),
                     ],
                   ),
@@ -103,7 +100,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     onPressed: () {
                       final notifier =
                       ref.read(trainingMemoNotifierProvider.notifier);
-                      notifier.updateState(userIdKey, menusId, menus);
+                      notifier.updateState(userIdKey, menuId, menu);
                     },
                     child: Text(
                       edit == 0 ? '登録' : '更新',
@@ -129,7 +126,7 @@ class TrainingMemoDialog extends ConsumerWidget {
           children: [
             Expanded(
               flex: 4,
-              child: _textField(2, '', 0 , 0),
+              child: _textField(2, '', 0 , 0, ref),
             ),
             const Expanded(
               flex: 2,
@@ -143,7 +140,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             ),
             Expanded(
               flex: 4,
-              child: _textField(3, '', 0, 0),
+              child: _textField(3, '', 0, 0, ref),
             ),
             const Expanded(
               flex: 2,
@@ -159,7 +156,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             ),
             Expanded(
               flex: 4,
-              child: _textField(4, '', 0, 0),
+              child: _textField(4, '', 0, 0, ref),
             ),
             const Expanded(
               flex: 2,
@@ -172,7 +169,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 onPressed: () {
                   final notifier =
                       ref.read(trainingMemoNotifierProvider.notifier);
-                  notifier.deleteMenuState(userIdKey, menusId, 0);
+                  notifier.deleteMenuState(userIdKey, menuId, 0);
                 },
               ),
             )
@@ -183,14 +180,14 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   // 更新用記録入力ウィジェット
-  Widget _updateWidget(ref, menus) {
+  Widget _updateWidget(ref, menu) {
     return Column(
       children: [
-        for (int i = 0; i < menus.length; i++)
+        for (int i = 0; i < menu.length; i++)
           Row(children: [
             Expanded(
               flex: 4,
-              child: _textField(2, menus[i]['weight'], 1, i),
+              child: _textField(2, menu[i]['weight'], 1, i, ref),
             ),
             const Expanded(
               flex: 2,
@@ -206,7 +203,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             ),
             Expanded(
               flex: 4,
-              child: _textField(3, menus[i]['reps'], 1, i),
+              child: _textField(3, menu[i]['reps'], 1, i, ref),
             ),
             const Expanded(
               flex: 2,
@@ -222,7 +219,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             ),
             Expanded(
               flex: 4,
-              child: _textField(4, menus[i]['sets'], 1, i),
+              child: _textField(4, menu[i]['sets'], 1, i, ref),
             ),
             const Expanded(
               flex: 2,
@@ -235,11 +232,6 @@ class TrainingMemoDialog extends ConsumerWidget {
                 onPressed: () {
                   final notifier =
                       ref.read(trainingMemoNotifierProvider.notifier);
-                  // notifier.deleteMenuState(userIdKey, menusId, i);
-                  var a = menus;
-                  var c = menus.removeAt(i);
-                  var b = menus;
-                  var d = menu?.data();
                 },
               ),
             )
@@ -249,7 +241,7 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   // 入力欄
-  Widget _textField(int lines, text, int edit, i) {
+  Widget _textField(int lines, text, int edit, i, ref) {
     return Card(
       child: TextField(
         textAlign: lines == 1 ? TextAlign.end : TextAlign.start,
@@ -262,19 +254,24 @@ class TrainingMemoDialog extends ConsumerWidget {
         onChanged: (value) {
           switch (lines) {
             case 1:
-              edit == 0 ?  menusId = 'value' : menu?.id;
+              final notifier =
+              ref.read(trainingMemoNotifierProvider.notifier);
+              notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
             case 2:
-              menus[i]['weight'] = value;
-              text = value;
+              final notifier =
+              ref.read(trainingMemoNotifierProvider.notifier);
+              notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
             case 3:
-              menus[i]['reps'] = value;
-              text = value;
+              final notifier =
+              ref.read(trainingMemoNotifierProvider.notifier);
+              notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
             case 4:
-              menus[i]['sets'] = value;
-              text = value;
+              final notifier =
+              ref.read(trainingMemoNotifierProvider.notifier);
+              notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
           }
         },

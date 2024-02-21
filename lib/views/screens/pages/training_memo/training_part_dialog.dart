@@ -20,7 +20,6 @@ class TrainingPartDialog extends ConsumerWidget {
 
     String partValue = part;
 
-    var screenSize = MediaQuery.of(context).size;
     // トレーニング記録ダイアログ
     return Dialog(
       child: SizedBox(
@@ -65,7 +64,7 @@ class TrainingPartDialog extends ConsumerWidget {
                     ),
                     onPressed: () {
                       final notifier = ref.read(trainingPartNotifierProvider.notifier);
-                      notifier.updatePartState(userIdKey, partValue);
+                      notifier.updateState(userIdKey, partValue);
                       Navigator.pop(context);
                     },
                     child: Text(
