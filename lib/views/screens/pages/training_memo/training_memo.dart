@@ -97,6 +97,7 @@ class TrainingMemo extends ConsumerWidget {
               context: context,
               builder: (context) => TrainingMemoDialog(
                 menu: menu,
+                menuId: '',
                 edit: 0,
               ),
             );
@@ -116,8 +117,8 @@ class TrainingMemo extends ConsumerWidget {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => TrainingMemoDialog(
-              menu: part,
+            builder: (context) => TrainingPartDialog(
+              part: part,
               edit: 0,
             ),
           );
@@ -158,6 +159,7 @@ class TrainingMemo extends ConsumerWidget {
                   context: context,
                   builder: (context) => TrainingMemoDialog(
                     menu: menu,
+                    menuId: menu.id,
                     edit: 1,
                   ),
                 );

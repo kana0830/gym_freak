@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
@@ -13,9 +14,6 @@ class TrainingMemoDialog extends ConsumerWidget {
   String? menuId = '';
   int edit;
 
-
-  // List<Map<String, dynamic>> menus = [];
-
   // ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
 
@@ -23,6 +21,10 @@ class TrainingMemoDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final menu = ref.watch(menuNotifierProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(menuNotifierProvider.notifier);
+      notifier.setState(this.menu);
+    });
 
     var screenSize = MediaQuery.of(context).size;
 
@@ -98,9 +100,9 @@ class TrainingMemoDialog extends ConsumerWidget {
                       backgroundColor: const Color(0xFFFFF59D),
                     ),
                     onPressed: () {
-                      final notifier =
-                      ref.read(trainingMemoNotifierProvider.notifier);
-                      notifier.updateState(userIdKey, menuId, menu);
+                      // final notifier =
+                      // ref.read(trainingMemoNotifierProvider.notifier);
+                      // notifier.updateState(userIdKey, menuId, menu);
                     },
                     child: Text(
                       edit == 0 ? '登録' : '更新',
@@ -167,9 +169,9 @@ class TrainingMemoDialog extends ConsumerWidget {
               child: IconButton(
                 icon: const Icon(Icons.highlight_off),
                 onPressed: () {
-                  final notifier =
-                      ref.read(trainingMemoNotifierProvider.notifier);
-                  notifier.deleteMenuState(userIdKey, menuId, 0);
+                  // final notifier =
+                  //     ref.read(trainingMemoNotifierProvider.notifier);
+                  // notifier.deleteMenuState(userIdKey, menuId, 0);
                 },
               ),
             )
@@ -230,8 +232,8 @@ class TrainingMemoDialog extends ConsumerWidget {
               child: IconButton(
                 icon: const Icon(Icons.highlight_off),
                 onPressed: () {
-                  final notifier =
-                      ref.read(trainingMemoNotifierProvider.notifier);
+                  // final notifier =
+                  //     ref.read(trainingMemoNotifierProvider.notifier);
                 },
               ),
             )
@@ -254,24 +256,24 @@ class TrainingMemoDialog extends ConsumerWidget {
         onChanged: (value) {
           switch (lines) {
             case 1:
-              final notifier =
-              ref.read(trainingMemoNotifierProvider.notifier);
-              notifier.deleteMenuState(userIdKey, menuId, 0);
+              // final notifier =
+              // ref.read(trainingMemoNotifierProvider.notifier);
+              // notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
             case 2:
-              final notifier =
-              ref.read(trainingMemoNotifierProvider.notifier);
-              notifier.deleteMenuState(userIdKey, menuId, 0);
+              // final notifier =
+              // ref.read(trainingMemoNotifierProvider.notifier);
+              // notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
             case 3:
-              final notifier =
-              ref.read(trainingMemoNotifierProvider.notifier);
-              notifier.deleteMenuState(userIdKey, menuId, 0);
+              // final notifier =
+              // ref.read(trainingMemoNotifierProvider.notifier);
+              // notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
             case 4:
-              final notifier =
-              ref.read(trainingMemoNotifierProvider.notifier);
-              notifier.deleteMenuState(userIdKey, menuId, 0);
+              // final notifier =
+              // ref.read(trainingMemoNotifierProvider.notifier);
+              // notifier.deleteMenuState(userIdKey, menuId, 0);
               break;
           }
         },
