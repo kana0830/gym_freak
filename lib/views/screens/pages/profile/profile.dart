@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/division.dart';
-import '../../../../view_models/user_notifier/user_notifier.dart';
 import '../../../style/style.dart';
 import 'package:age_calculator/age_calculator.dart';
 import 'edit_profile.dart';

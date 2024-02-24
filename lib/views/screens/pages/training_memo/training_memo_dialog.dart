@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
-import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
 class TrainingMemoDialog extends ConsumerWidget {
   TrainingMemoDialog({this.menu, this.menuId, required this.edit, super.key});

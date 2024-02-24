@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
-import 'package:gym_freak/models/menus.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo_dialog.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_part_dialog.dart';
 import '../../../../common/common_data_util.dart';
