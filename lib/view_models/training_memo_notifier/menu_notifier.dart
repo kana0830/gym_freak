@@ -15,22 +15,23 @@ class MenuNotifier extends _$MenuNotifier {
 
   @override
   List<Map<String, dynamic>> build() {
-    // for(var memo in menu?.data()['memo']) {
-    //   menuList.add(memo);
-    // }
     return [];
   }
 
   // update
   void setState(QueryDocumentSnapshot<Map<String, dynamic>>? menu) {
-    for(var memo in menu?.data()['memo']) {
-      menuList.add(memo);
+    if (menuList.isEmpty){
+      for(var memo in menu?.data()['memo']) {
+        menuList.add(memo);
+      }
+      state = menuList;
     }
-    state = menuList;
   }
 
   // update
-  void updateState(userId, menuId, menus) async {
+  void updateState(value, i) async {
+    menuList[i]['weight'] = value;
+    state = menuList;
   }
 
   // delete

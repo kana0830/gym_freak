@@ -254,24 +254,24 @@ class TrainingMemoDialog extends ConsumerWidget {
         onChanged: (value) {
           switch (lines) {
             case 1:
-              // final notifier =
-              // ref.read(trainingMemoNotifierProvider.notifier);
-              // notifier.deleteMenuState(userIdKey, menuId, 0);
+              final notifier =
+              ref.read(menuNotifierProvider.notifier);
+              notifier.updateMenuState(userIdKey, menuId, 0);
               break;
             case 2:
-              // final notifier =
-              // ref.read(trainingMemoNotifierProvider.notifier);
-              // notifier.deleteMenuState(userIdKey, menuId, 0);
+              final notifier =
+              ref.read(menuNotifierProvider.notifier);
+              notifier.updateMenuState(value, i);
               break;
             case 3:
-              // final notifier =
-              // ref.read(trainingMemoNotifierProvider.notifier);
-              // notifier.deleteMenuState(userIdKey, menuId, 0);
+              final notifier =
+              ref.read(menuNotifierProvider.notifier);
+              notifier.updateMenuState(userIdKey, menuId, 0);
               break;
             case 4:
-              // final notifier =
-              // ref.read(trainingMemoNotifierProvider.notifier);
-              // notifier.deleteMenuState(userIdKey, menuId, 0);
+              final notifier =
+              ref.read(menuNotifierProvider.notifier);
+              notifier.updateMenuState(userIdKey, menuId, 0);
               break;
           }
         },
