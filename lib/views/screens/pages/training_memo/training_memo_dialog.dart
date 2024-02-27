@@ -17,7 +17,6 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final menu = ref.watch(menuNotifierProvider);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(menuNotifierProvider.notifier);
@@ -52,15 +51,15 @@ class TrainingMemoDialog extends ConsumerWidget {
                     edit == 0
                         ? _textField(1, menuId, 0, 0, ref)
                         : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        menuId!,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Color(0xFFFFF59D)),
-                      ),
-                    ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              menuId!,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  color: Color(0xFFFFF59D)),
+                            ),
+                          ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
@@ -87,7 +86,10 @@ class TrainingMemoDialog extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     children: [
                       edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menu),
-                      Expanded(child: Container(height: 10.0,)),
+                      Expanded(
+                          child: Container(
+                        height: 10.0,
+                      )),
                     ],
                   ),
                 ),
@@ -126,7 +128,7 @@ class TrainingMemoDialog extends ConsumerWidget {
           children: [
             Expanded(
               flex: 4,
-              child: _textField(2, '', 0 , 0, ref),
+              child: _textField(2, '', 0, 0, ref),
             ),
             const Expanded(
               flex: 2,
@@ -184,67 +186,69 @@ class TrainingMemoDialog extends ConsumerWidget {
     return Column(
       children: [
         for (int i = 0; i < menu.length; i++)
-          Row(children: [
-            Expanded(
-              flex: 4,
-              child: _textField(2, menu[i]['weight'], 1, i, ref),
-            ),
-            const Expanded(
-              flex: 2,
-              child: Text('kg'),
-            ),
-            const Expanded(
-              flex: 1,
-              child: Text(
-                '×',
-                style: TextStyle(fontSize: 20.0),
-                textAlign: TextAlign.center,
+          Row(
+            children: [
+              Expanded(
+                flex: 4,
+                child: _textField(2, menu[i]['weight'], 1, i, ref),
               ),
-            ),
-            Expanded(
-              flex: 4,
-              child: _textField(3, menu[i]['reps'], 1, i, ref),
-            ),
-            const Expanded(
-              flex: 2,
-              child: Text('rep'),
-            ),
-            const Expanded(
-              flex: 1,
-              child: Text(
-                '×',
-                style: TextStyle(fontSize: 20.0),
-                textAlign: TextAlign.center,
+              const Expanded(
+                flex: 2,
+                child: Text('kg'),
               ),
-            ),
-            Expanded(
-              flex: 4,
-              child: _textField(4, menu[i]['sets'], 1, i, ref),
-            ),
-            const Expanded(
-              flex: 2,
-              child: Text('set'),
-            ),
-            Expanded(
-              flex: 2,
-              child: IconButton(
-                icon: const Icon(Icons.highlight_off),
-                onPressed: () {
-                  // final notifier =
-                  //     ref.read(trainingMemoNotifierProvider.notifier);
-                },
+              const Expanded(
+                flex: 1,
+                child: Text(
+                  '×',
+                  style: TextStyle(fontSize: 20.0),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            )
-          ]),
+              Expanded(
+                flex: 4,
+                child: _textField(3, menu[i]['reps'], 1, i, ref),
+              ),
+              const Expanded(
+                flex: 2,
+                child: Text('rep'),
+              ),
+              const Expanded(
+                flex: 1,
+                child: Text(
+                  '×',
+                  style: TextStyle(fontSize: 20.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: _textField(4, menu[i]['sets'], 1, i, ref),
+              ),
+              const Expanded(
+                flex: 2,
+                child: Text('set'),
+              ),
+              Expanded(
+                flex: 2,
+                child: IconButton(
+                  icon: const Icon(Icons.highlight_off),
+                  onPressed: () {
+                    final notifier = ref.read(menuNotifierProvider.notifier);
+                    notifier.deleteMenuState(i);
+                  },
+                ),
+              )
+            ],
+          ),
       ],
     );
   }
 
   // 入力欄
-  Widget _textField(int lines, text, int edit, i, ref) {
+  Widget _textField(int no, text, int edit, i, ref) {
     return Card(
       child: TextField(
-        textAlign: lines == 1 ? TextAlign.end : TextAlign.start,
+        textAlign: no == 1 ? TextAlign.end : TextAlign.start,
         controller: TextEditingController(text: text),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
@@ -252,26 +256,22 @@ class TrainingMemoDialog extends ConsumerWidget {
           border: InputBorder.none,
         ),
         onChanged: (value) {
-          switch (lines) {
+          switch (no) {
             case 1:
-              final notifier =
-              ref.read(menuNotifierProvider.notifier);
-              notifier.updateMenuState(userIdKey, menuId, 0);
-              break;
-            case 2:
-              final notifier =
-              ref.read(menuNotifierProvider.notifier);
+              final notifier = ref.read(menuNotifierProvider.notifier);
               notifier.updateMenuState(value, i);
               break;
-            case 3:
-              final notifier =
-              ref.read(menuNotifierProvider.notifier);
-              notifier.updateMenuState(userIdKey, menuId, 0);
+            case 2: // weight
+              final notifier = ref.read(menuNotifierProvider.notifier);
+              notifier.updateWeightState(value, i);
               break;
-            case 4:
-              final notifier =
-              ref.read(menuNotifierProvider.notifier);
-              notifier.updateMenuState(userIdKey, menuId, 0);
+            case 3: // reps
+              final notifier = ref.read(menuNotifierProvider.notifier);
+              notifier.updateRepsState(value, i);
+              break;
+            case 4: //sets
+              final notifier = ref.read(menuNotifierProvider.notifier);
+              notifier.updateSetsState(value, i);
               break;
           }
         },
