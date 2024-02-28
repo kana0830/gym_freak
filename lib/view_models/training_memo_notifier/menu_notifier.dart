@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_public_notifier_properties
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,7 +24,12 @@ class MenuNotifier extends _$MenuNotifier {
       state = menuList;
     }
   }
-
+  // list行追加
+  void insertRowState() async {
+    Map<String, dynamic> emptyMap = {};
+    menuList.add(emptyMap);
+    state = menuList;
+  }
   // weight書き換え
   void updateWeightState(value, i) async {
     menuList[i]['weight'] = value;

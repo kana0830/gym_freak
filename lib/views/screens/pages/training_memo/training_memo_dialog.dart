@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
+import '../../../../view_models/training_memo_notifier/menu_id_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
+import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
 class TrainingMemoDialog extends ConsumerWidget {
   TrainingMemoDialog({this.menu, this.menuId, required this.edit, super.key});
@@ -21,6 +23,11 @@ class TrainingMemoDialog extends ConsumerWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(menuNotifierProvider.notifier);
       notifier.setState(this.menu);
+    });
+    final menuId = ref.watch(menuIdNotifierProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(menuIdNotifierProvider.notifier);
+      notifier.setState(this.menuId);
     });
 
     var screenSize = MediaQuery.of(context).size;
@@ -100,9 +107,10 @@ class TrainingMemoDialog extends ConsumerWidget {
                       backgroundColor: const Color(0xFFFFF59D),
                     ),
                     onPressed: () {
-                      // final notifier =
-                      // ref.read(trainingMemoNotifierProvider.notifier);
-                      // notifier.updateState(userIdKey, menuId, menu);
+                      final notifier =
+                          ref.read(trainingMemoNotifierProvider.notifier);
+                      notifier.updateState(userIdKey, menuId, menu);
+                      Navigator.pop(context);
                     },
                     child: Text(
                       edit == 0 ? '登録' : '更新',
@@ -169,9 +177,8 @@ class TrainingMemoDialog extends ConsumerWidget {
               child: IconButton(
                 icon: const Icon(Icons.highlight_off),
                 onPressed: () {
-                  // final notifier =
-                  //     ref.read(trainingMemoNotifierProvider.notifier);
-                  // notifier.deleteMenuState(userIdKey, menuId, 0);
+                  final notifier = ref.read(menuNotifierProvider.notifier);
+                  notifier.deleteMenuState();
                 },
               ),
             )
@@ -240,6 +247,20 @@ class TrainingMemoDialog extends ConsumerWidget {
               )
             ],
           ),
+        SizedBox(
+          width: 120,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black26,
+            ),
+            onPressed: () {
+              final notifier =
+              ref.read(menuNotifierProvider.notifier);
+              notifier.insertRowState();
+            },
+            child: Text('セット数追加'),
+            ),
+          ),
       ],
     );
   }
@@ -248,7 +269,7 @@ class TrainingMemoDialog extends ConsumerWidget {
   Widget _textField(int no, text, int edit, i, ref) {
     return Card(
       child: TextField(
-        textAlign: no == 1 ? TextAlign.end : TextAlign.start,
+        textAlign: no == 1 ? TextAlign.start : TextAlign.end,
         controller: TextEditingController(text: text),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
@@ -258,8 +279,8 @@ class TrainingMemoDialog extends ConsumerWidget {
         onChanged: (value) {
           switch (no) {
             case 1:
-              final notifier = ref.read(menuNotifierProvider.notifier);
-              notifier.updateMenuState(value, i);
+              final notifier = ref.read(menuIdNotifierProvider.notifier);
+              notifier.updateState(value);
               break;
             case 2: // weight
               final notifier = ref.read(menuNotifierProvider.notifier);
