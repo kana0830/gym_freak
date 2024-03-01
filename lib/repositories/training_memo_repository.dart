@@ -39,14 +39,13 @@ class TrainingMemoRepository {
         .set({'memo': menus});
   }
 
-  void deleteTrainingMemo(userId, menuId, i) async {
-    // final updates = <String, dynamic>{
-    //   "memo": [i]{
-    //     FieldValue.arrayRemove([
-    //       {i}
-    //     ])
-    //   }
-    // };
+  void deleteTrainingMemo(userId, menuId) async {
+    await FirebaseFirestore.instance
+        .collection('trainingMemo')
+        .doc('120240211')
+        .collection('menus')
+        .doc(menuId)
+        .delete();
 
     final docRef = FirebaseFirestore.instance
         .collection('trainingMemo')

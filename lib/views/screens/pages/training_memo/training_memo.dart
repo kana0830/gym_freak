@@ -163,6 +163,12 @@ class TrainingMemo extends ConsumerWidget {
                   ),
                 );
               },
+              onLongPress: () {
+                // TODO 確認ダイアログ
+                final notifier =
+                ref.read(trainingMemoNotifierProvider.notifier);
+                notifier.deleteMenuState(userIdKey, menu.id);
+              },
               child: Card(
                 child: ListTile(
                   title: Text(

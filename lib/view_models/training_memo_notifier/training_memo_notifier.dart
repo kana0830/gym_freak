@@ -31,8 +31,8 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
   }
 
   // delete
-  void deleteMenuState(userId, menuId, i) async {
-    _trainingMemoRepository.deleteTrainingMemo(userId, menuId, i);
+  void deleteMenuState(userId, menuId) async {
+    _trainingMemoRepository.deleteTrainingMemo(userId, menuId);
     trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
