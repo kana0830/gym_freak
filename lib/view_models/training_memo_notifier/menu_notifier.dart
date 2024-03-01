@@ -26,12 +26,19 @@ class MenuNotifier extends _$MenuNotifier {
   }
   // list行追加
   void insertRowState() async {
-    Map<String, dynamic> emptyMap = {};
+    Map<String, dynamic> emptyMap = {
+      'weight' : '',
+      'reps' : '',
+      'sets' : ''
+    };
     menuList.add(emptyMap);
     state = menuList;
   }
   // weight書き換え
   void updateWeightState(value, i) async {
+    if (menuList.isEmpty) {
+      menuList.add({});
+    }
     menuList[i]['weight'] = value;
     state = menuList;
   }

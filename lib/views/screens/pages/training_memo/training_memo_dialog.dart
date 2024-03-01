@@ -20,15 +20,19 @@ class TrainingMemoDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final menu = ref.watch(menuNotifierProvider);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(menuNotifierProvider.notifier);
-      notifier.setState(this.menu);
-    });
     final menuId = ref.watch(menuIdNotifierProvider);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(menuIdNotifierProvider.notifier);
-      notifier.setState(this.menuId);
-    });
+    if (this.menu != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final notifier = ref.read(menuNotifierProvider.notifier);
+        notifier.setState(this.menu);
+      });
+    }
+    if (this.menuId != null || this.menuId != '') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final notifier = ref.read(menuIdNotifierProvider.notifier);
+        notifier.setState(this.menuId);
+      });
+    }
 
     var screenSize = MediaQuery.of(context).size;
 
@@ -93,10 +97,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     children: [
                       edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menu),
-                      Expanded(
-                          child: Container(
-                        height: 10.0,
-                      )),
+
                     ],
                   ),
                 ),
@@ -266,11 +267,11 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   // 入力欄
-  Widget _textField(int no, text, int edit, i, ref) {
+  Widget _textField(int no, String text, int edit, int i, ref) {
     return Card(
-      child: TextField(
+      child: TextFormField(
         textAlign: no == 1 ? TextAlign.start : TextAlign.end,
-        controller: TextEditingController(text: text),
+        initialValue: text,
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
           filled: true,
