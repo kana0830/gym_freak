@@ -164,10 +164,41 @@ class TrainingMemo extends ConsumerWidget {
                 );
               },
               onLongPress: () {
-                // TODO 確認ダイアログ
-                final notifier =
-                ref.read(trainingMemoNotifierProvider.notifier);
-                notifier.deleteMenuState(userIdKey, menu.id);
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("削除してよろしいですか。"),
+                      actions: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: const Color(0xFFFFF59D),
+                            foregroundColor: Colors.black
+                          ),
+                          child: const Text("いいえ"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor: const Color(0xFFFFF59D),
+                                foregroundColor: Colors.black
+                            ),
+                            child: const Text("はい"),
+                            onPressed: () {
+                              final notifier =
+                              ref.read(trainingMemoNotifierProvider.notifier);
+                              notifier.deleteMenuState(userIdKey, menu.id);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               child: Card(
                 child: ListTile(
