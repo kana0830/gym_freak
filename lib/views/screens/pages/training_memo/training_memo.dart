@@ -8,13 +8,12 @@ import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
-// トレーニング記録画面
+/// トレーニング記録画面
 class TrainingMemo extends ConsumerWidget {
   TrainingMemo({super.key});
 
-  // ユーザーIDキー
+  /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,18 +21,18 @@ class TrainingMemo extends ConsumerWidget {
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
     QueryDocumentSnapshot<Map<String, dynamic>>? menu;
 
-    // トレーニング記録表示ウィジェット
+    /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
 
-    // トレーニング記録登録用
+    /// トレーニング記録登録用
     List<QueryDocumentSnapshot<Map<String, dynamic>>>? trainingMemoData;
 
-    // 表示用日付を取得
+    /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
-    // 今日のトレーニング記録がある場合
+    /// 今日のトレーニング記録がある場合
     if (trainingMemo.hasValue) {
-      // ユーザー情報表示部分
+      /// トレーニング記録表示部分
       trainingMemoInfo = trainingMemo.when(
         loading: () => const CircularProgressIndicator(),
         error: (error, stacktrace) => Text('エラー $error'),
@@ -54,7 +53,7 @@ class TrainingMemo extends ConsumerWidget {
           }
         },
       );
-      // 今日のトレーニング記録がない場合
+      /// 今日のトレーニング記録がない場合
     } else {
       trainingMemoInfo = const Padding(
         padding: EdgeInsets.all(16.0),
@@ -62,16 +61,20 @@ class TrainingMemo extends ConsumerWidget {
       );
     }
 
-    // ヘッダ部位表示
+    /// ヘッダ部位表示
     final Widget part = trainingPart.when(
       loading: () => const CircularProgressIndicator(),
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
-        return headerPart(data['part'], context, ref);
+        if (data.isEmpty) {
+          return headerPart('', context, ref);
+        } else {
+          return headerPart(data['part'], context, ref);
+        }
       },
     );
 
-    // プロフィール画面
+    /// トレーニング記録
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -109,10 +112,13 @@ class TrainingMemo extends ConsumerWidget {
     );
   }
 
-  // トレーニング部位ヘッダ部
+  /// トレーニング部位ヘッダ部
   Widget headerPart(part, context, ref) {
-    if (part == null) {
+    if (part == '') {
       return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFFFFF59D),
+        ),
         onPressed: () {
           showDialog(
             context: context,
@@ -122,7 +128,10 @@ class TrainingMemo extends ConsumerWidget {
             ),
           );
         },
-        child: const Text('今日鍛える部位の登録'),
+        child: const Text(
+          '今日鍛える部位の登録',
+          style: TextStyle(color: Colors.black),
+        ),
       );
     } else {
       return InkWell(
@@ -145,7 +154,7 @@ class TrainingMemo extends ConsumerWidget {
     }
   }
 
-  // メインwidget表示
+  /// メインwidget表示
   Widget _listContent(
       List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref) {
     return Expanded(
@@ -173,9 +182,8 @@ class TrainingMemo extends ConsumerWidget {
                       actions: [
                         TextButton(
                           style: TextButton.styleFrom(
-                            backgroundColor: const Color(0xFFFFF59D),
-                            foregroundColor: Colors.black
-                          ),
+                              backgroundColor: const Color(0xFFFFF59D),
+                              foregroundColor: Colors.black),
                           child: const Text("いいえ"),
                           onPressed: () => Navigator.pop(context),
                         ),
@@ -184,12 +192,11 @@ class TrainingMemo extends ConsumerWidget {
                           child: TextButton(
                             style: TextButton.styleFrom(
                                 backgroundColor: const Color(0xFFFFF59D),
-                                foregroundColor: Colors.black
-                            ),
+                                foregroundColor: Colors.black),
                             child: const Text("はい"),
                             onPressed: () {
-                              final notifier =
-                              ref.read(trainingMemoNotifierProvider.notifier);
+                              final notifier = ref
+                                  .read(trainingMemoNotifierProvider.notifier);
                               notifier.deleteMenuState(userIdKey, menu.id);
                               Navigator.pop(context);
                             },
@@ -217,7 +224,7 @@ class TrainingMemo extends ConsumerWidget {
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 5,
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: Text(

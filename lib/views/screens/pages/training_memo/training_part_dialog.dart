@@ -10,7 +10,7 @@ class TrainingPartDialog extends ConsumerWidget {
   String part = '';
   int edit;
 
-  // ユーザーIDキー
+  /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
 
   @override
@@ -20,7 +20,7 @@ class TrainingPartDialog extends ConsumerWidget {
 
     String partValue = part;
 
-    // トレーニング記録ダイアログ
+    /// トレーニング記録ダイアログ
     return Dialog(
       child: SizedBox(
         height: 160,

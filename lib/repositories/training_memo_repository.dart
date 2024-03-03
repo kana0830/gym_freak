@@ -30,26 +30,26 @@ class TrainingMemoRepository {
     getTrainingMemo(userIdKey);
   }
 
-  void updateTrainingMemo(userId, menuId, menus) async {
+  void updateTrainingMemo(userIdKey, menuId, menus) async {
     await FirebaseFirestore.instance
         .collection('trainingMemo')
-        .doc('120240211')
+        .doc(userIdKey)
         .collection('menus')
         .doc(menuId)
         .set({'memo': menus});
   }
 
-  void deleteTrainingMemo(userId, menuId) async {
+  void deleteTrainingMemo(userIdKey, menuId) async {
     await FirebaseFirestore.instance
         .collection('trainingMemo')
-        .doc('120240211')
+        .doc(userIdKey)
         .collection('menus')
         .doc(menuId)
         .delete();
 
     final docRef = FirebaseFirestore.instance
         .collection('trainingMemo')
-        .doc('120240211')
+        .doc(userIdKey)
         .collection('menus')
         .doc(menuId)
         .update({
@@ -72,16 +72,18 @@ class TrainingMemoRepository {
         .doc(userIdKey)
         .get()
         .then((DocumentSnapshot doc) {
-      trainingPart = doc.data() as Map<String, dynamic>;
+          if (doc.data() != null) {
+            trainingPart = doc.data() as Map<String, dynamic>;
+          }
     });
 
     return trainingPart;
   }
 
-  void updateTrainingPart(id, partValue) async {
+  void updateTrainingPart(userIdKey, partValue) async {
     await FirebaseFirestore.instance
         .collection('trainingMemo')
-        .doc('120240211')
+        .doc(userIdKey)
         .set({'part': partValue});
   }
 }

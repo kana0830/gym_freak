@@ -15,7 +15,7 @@ class MenuNotifier extends _$MenuNotifier {
     return [];
   }
 
-  // 親画面からのパラメータ設定
+  /// 親画面からのパラメータ設定
   void setState(QueryDocumentSnapshot<Map<String, dynamic>>? menu) {
     if (menuList.isEmpty){
       for(var memo in menu?.data()['memo']) {
@@ -24,17 +24,17 @@ class MenuNotifier extends _$MenuNotifier {
       state = menuList;
     }
   }
-  // list行追加
+  /// list行追加
   void insertRowState() async {
     Map<String, dynamic> emptyMap = {
       'weight' : '',
       'reps' : '',
       'sets' : ''
     };
+    state = [...menuList, emptyMap];
     menuList.add(emptyMap);
-    state = menuList;
   }
-  // weight書き換え
+  /// weight書き換え
   void updateWeightState(value, i) async {
     if (menuList.isEmpty) {
       menuList.add({});
@@ -42,20 +42,20 @@ class MenuNotifier extends _$MenuNotifier {
     menuList[i]['weight'] = value;
     state = menuList;
   }
-  // reps書き換え
+  /// reps書き換え
   void updateRepsState(value, i) async {
     menuList[i]['reps'] = value;
     state = menuList;
   }
-  // sets書き換え
+  /// sets書き換え
   void updateSetsState(value, i) async {
     menuList[i]['sets'] = value;
     state = menuList;
   }
 
-  // delete
+  /// delete
   void deleteMenuState(i) async {
-    menuList.removeRange(i, i+1);
-    state = menuList;
+    menuList.removeAt(i);
+    state = [...menuList];
   }
 }

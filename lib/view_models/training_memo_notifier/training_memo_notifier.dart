@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../common/common_data_util.dart';
 import '../../repositories/training_memo_repository.dart';
 
 part 'training_memo_notifier.g.dart';
@@ -17,23 +18,21 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
 
   @override
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> build() async {
-    // var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDateNoSlash());
-    trainingMemo = await _trainingMemoRepository.getTrainingMemo(
-        AuthService.userId + '20240211');
+    var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + CommonDataUtil.getDateNoSlash());
     return trainingMemo;
   }
 
   // update
-  void updateState(userId, menuId, menus) async {
-    _trainingMemoRepository.updateTrainingMemo(userId, menuId, menus);
-    trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
+  void updateState(userIdKey, menuId, menus) async {
+    _trainingMemoRepository.updateTrainingMemo(userIdKey, menuId, menus);
+    trainingMemo = await _trainingMemoRepository.getTrainingMemo(userIdKey);
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 
   // delete
-  void deleteMenuState(userId, menuId) async {
-    _trainingMemoRepository.deleteTrainingMemo(userId, menuId);
-    trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + '20240211');
+  void deleteMenuState(userIdKey, menuId) async {
+    _trainingMemoRepository.deleteTrainingMemo(userIdKey, menuId);
+    trainingMemo = await _trainingMemoRepository.getTrainingMemo(userIdKey);
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 }

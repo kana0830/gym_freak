@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../common/common_data_util.dart';
 import '../../repositories/training_memo_repository.dart';
 
 part 'training_part_notifier.g.dart';
@@ -15,15 +16,14 @@ class TrainingPartNotifier extends _$TrainingPartNotifier {
 
   @override
   Future<Map<String, dynamic>> build() async {
-    // var trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
-    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + '20240211');
+    var trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
     return trainingPart;
   }
 
   // update
   void updateState(userIdKye, value) async {
-    _trainingMemoRepository.updateTrainingPart(AuthService.userId + '20240211', value);
-    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + '20240211');
+    _trainingMemoRepository.updateTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash(), value);
+    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
     state = AsyncData<Map<String, dynamic>>(trainingPart);
   }
 }

@@ -14,7 +14,7 @@ class TrainingMemoDialog extends ConsumerWidget {
   String? menuId = '';
   int edit;
 
-  // ユーザーIDキー
+  /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
 
   @override
@@ -36,7 +36,7 @@ class TrainingMemoDialog extends ConsumerWidget {
 
     var screenSize = MediaQuery.of(context).size;
 
-    // トレーニング記録ダイアログ
+    /// トレーニング記録ダイアログ
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
       child: ConstrainedBox(
@@ -129,14 +129,14 @@ class TrainingMemoDialog extends ConsumerWidget {
     );
   }
 
-  // 登録用記録入力ウィジェット
+  /// 登録用記録入力ウィジェット
   Widget _insertWidget(ref) {
     return Column(
       children: [
         Row(
           children: [
             Expanded(
-              flex: 4,
+              flex: 5,
               child: _textField(2, '', 0, 0, ref),
             ),
             const Expanded(
@@ -185,11 +185,25 @@ class TrainingMemoDialog extends ConsumerWidget {
             )
           ],
         ),
+        SizedBox(
+          width: 120,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black26,
+            ),
+            onPressed: () {
+              final notifier =
+              ref.read(menuNotifierProvider.notifier);
+              notifier.insertRowState();
+            },
+            child: const Text('セット数追加'),
+          ),
+        ),
       ],
     );
   }
 
-  // 更新用記録入力ウィジェット
+  /// 更新用記録入力ウィジェット
   Widget _updateWidget(ref, menu) {
     return Column(
       children: [
@@ -197,7 +211,7 @@ class TrainingMemoDialog extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: _textField(2, menu[i]['weight'], 1, i, ref),
               ),
               const Expanded(
@@ -259,14 +273,14 @@ class TrainingMemoDialog extends ConsumerWidget {
               ref.read(menuNotifierProvider.notifier);
               notifier.insertRowState();
             },
-            child: Text('セット数追加'),
+            child: const Text('セット数追加'),
             ),
           ),
       ],
     );
   }
 
-  // 入力欄
+  /// 入力欄
   Widget _textField(int no, String text, int edit, int i, ref) {
     return Card(
       child: TextFormField(

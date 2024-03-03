@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/screens/pages/profile/profile.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo.dart';
-import 'package:gym_freak/views/screens/pages/my_calender.dart';
+import 'package:gym_freak/views/screens/pages/calender/my_calender.dart';
 
 class HomeScreen extends StatefulWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> user;
