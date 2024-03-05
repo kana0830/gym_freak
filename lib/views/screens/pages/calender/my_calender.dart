@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../common/common_data_util.dart';
 
@@ -13,7 +14,6 @@ class MyCalender extends StatefulWidget {
 class _MyCalenderState extends State<MyCalender> {
   @override
   Widget build(BuildContext context) {
-
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
@@ -25,6 +25,18 @@ class _MyCalenderState extends State<MyCalender> {
             SizedBox(
               height: 300,
               child: TableCalendar(
+                headerStyle: const HeaderStyle(
+                  headerPadding: EdgeInsets.only(top: 6, left: 16, bottom: 6),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF7b755e),
+                  ),
+                  formatButtonVisible: false,
+                  titleCentered: false,
+                  leftChevronVisible: false,
+                  rightChevronVisible: false,
+                  titleTextStyle:
+                      TextStyle(color: Color(0xFFFFFDE7), fontSize: 18.0),
+                ),
                 focusedDay: focusedDay,
                 firstDay: DateTime.utc(2023, 1, 1),
                 lastDay: DateTime.utc(2024, 12, 31),
@@ -32,17 +44,6 @@ class _MyCalenderState extends State<MyCalender> {
                 locale: 'ja_JP',
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekHeight: 30,
-                headerStyle: const HeaderStyle(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF7b755e),
-                  ),
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  leftChevronVisible: false,
-                  rightChevronVisible: false,
-                  titleTextStyle:
-                      TextStyle(color: Color(0xFFFFFDE7), fontSize: 18.0),
-                ),
                 daysOfWeekStyle: const DaysOfWeekStyle(
                   weekdayStyle: TextStyle(
                     color: Color(0xFFFAFAFA),
@@ -50,6 +51,28 @@ class _MyCalenderState extends State<MyCalender> {
                   weekendStyle: TextStyle(
                     color: Color(0xFF9FA8DA),
                   ),
+                ),
+                calendarBuilders: CalendarBuilders(
+                  dowBuilder: (_, day) {
+                    if (day.weekday == DateTime.sunday) {
+                      final text = '日';
+                      return Center(
+                        child: Text(
+                          text,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      );
+                    } else if (day.weekday == DateTime.saturday) {
+                      final text = '土';
+                      return Center(
+                        child: Text(
+                          text,
+                          style: const TextStyle(color: Colors.blue),
+                        ),
+                      );
+                    }
+                    return null;
+                  },
                 ),
                 calendarStyle: const CalendarStyle(
                   weekendTextStyle: TextStyle(
