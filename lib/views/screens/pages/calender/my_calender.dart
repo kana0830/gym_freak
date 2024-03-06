@@ -55,19 +55,17 @@ class _MyCalenderState extends State<MyCalender> {
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (_, day) {
                     if (day.weekday == DateTime.sunday) {
-                      final text = '日';
                       return Center(
                         child: Text(
-                          text,
-                          style: const TextStyle(color: Colors.red),
+                          '日',
+                          style: TextStyle(color: _textColor(day)),
                         ),
                       );
                     } else if (day.weekday == DateTime.saturday) {
-                      final text = '土';
                       return Center(
                         child: Text(
-                          text,
-                          style: const TextStyle(color: Colors.blue),
+                          '土',
+                          style: TextStyle(color: _textColor(day)),
                         ),
                       );
                     }
