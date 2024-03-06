@@ -73,23 +73,32 @@ class _MyCalenderState extends State<MyCalender> {
                     }
                     return null;
                   },
+                  defaultBuilder: (
+                      BuildContext context, DateTime day, DateTime focusedDay) {
+                    return Text(
+                        day.day.toString(),
+                        style: TextStyle(
+                          color: _textColor(day),
+                        ),
+                    );
+                  },
                 ),
-                calendarStyle: const CalendarStyle(
-                  weekendTextStyle: TextStyle(
-                    color: Color(0xFF9FA8DA),
-                  ),
-                  outsideTextStyle: TextStyle(
-                    color: Color(0xFF616161),
-                  ),
-                ),
-                // onDaySelected: () {
-                //
-                // },
               ),
             ),
           ],
         ),
       ),
     );
+  }
+  Color _textColor(DateTime day) {
+    const _defaultTextColor = Colors.white70;
+
+    if (day.weekday == DateTime.sunday) {
+      return Colors.red;
+    }
+    if (day.weekday == DateTime.saturday) {
+      return Colors.blue[600]!;
+    }
+    return _defaultTextColor;
   }
 }
