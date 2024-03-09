@@ -38,8 +38,8 @@ class _MyCalenderState extends State<MyCalender> {
                       TextStyle(color: Color(0xFFFFFDE7), fontSize: 18.0),
                 ),
                 focusedDay: focusedDay,
-                firstDay: DateTime.utc(2023, 1, 1),
-                lastDay: DateTime.utc(2024, 12, 31),
+                firstDay: DateTime.utc(2020, 1, 1),
+                lastDay: DateTime.utc(2050, 12, 31),
                 shouldFillViewport: true,
                 locale: 'ja_JP',
                 startingDayOfWeek: StartingDayOfWeek.monday,
@@ -73,16 +73,22 @@ class _MyCalenderState extends State<MyCalender> {
                   },
                   defaultBuilder: (
                       BuildContext context, DateTime day, DateTime focusedDay) {
-                    return Text(
-                        day.day.toString(),
-                        style: TextStyle(
-                          color: _textColor(day),
-                        ),
+                    return Center(
+                      child: Text(
+                          day.day.toString(),
+                          style: TextStyle(
+                            color: _textColor(day),
+                          ),
+                      ),
                     );
                   },
                 ),
+                // onDaySelected: (DateTime day) {
+                //
+                // },
               ),
             ),
+
           ],
         ),
       ),
