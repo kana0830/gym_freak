@@ -52,6 +52,9 @@ class _MyCalenderState extends State<MyCalender> {
                     color: Color(0xFF9FA8DA),
                   ),
                 ),
+                calendarStyle: CalendarStyle(
+                  tableBorder: TableBorder.all(color: Colors.white12)
+                ),
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (_, day) {
                     if (day.weekday == DateTime.sunday) {
@@ -73,12 +76,15 @@ class _MyCalenderState extends State<MyCalender> {
                   },
                   defaultBuilder: (
                       BuildContext context, DateTime day, DateTime focusedDay) {
-                    return Center(
-                      child: Text(
-                          day.day.toString(),
-                          style: TextStyle(
-                            color: _textColor(day),
-                          ),
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      child: Center(
+                        child: Text(
+                            day.day.toString(),
+                            style: TextStyle(
+                              color: _textColor(day),
+                            ),
+                        ),
                       ),
                     );
                   },
