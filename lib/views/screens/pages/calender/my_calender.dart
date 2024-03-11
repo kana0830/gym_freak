@@ -44,24 +44,21 @@ class _MyCalenderState extends State<MyCalender> {
                 locale: 'ja_JP',
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekHeight: 30,
-                daysOfWeekStyle: const DaysOfWeekStyle(
-                  weekdayStyle: TextStyle(
-                    color: Color(0xFFFAFAFA),
-                  ),
-                  weekendStyle: TextStyle(
-                    color: Color(0xFF9FA8DA),
-                  ),
-                ),
                 calendarStyle: CalendarStyle(
-                  tableBorder: TableBorder.all(color: Colors.white12)
+                  tableBorder: TableBorder.all(color: Color(0xFFFFF59D))
                 ),
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (_, day) {
                     if (day.weekday == DateTime.sunday) {
-                      return Center(
-                        child: Text(
-                          '日',
-                          style: TextStyle(color: _textColor(day)),
+                      return Expanded(
+                        child: Container(
+                          color: Color(0xFFFFF59D),
+                          child: Center(
+                            child: Text(
+                              '日',
+                              style: TextStyle(color: _textColor(day)),
+                            ),
+                          ),
                         ),
                       );
                     } else if (day.weekday == DateTime.saturday) {
@@ -72,7 +69,7 @@ class _MyCalenderState extends State<MyCalender> {
                         ),
                       );
                     }
-                    return null;
+                    return Expanded(child: Container(color: Color(0xFFFFF59D)));
                   },
                   defaultBuilder: (
                       BuildContext context, DateTime day, DateTime focusedDay) {
