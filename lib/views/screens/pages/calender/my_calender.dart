@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../common/common_data_util.dart';
+import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
+import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 
 /// カレンダー画面
-class MyCalender extends StatefulWidget {
+class MyCalender extends ConsumerWidget {
   const MyCalender({super.key});
 
-  @override
-  State<MyCalender> createState() => _MyCalenderState();
-}
-
-class _MyCalenderState extends State<MyCalender> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trainingPart = ref.watch(calenderNotifierProvider);
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
@@ -86,12 +84,15 @@ class _MyCalenderState extends State<MyCalender> {
                     );
                   },
                 ),
-                // onDaySelected: (DateTime day) {
-                //
-                // },
+                onDaySelected: (selectedDay, focusedDay) {
+                  final notifier = ref.read(calenderNotifierProvider.notifier);
+                  notifier.setState(selectedDay);
+                },
               ),
             ),
+            Container(
 
+            )
           ],
         ),
       ),
