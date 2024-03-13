@@ -15,13 +15,14 @@ class CalenderNotifier extends _$CalenderNotifier {
   late List<QueryDocumentSnapshot<Map<String, dynamic>>> trainingMemo;
 
   @override
-  String build() {
-    return '';
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> build() async {
+    return trainingMemo;
   }
 
   /// set
   void setState(DateTime day) async {
     var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + day.toString());
+    state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 
   /// update

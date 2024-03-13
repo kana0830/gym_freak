@@ -24,9 +24,6 @@ class TrainingMemo extends ConsumerWidget {
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
 
-    /// トレーニング記録登録用
-    List<QueryDocumentSnapshot<Map<String, dynamic>>>? trainingMemoData;
-
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
@@ -37,7 +34,6 @@ class TrainingMemo extends ConsumerWidget {
         loading: () => const CircularProgressIndicator(),
         error: (error, stacktrace) => Text('エラー $error'),
         data: (data) {
-          trainingMemoData = data;
           if (data.isEmpty) {
             return const Text('今日のトレーニング記録はまだありません');
           } else {
