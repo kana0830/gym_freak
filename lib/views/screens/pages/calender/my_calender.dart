@@ -47,7 +47,8 @@ class MyCalender extends ConsumerWidget {
                                 Expanded(
                                   flex: 5,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
+                                    padding:
+                                        const EdgeInsets.only(right: 8.0),
                                     child: Text(
                                       menu.data()['memo'][i]['weight'],
                                       textAlign: TextAlign.right,
@@ -77,7 +78,8 @@ class MyCalender extends ConsumerWidget {
                                 Expanded(
                                   flex: 3,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
+                                    padding:
+                                        const EdgeInsets.only(right: 8.0),
                                     child: Text(
                                       '${menu.data()['memo'][i]['reps']}',
                                       textAlign: TextAlign.right,
@@ -102,7 +104,8 @@ class MyCalender extends ConsumerWidget {
                                 Expanded(
                                   flex: 3,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
+                                    padding:
+                                        const EdgeInsets.only(right: 8.0),
                                     child: Text(
                                       '${menu.data()['memo'][i]['sets']}',
                                       textAlign: TextAlign.right,
@@ -128,6 +131,7 @@ class MyCalender extends ConsumerWidget {
           }
         },
       );
+
       /// トレーニング記録がない場合
     } else {
       trainingMemoInfo = Container();
@@ -161,21 +165,24 @@ class MyCalender extends ConsumerWidget {
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekHeight: 30,
                 calendarStyle: CalendarStyle(
-                  tableBorder: TableBorder.all(color: Color(0xFFFFF59D))
-                ),
+                    tableBorder: TableBorder.all(color: Color(0xFFFFF59D))),
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (_, day) {
                     if (day.weekday == DateTime.sunday) {
-                      return Expanded(
-                        child: Container(
-                          color: Color(0xFFFFF59D),
-                          child: Center(
-                            child: Text(
-                              '日',
-                              style: TextStyle(color: _textColor(day)),
+                      return Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              color: Color(0xFFFFF59D),
+                              child: Center(
+                                child: Text(
+                                  '日',
+                                  style: TextStyle(color: _textColor(day)),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       );
                     } else if (day.weekday == DateTime.saturday) {
                       return Center(
@@ -185,35 +192,37 @@ class MyCalender extends ConsumerWidget {
                         ),
                       );
                     }
-                    return Expanded(child: Container(color: Color(0xFFFFF59D)));
+                    return Container(color: Color(0xFFFFF59D));
                   },
-                  defaultBuilder: (
-                      BuildContext context, DateTime day, DateTime focusedDay) {
+                  defaultBuilder: (BuildContext context, DateTime day,
+                      DateTime focusedDay) {
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 250),
                       child: Center(
                         child: Text(
-                            day.day.toString(),
-                            style: TextStyle(
-                              color: _textColor(day),
-                            ),
+                          day.day.toString(),
+                          style: TextStyle(
+                            color: _textColor(day),
+                          ),
                         ),
                       ),
                     );
                   },
                 ),
                 onDaySelected: (selectedDay, focusedDay) {
-                  final notifier = ref.read(calenderNotifierProvider.notifier);
+                  final notifier =
+                      ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
                 },
               ),
             ),
-            trainingMemoInfo,
+            Expanded(child: trainingMemoInfo),
           ],
         ),
       ),
     );
   }
+
   Color _textColor(DateTime day) {
     const _defaultTextColor = Colors.white70;
 
