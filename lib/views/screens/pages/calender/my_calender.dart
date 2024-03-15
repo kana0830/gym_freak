@@ -37,95 +37,31 @@ class MyCalender extends ConsumerWidget {
                 for (var menu in data)
                   ListTile(
                     title: Text(menu.id),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(left: 80.0),
-                      child: Column(
-                        children: [
-                          for (int i = 0; i < menu.data()['memo'].length; i++)
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      menu.data()['memo'][i]['weight'],
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                      menu.data()['memo'][i]['weight'] == ''
-                                          ? ''
-                                          : 'kg'),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    menu.data()['memo'][i]['weight'] == ''
-                                        ? ''
-                                        : '×',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      '${menu.data()['memo'][i]['reps']}',
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Text('rep'),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    '×',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      '${menu.data()['memo'][i]['sets']}',
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 2,
-                                  child: Text('set'),
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
+                    subtitle: Column(
+                      children: [
+                        for (int i = 0; i < menu.data()['memo'].length; i++)
+                          Row(
+                            children: [
+                              const Text("・"),
+                              Text(menu.data()['memo'][i]['weight']),
+                              Text(menu.data()['memo'][i]['weight'] == ''
+                                  ? ''
+                                  : 'kg'),
+                              Text(
+                                menu.data()['memo'][i]['weight'] == ''
+                                    ? ''
+                                    : '×',
+                              ),
+                              Text('${menu.data()['memo'][i]['reps']}'),
+                              const Text('rep'),
+                              const Text('×'),
+                              Text('${menu.data()['memo'][i]['sets']}'),
+                              const Text('set'),
+                            ],
+                          ),
+                      ],
                     ),
-                  )
+                  ),
               ],
             );
           }
@@ -147,9 +83,9 @@ class MyCalender extends ConsumerWidget {
               child: TableCalendar(
                 headerStyle: const HeaderStyle(
                   headerPadding: EdgeInsets.only(top: 6, left: 16, bottom: 6),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF7b755e),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   color: Color(0xFF7b755e),
+                  // ),
                   formatButtonVisible: false,
                   titleCentered: false,
                   leftChevronVisible: false,
@@ -165,7 +101,7 @@ class MyCalender extends ConsumerWidget {
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekHeight: 30,
                 calendarStyle: CalendarStyle(
-                    tableBorder: TableBorder.all(color: Color(0xFFFFF59D))),
+                    tableBorder: TableBorder.all(color: Color(0xff5f5e53))),
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (_, day) {
                     if (day.weekday == DateTime.sunday) {
@@ -173,7 +109,7 @@ class MyCalender extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Container(
-                              color: Color(0xFFFFF59D),
+                              // color: Color(0xFFFFF59D),
                               child: Center(
                                 child: Text(
                                   '日',
@@ -192,7 +128,7 @@ class MyCalender extends ConsumerWidget {
                         ),
                       );
                     }
-                    return Container(color: Color(0xFFFFF59D));
+                    return null;
                   },
                   defaultBuilder: (BuildContext context, DateTime day,
                       DateTime focusedDay) {
@@ -210,8 +146,7 @@ class MyCalender extends ConsumerWidget {
                   },
                 ),
                 onDaySelected: (selectedDay, focusedDay) {
-                  final notifier =
-                      ref.read(calenderNotifierProvider.notifier);
+                  final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
                 },
               ),
