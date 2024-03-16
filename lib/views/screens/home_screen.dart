@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/screens/pages/profile/profile.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo.dart';
 import 'package:gym_freak/views/screens/pages/calender/my_calender.dart';
 
+import '../../models/aurh_service.dart';
+import '../../repositories/user_repository.dart';
+
 class HomeScreen extends StatefulWidget {
-  final QueryDocumentSnapshot<Map<String, dynamic>> user;
-  const HomeScreen({super.key, required this.user});
+  // final QueryDocumentSnapshot<Map<String, dynamic>> user;
+  const HomeScreen({super.key});
+  // const HomeScreen({super.key, required this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,19 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
       TrainingMemo(),
       const MyCalender(),
       // Ranking(),
-      Profile(user: widget.user),
+      // Profile(user: widget.user),
     ];
   }
-  // ナビゲーションバーに表示するページ
-  // final _pages = [
-  //   const TrainingMemo(),
-  //   const MyCalender(),
-  //   // Ranking(),
-  //   Profile(user: widget.user),
-  // ];
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
         child: Scaffold(
       body: _pages[_currentIndex],
@@ -54,10 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
           //   icon: Icon(Icons.add_chart),
           //   label: 'ランキング',
           // ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box_rounded),
-            label: 'マイページ',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.account_box_rounded),
+          //   label: 'マイページ',
+          // ),
         ],
         onTap: (index) {
           setState(() {

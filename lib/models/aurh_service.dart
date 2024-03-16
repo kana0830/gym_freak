@@ -36,16 +36,17 @@ class AuthService {
       AuthService.email = userCred.user!.email ?? '';
     }
     // AuthService.idToken = (await userCred.user?.getIdToken())!;
-
-    final userRepository = UserRepository();
-    final user = await userRepository.getUser(email);
-    AuthService.userId = user.id;
+    //
+    // final userRepository = UserRepository();
+    // final user = await userRepository.getUser(email);
+    // AuthService.userId = user.id;
 
     // ホームスクリーンへ遷移
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomeScreen(user: user)));
+            builder: (context) => HomeScreen()));
+    // builder: (context) => HomeScreen(user: user)));
   }
 
   // サインアウト

@@ -13,12 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'models/aurh_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    // options: DefaultFirebaseOptions.currentPlatform,
-  );
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -31,6 +32,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final currentUser = FirebaseAuth.instance.currentUser;
+    _setUser();
+
     return MaterialApp(
       title: 'gym_freak',
       theme: ThemeData(
@@ -39,32 +44,14 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16.0),
         ),
       ),
-      home: _initialPage(),
+      home: currentUser != null ? HomeScreen() : Login(),
     );
   }
 
-  Widget _initialPage() {
+  _setUser() async {
     final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      var user = getData(currentUser);
-      return HomeScreen(user: user);
-    } else {
-      return const Login();
-    }
-  }
-
-  QueryDocumentSnapshot<Map<String, dynamic>> getData(currentUser) {
-    try {
-      var snapshot = _fetchData(currentUser);
-      return snapshot;
-    } catch (error) {
-      throw Exception('データが取得できませんでした');
-    }
-  }
-
-  QueryDocumentSnapshot<Map<String, dynamic>> _fetchData(User currentUser) {
     final userRepository = UserRepository();
-    var user = userRepository.getUser(currentUser.email!);
-    return user;
+    final user = await userRepository.getUser(currentUser!.email!);
+    AuthService.userId = user.id;
   }
 }
