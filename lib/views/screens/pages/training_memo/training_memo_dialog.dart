@@ -10,8 +10,11 @@ import '../../../../view_models/training_memo_notifier/training_memo_notifier.da
 class TrainingMemoDialog extends ConsumerWidget {
   TrainingMemoDialog({this.menu, this.menuId, required this.edit, super.key});
 
+  /// メニュー
   QueryDocumentSnapshot<Map<String, dynamic>>? menu;
+  /// メニューID
   String? menuId = '';
+  /// 編集フラグ
   int edit;
 
   /// ユーザーIDキー
@@ -19,21 +22,26 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// メニュー
     final menu = ref.watch(menuNotifierProvider);
+    /// メニューID
     final menuId = ref.watch(menuIdNotifierProvider);
-    if (this.menu != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final notifier = ref.read(menuNotifierProvider.notifier);
-        notifier.setState(this.menu);
-      });
-    }
-    if (this.menuId != null || this.menuId != '') {
+
+    /// メニューデータをセットして書き換え
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(menuNotifierProvider.notifier);
+      notifier.setState(this.menu);
+    });
+
+    /// メニューIDデータがある場合、メニューIDデータをセットして書き換え
+    if (this.menuId != '') {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final notifier = ref.read(menuIdNotifierProvider.notifier);
         notifier.setState(this.menuId);
       });
     }
 
+    ///　スクリーンサイズ取得
     var screenSize = MediaQuery.of(context).size;
 
     /// トレーニング記録ダイアログ
@@ -55,9 +63,11 @@ class TrainingMemoDialog extends ConsumerWidget {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
+                /// 記録の表示
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    /// 種目名の表示
                     edit == 0 ? const Text('種目') : Container(),
                     edit == 0
                         ? _textField(1, menuId, 0, 0, ref)
@@ -71,6 +81,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                                   color: Color(0xFFFFF59D)),
                             ),
                           ),
+                    /// 記録入力のタイトル
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
@@ -92,15 +103,16 @@ class TrainingMemoDialog extends ConsumerWidget {
                     ),
                   ],
                 ),
+                /// 記録入力リスト
                 Expanded(
                   child: ListView(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     children: [
-                      edit == 0 ? _insertWidget(ref) : _updateWidget(ref, menu),
-
+                      edit == 0 ? _updateWidget(ref, menu) : _updateWidget(ref, menu),
                     ],
                   ),
                 ),
+                /// 登録更新ボタン
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -126,80 +138,6 @@ class TrainingMemoDialog extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-
-  /// 登録用記録入力ウィジェット
-  Widget _insertWidget(ref) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 5,
-              child: _textField(2, '', 0, 0, ref),
-            ),
-            const Expanded(
-              flex: 2,
-              child: Text('kg'),
-            ),
-            const Expanded(
-              flex: 1,
-              child: Text('×',
-                  style: TextStyle(fontSize: 20.0),
-                  textAlign: TextAlign.center),
-            ),
-            Expanded(
-              flex: 4,
-              child: _textField(3, '', 0, 0, ref),
-            ),
-            const Expanded(
-              flex: 2,
-              child: Text('rep'),
-            ),
-            const Expanded(
-              flex: 1,
-              child: Text(
-                '×',
-                style: TextStyle(fontSize: 20.0),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: _textField(4, '', 0, 0, ref),
-            ),
-            const Expanded(
-              flex: 2,
-              child: Text('set'),
-            ),
-            Expanded(
-              flex: 2,
-              child: IconButton(
-                icon: const Icon(Icons.highlight_off),
-                onPressed: () {
-                  final notifier = ref.read(menuNotifierProvider.notifier);
-                  notifier.deleteMenuState();
-                },
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          width: 120,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black26,
-            ),
-            onPressed: () {
-              final notifier =
-              ref.read(menuNotifierProvider.notifier);
-              notifier.insertRowState();
-            },
-            child: const Text('セット数追加'),
-          ),
-        ),
-      ],
     );
   }
 

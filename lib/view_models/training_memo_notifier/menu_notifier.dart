@@ -18,8 +18,17 @@ class MenuNotifier extends _$MenuNotifier {
   /// 親画面からのパラメータ設定
   void setState(QueryDocumentSnapshot<Map<String, dynamic>>? menu) {
     if (menuList.isEmpty){
-      for(var memo in menu?.data()['memo']) {
-        menuList.add(memo);
+      if(menu != null) {
+        for(var memo in menu?.data()['memo']) {
+          menuList.add(memo);
+        }
+      } else {
+        Map<String, dynamic> emptyMap = {
+          'weight' : '',
+          'reps' : '',
+          'sets' : ''
+        };
+        menuList.add(emptyMap);
       }
       state = menuList;
     }
