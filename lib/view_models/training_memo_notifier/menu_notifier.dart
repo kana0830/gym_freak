@@ -49,22 +49,28 @@ class MenuNotifier extends _$MenuNotifier {
       menuList.add({});
     }
     menuList[i]['weight'] = value;
-    state = menuList;
+    state = [...menuList];
   }
   /// reps書き換え
   void updateRepsState(value, i) async {
     menuList[i]['reps'] = value;
-    state = menuList;
+    state = [...menuList];
   }
   /// sets書き換え
   void updateSetsState(value, i) async {
     menuList[i]['sets'] = value;
-    state = menuList;
+    state = [...menuList];
   }
 
   /// delete
   void deleteMenuState(i) async {
     menuList.removeAt(i);
+    if (menuList.isEmpty) {
+      insertRowState();
+      updateWeightState('', 0);
+      updateRepsState('', 0);
+      updateSetsState('', 0);
+    }
     state = [...menuList];
   }
 }

@@ -19,7 +19,6 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// メニュー
@@ -193,6 +192,9 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: IconButton(
                   icon: const Icon(Icons.highlight_off),
                   onPressed: () {
+                    /// 記録枠が１行の場合
+                    if(menu.length == 1) {
+                    }
                     final notifier = ref.read(menuNotifierProvider.notifier);
                     notifier.deleteMenuState(i);
                   },
@@ -229,6 +231,7 @@ class TrainingMemoDialog extends ConsumerWidget {
           filled: true,
           border: InputBorder.none,
         ),
+        keyboardType: no == 1 ? TextInputType.text : TextInputType.number,
         onChanged: (value) {
           switch (no) {
             case 1:
