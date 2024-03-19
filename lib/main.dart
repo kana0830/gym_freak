@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final currentUser = FirebaseAuth.instance.currentUser;
-    _setUser();
 
     return MaterialApp(
       title: 'gym_freak',
@@ -36,13 +35,5 @@ class MyApp extends StatelessWidget {
       ),
       home: currentUser != null ? HomeScreen() : Login(),
     );
-  }
-
-  /// ログイン者のユーザーIDの設定
-  _setUser() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final userRepository = UserRepository();
-    final user = await userRepository.getUser(currentUser!.email!);
-    AuthService.userId = user.id;
   }
 }

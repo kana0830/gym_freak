@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo.dart';
 import 'package:gym_freak/views/screens/pages/calender/my_calender.dart';
+
+import '../../models/aurh_service.dart';
+import '../../repositories/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   // final QueryDocumentSnapshot<Map<String, dynamic>> user;
@@ -12,15 +17,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // late List<QueryDocumentSnapshot<Map<String, dynamic>>> user;
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final userRepository = UserRepository();
+
+  @override
   int _currentIndex = 0;
   var _pages = [];
+
   void initState() {
-    _pages = [
-      TrainingMemo(),
-      const MyCalender(),
-      // Ranking(),
-      // Profile(user: widget.user),
-    ];
+    Future(
+      () async {
+        QueryDocumentSnapshot<Map<String, dynamic>> user =
+            await userRepository.getUser(currentUser!.email!);
+        AuthService.userId = user.id;
+        _pages = [
+          TrainingMemo(),
+          const MyCalender(),
+          // Ranking(),
+          // Profile(user: widget.user),
+        ];
+        return user;
+      },
+    );
   }
 
   @override
@@ -39,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.directions_run),
             label: '記録',
           ),
+
           /// カレンダータブ
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month_outlined),
