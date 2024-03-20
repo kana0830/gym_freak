@@ -25,21 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   var _pages = [];
 
+  @override
   void initState() {
-    Future(
-      () async {
-        QueryDocumentSnapshot<Map<String, dynamic>> user =
-            await userRepository.getUser(currentUser!.email!);
-        AuthService.userId = user.id;
-        _pages = [
-          TrainingMemo(),
-          const MyCalender(),
-          // Ranking(),
-          // Profile(user: widget.user),
-        ];
-        return user;
-      },
-    );
+    super.initState();
+    _pages = [
+      TrainingMemo(),
+      const MyCalender(),
+      // Ranking(),
+      // Profile(user: widget.user),
+    ];
   }
 
   @override

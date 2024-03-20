@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
-import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 /// カレンダー画面
@@ -33,10 +30,17 @@ class MyCalender extends ConsumerWidget {
             return Container();
           } else {
             return ListView(
+              itemExtent: 50,
               children: [
                 for (var menu in data)
                   ListTile(
-                    title: Text(menu.id),
+                    contentPadding: const EdgeInsets.all(10.0),
+                    title: Text(
+                      menu.id,
+                      style: const TextStyle(
+                          color: Color(0xFFFFF59D),
+                          fontWeight: FontWeight.bold),
+                    ),
                     subtitle: Column(
                       children: [
                         for (int i = 0; i < menu.data()['memo'].length; i++)

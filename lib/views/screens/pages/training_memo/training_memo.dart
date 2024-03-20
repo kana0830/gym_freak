@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo_dialog.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_part_dialog.dart';
 import '../../../../common/common_data_util.dart';
+import '../../../../repositories/user_repository.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
@@ -17,8 +19,10 @@ class TrainingMemo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final trainingPart = ref.watch(trainingPartNotifierProvider);
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
+
     QueryDocumentSnapshot<Map<String, dynamic>>? menu;
 
     /// トレーニング記録表示ウィジェット
@@ -303,5 +307,11 @@ class TrainingMemo extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>> _fetchData(userRepository, currentUser) async {
+    QueryDocumentSnapshot<Map<String, dynamic>> user =
+    await userRepository.getUser(currentUser!.email!);
+    return user;
   }
 }

@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gym_freak/repositories/user_repository.dart';
 import 'package:gym_freak/views/screens/pages/login.dart';
 import 'package:gym_freak/views/screens/home_screen.dart';
-import 'models/aurh_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +20,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final currentUser = FirebaseAuth.instance.currentUser;
 
     return MaterialApp(
@@ -33,7 +30,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16.0),
         ),
       ),
-      home: currentUser != null ? HomeScreen() : Login(),
+      home: currentUser != null ? const HomeScreen() : const Login(),
     );
   }
 }

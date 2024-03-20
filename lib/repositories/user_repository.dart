@@ -4,7 +4,6 @@ class UserRepository {
 
   @override
   Future<QueryDocumentSnapshot<Map<String, dynamic>>> getUser(String email) async {
-
     List<QueryDocumentSnapshot<Map<String, dynamic>>> users = [];
     await FirebaseFirestore.instance.collection('user')
         .where("email", isEqualTo: email)
