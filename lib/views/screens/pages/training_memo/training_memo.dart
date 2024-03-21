@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo_dialog.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_part_dialog.dart';
 import '../../../../common/common_data_util.dart';
-import '../../../../repositories/user_repository.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
@@ -31,35 +29,26 @@ class TrainingMemo extends ConsumerWidget {
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
-    /// 今日のトレーニング記録がある場合
-    if (trainingMemo.hasValue) {
-      /// トレーニング記録表示部分
-      trainingMemoInfo = trainingMemo.when(
-        loading: () => const CircularProgressIndicator(),
-        error: (error, stacktrace) => Text('エラー $error'),
-        data: (data) {
-          if (data.isEmpty) {
-            return const Text('今日のトレーニング記録はまだありません');
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10.0),
-                  _listContent(data, context, ref),
-                ],
-              ),
-            );
-          }
-        },
-      );
-      /// 今日のトレーニング記録がない場合
-    } else {
-      trainingMemoInfo = const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text('今日のトレーニング記録はまだありません'),
-      );
-    }
+    /// トレーニング記録表示部分
+    trainingMemoInfo = trainingMemo.when(
+      loading: () => const CircularProgressIndicator(),
+      error: (error, stacktrace) => Text('エラー $error'),
+      data: (data) {
+        if (data.isEmpty) {
+          return const Text('今日のトレーニング記録はまだありません');
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 10.0),
+                _listContent(data, context, ref),
+              ],
+            ),
+          );
+        }
+      },
+    );
 
     /// ヘッダ部位表示
     final Widget part = trainingPart.when(
@@ -307,11 +296,5 @@ class TrainingMemo extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  Future<QueryDocumentSnapshot<Map<String, dynamic>>> _fetchData(userRepository, currentUser) async {
-    QueryDocumentSnapshot<Map<String, dynamic>> user =
-    await userRepository.getUser(currentUser!.email!);
-    return user;
   }
 }
