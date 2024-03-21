@@ -44,15 +44,3 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 }
-
-class MyPageProviders {
-  static final trainingMemoProvider = FutureProvider((ref) async {
-    final trainingMemoNotifier = TrainingMemoNotifier();
-    return trainingMemoNotifier;
-  });
-
-  static final trainingPartProvider = FutureProvider((ref) async {
-    final trainingPartNotifier = TrainingPartNotifier();
-    return trainingPartNotifier;
-  });
-}
