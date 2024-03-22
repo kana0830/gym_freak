@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
-import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
+import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 
 /// カレンダー画面
 class MyCalender extends ConsumerWidget {
@@ -11,13 +11,33 @@ class MyCalender extends ConsumerWidget {
 
   Widget build(BuildContext context, WidgetRef ref) {
     final menus = ref.watch(calenderNotifierProvider);
-    final trainingPart = ref.watch(trainingPartNotifierProvider);
+    final trainingPart = ref.watch(calenderPartNotifierProvider);
 
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
 
+    /// トレーニング部位表示ウィジェット
+    Widget trainingPartInfo;
+
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
+
+    if (trainingPart.hasValue) {
+      /// トレーニング部位表示部分
+      trainingPartInfo = trainingPart.when(
+        loading: () => const CircularProgressIndicator(),
+        error: (error, stacktrace) => Text('エラー $error'),
+        data: (data) {
+          if (data.isEmpty) {
+            return Text("");
+          } else {
+            return Text(data.values.toString());
+          }
+        },
+      );
+    } else {
+      return Text("");
+    }
 
     /// トレーニング記録がある場合
     if (menus.hasValue) {
@@ -152,8 +172,16 @@ class MyCalender extends ConsumerWidget {
                 onDaySelected: (selectedDay, focusedDay) {
                   final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
+                  final partNotifier = ref.read(calenderPartNotifierProvider.notifier);
+                  partNotifier.setState(selectedDay);
                 },
               ),
+            ),
+            Container(
+              width: 400,
+              height: 30,
+              child: trainingPartInfo,
+              color: Colors.white60,
             ),
             Expanded(child: trainingMemoInfo),
           ],
