@@ -31,7 +31,22 @@ class MyCalender extends ConsumerWidget {
           if (data.isEmpty) {
             return Text("");
           } else {
-            return Text(data.values.toString());
+            return Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.accessibility, color: Colors.black87, size: 26.0,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6.0),
+                    child: Text(
+                      data.values.toString().replaceAll("(", "").replaceAll(")", ""),
+                      style: TextStyle(
+                          color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
         },
       );
@@ -54,7 +69,6 @@ class MyCalender extends ConsumerWidget {
               children: [
                 for (var menu in data)
                   ListTile(
-                    contentPadding: const EdgeInsets.all(10.0),
                     title: Text(
                       menu.id,
                       style: const TextStyle(
@@ -97,7 +111,9 @@ class MyCalender extends ConsumerWidget {
       trainingMemoInfo = Container();
     }
 
-    DateTime focusedDay = DateTime.now();
+    DateTime _focusedDay = DateTime.now();
+    DateTime? _selectedDay;
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -107,17 +123,19 @@ class MyCalender extends ConsumerWidget {
               child: TableCalendar(
                 headerStyle: const HeaderStyle(
                   headerPadding: EdgeInsets.only(top: 6, left: 16, bottom: 6),
-                  // decoration: BoxDecoration(
-                  //   color: Color(0xFF7b755e),
-                  // ),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF7b755e),
+                  ),
                   formatButtonVisible: false,
                   titleCentered: false,
                   leftChevronVisible: false,
                   rightChevronVisible: false,
-                  titleTextStyle:
-                      TextStyle(color: Color(0xFFFFFDE7), fontSize: 18.0),
+                  titleTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold),
                 ),
-                focusedDay: focusedDay,
+                focusedDay: _focusedDay,
                 firstDay: DateTime.utc(2020, 1, 1),
                 lastDay: DateTime.utc(2050, 12, 31),
                 shouldFillViewport: true,
@@ -125,38 +143,28 @@ class MyCalender extends ConsumerWidget {
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekHeight: 30,
                 calendarStyle: CalendarStyle(
-                    tableBorder: TableBorder.all(color: Color(0xff5f5e53))),
+                  tableBorder:
+                      TableBorder.all(color: Color(0xff848375), width: 0.4),
+                ),
                 calendarBuilders: CalendarBuilders(
+                  /// ヘッダ部分
                   dowBuilder: (_, day) {
-                    if (day.weekday == DateTime.sunday) {
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              // color: Color(0xFFFFF59D),
-                              child: Center(
-                                child: Text(
-                                  '日',
-                                  style: TextStyle(color: _textColor(day)),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    } else if (day.weekday == DateTime.saturday) {
-                      return Center(
+                    return Container(
+                      color: Color(0xFFFFF9C4),
+                      child: Center(
                         child: Text(
-                          '土',
+                          _dayOfWeek(day),
                           style: TextStyle(color: _textColor(day)),
                         ),
-                      );
-                    }
-                    return null;
+                      ),
+                    );
                   },
+
+                  /// デフォルト
                   defaultBuilder: (BuildContext context, DateTime day,
                       DateTime focusedDay) {
                     return AnimatedContainer(
+                      color: Colors.white,
                       duration: const Duration(milliseconds: 250),
                       child: Center(
                         child: Text(
@@ -168,20 +176,66 @@ class MyCalender extends ConsumerWidget {
                       ),
                     );
                   },
+
+                  /// 今日
+                  todayBuilder: (BuildContext context, DateTime day,
+                      DateTime focusedDay) {
+                    return AnimatedContainer(
+                      color: Colors.white,
+                      duration: const Duration(milliseconds: 250),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFFffe071),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              day.day.toString(),
+                              style: TextStyle(
+                                color: _textColor(day),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  outsideBuilder: (BuildContext context, DateTime day,
+                      DateTime focusedDay) {
+                    return AnimatedContainer(
+                      color: Color(0xFFE0E0E0),
+                      duration: const Duration(milliseconds: 250),
+                      child: Center(
+                        child: Text(
+                          day.day.toString(),
+                          style: TextStyle(
+                            color: Colors.black45,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDay, day);
+                },
                 onDaySelected: (selectedDay, focusedDay) {
+                  _focusedDay = focusedDay;
                   final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
-                  final partNotifier = ref.read(calenderPartNotifierProvider.notifier);
+                  final partNotifier =
+                      ref.read(calenderPartNotifierProvider.notifier);
                   partNotifier.setState(selectedDay);
                 },
               ),
             ),
             Container(
-              width: 400,
+              width: double.infinity,
               height: 30,
+              color: Color(0xFFFFF9C4),
               child: trainingPartInfo,
-              color: Colors.white60,
             ),
             Expanded(child: trainingMemoInfo),
           ],
@@ -191,14 +245,35 @@ class MyCalender extends ConsumerWidget {
   }
 
   Color _textColor(DateTime day) {
-    const _defaultTextColor = Colors.white70;
+    const defaultTextColor = Colors.black87;
+    switch (day.weekday) {
+      case 6:
+        return Colors.blue[600]!;
+      case 7:
+        return Colors.red;
+      default:
+        return defaultTextColor;
+    }
+  }
 
-    if (day.weekday == DateTime.sunday) {
-      return Colors.red;
+  String _dayOfWeek(day) {
+    switch (day.weekday) {
+      case 1:
+        return '月';
+      case 2:
+        return '火';
+      case 3:
+        return '水';
+      case 4:
+        return '木';
+      case 5:
+        return '金';
+      case 6:
+        return '土';
+      case 7:
+        return '日';
+      default:
+        return '';
     }
-    if (day.weekday == DateTime.saturday) {
-      return Colors.blue[600]!;
-    }
-    return _defaultTextColor;
   }
 }

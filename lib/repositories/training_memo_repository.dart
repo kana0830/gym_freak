@@ -75,8 +75,7 @@ class TrainingMemoRepository {
           if (doc.data() != null) {
             trainingPart = doc.data() as Map<String, dynamic>;
           }
-    });
-
+    },);
     return trainingPart;
   }
 
