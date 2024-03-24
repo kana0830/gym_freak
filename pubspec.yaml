@@ -107,6 +107,9 @@ flutter:
     - family: Regular
       fonts:
         - asset: assets/fonts/Nunito-VariableFont_wght.ttf
+    - family: Tegaki
+      fonts:
+        - asset: assets/fonts/Hand_Of_Sean_Demo.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
+import '../../../../view_models/training_memo_notifier/calender_select_day_notifier.dart';
 
 /// カレンダー画面
 class MyCalender extends ConsumerWidget {
@@ -12,6 +13,7 @@ class MyCalender extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final menus = ref.watch(calenderNotifierProvider);
     final trainingPart = ref.watch(calenderPartNotifierProvider);
+    final selectDay = ref.watch(calenderSelectDayNotifierProvider);
 
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
@@ -41,7 +43,7 @@ class MyCalender extends ConsumerWidget {
                     child: Text(
                       data.values.toString().replaceAll("(", "").replaceAll(")", ""),
                       style: TextStyle(
-                          color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 20.0),
+                          color: Colors.black87, fontSize: 20.0),
                     ),
                   ),
                 ],
@@ -65,10 +67,11 @@ class MyCalender extends ConsumerWidget {
             return Container();
           } else {
             return ListView(
-              itemExtent: 50,
+              cacheExtent: 2.0,
               children: [
                 for (var menu in data)
                   ListTile(
+                    minVerticalPadding: 0,
                     title: Text(
                       menu.id,
                       style: const TextStyle(
@@ -217,17 +220,25 @@ class MyCalender extends ConsumerWidget {
                       ),
                     );
                   },
+                  selectedBuilder: (BuildContext context, DateTime day,
+                      DateTime focusedDay) {
+                    return selectDay;
+                  }
                 ),
-                selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
-                },
+                // selectedDayPredicate: (day) {
+                //   return isSameDay(_selectedDay, day);
+                // },
                 onDaySelected: (selectedDay, focusedDay) {
                   _focusedDay = focusedDay;
+                  _selectedDay = selectedDay;
                   final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
                   final partNotifier =
                       ref.read(calenderPartNotifierProvider.notifier);
                   partNotifier.setState(selectedDay);
+                  final selectDayNotifier =
+                  ref.read(calenderSelectDayNotifierProvider.notifier);
+                  selectDayNotifier.setState(selectedDay, _textColor(selectedDay));
                 },
               ),
             ),

@@ -17,7 +17,6 @@ class TrainingMemo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final trainingPart = ref.watch(trainingPartNotifierProvider);
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
 
@@ -35,7 +34,15 @@ class TrainingMemo extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return const Text('今日のトレーニング記録はまだありません');
+          return Center(
+              child: const Text(
+            'Enjoy Training!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 30.0,
+              fontFamily: "Tegaki"
+            ),
+          ));
         } else {
           return Padding(
             padding: const EdgeInsets.all(10.0),
