@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gym_freak/views/screens/pages/calender/training_memo_past.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
@@ -23,6 +24,9 @@ class MyCalender extends ConsumerWidget {
 
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
+
+    /// 選択中の日付
+    DateTime tapDay = DateTime.now();
 
     if (trainingPart.hasValue) {
       /// トレーニング部位表示部分
@@ -66,44 +70,51 @@ class MyCalender extends ConsumerWidget {
           if (data.isEmpty) {
             return Container();
           } else {
-            return ListView(
-              cacheExtent: 2.0,
-              children: [
-                for (var menu in data)
-                  ListTile(
-                    minVerticalPadding: 0,
-                    title: Text(
-                      menu.id,
-                      style: const TextStyle(
-                          color: Color(0xFFFFF59D),
-                          fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Column(
-                      children: [
-                        for (int i = 0; i < menu.data()['memo'].length; i++)
-                          Row(
-                            children: [
-                              const Text("・"),
-                              Text(menu.data()['memo'][i]['weight']),
-                              Text(menu.data()['memo'][i]['weight'] == ''
-                                  ? ''
-                                  : 'kg'),
-                              Text(
-                                menu.data()['memo'][i]['weight'] == ''
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TrainingMemoPast(tapDay: tapDay)));
+              },
+              child: ListView(
+                children: [
+                  for (var menu in data)
+                    ListTile(
+                      minVerticalPadding: 0,
+                      title: Text(
+                        menu.id,
+                        style: const TextStyle(
+                            color: Color(0xFFFFF59D),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        children: [
+                          for (int i = 0; i < menu.data()['memo'].length; i++)
+                            Row(
+                              children: [
+                                const Text("・"),
+                                Text(menu.data()['memo'][i]['weight']),
+                                Text(menu.data()['memo'][i]['weight'] == ''
                                     ? ''
-                                    : '×',
-                              ),
-                              Text('${menu.data()['memo'][i]['reps']}'),
-                              const Text('rep'),
-                              const Text('×'),
-                              Text('${menu.data()['memo'][i]['sets']}'),
-                              const Text('set'),
-                            ],
-                          ),
-                      ],
+                                    : 'kg'),
+                                Text(
+                                  menu.data()['memo'][i]['weight'] == ''
+                                      ? ''
+                                      : '×',
+                                ),
+                                Text('${menu.data()['memo'][i]['reps']}'),
+                                const Text('rep'),
+                                const Text('×'),
+                                Text('${menu.data()['memo'][i]['sets']}'),
+                                const Text('set'),
+                              ],
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             );
           }
         },
@@ -230,7 +241,7 @@ class MyCalender extends ConsumerWidget {
                 // },
                 onDaySelected: (selectedDay, focusedDay) {
                   _focusedDay = focusedDay;
-                  _selectedDay = selectedDay;
+                  tapDay = selectedDay;
                   final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
                   final partNotifier =
