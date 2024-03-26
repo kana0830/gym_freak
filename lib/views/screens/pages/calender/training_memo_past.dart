@@ -5,26 +5,38 @@ import 'package:gym_freak/models/aurh_service.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo_dialog.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_part_dialog.dart';
 import '../../../../common/common_data_util.dart';
+import '../../../../view_models/training_memo_notifier/calender_memo_notifier.dart';
+import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 /// トレーニング記録画面
 class TrainingMemoPast extends ConsumerWidget {
+
   /// 選択中日付
   DateTime tapDay;
 
   TrainingMemoPast({super.key, required this.tapDay});
 
-  /// ユーザーIDキー
-  String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trainingPart = ref.watch(trainingPartNotifierProvider);
-    final trainingMemo = ref.watch(trainingMemoNotifierProvider);
+    final trainingPart = ref.watch(calenderPartNotifierProvider);
+    final trainingMemo = ref.watch(calenderMemoNotifierProvider);
+
+
+
+    /// ユーザーIDキー
+    String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
 
     QueryDocumentSnapshot<Map<String, dynamic>>? menu;
+
+    /// メニューデータをセットして書き換え
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final partNotifier = ref.read(calenderPartNotifierProvider.notifier);
+      partNotifier.setState(tapDay);
+      final memoNotifier = ref.read(calenderMemoNotifierProvider.notifier);
+      memoNotifier.setState(userIdKey, menu?.id, menu);
+    });
 
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
@@ -38,8 +50,8 @@ class TrainingMemoPast extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return Center(
-              child: const Text(
+          return const Center(
+              child: Text(
             'Enjoy Training!',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -53,7 +65,7 @@ class TrainingMemoPast extends ConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10.0),
-                _listContent(data, context, ref),
+                _listContent(data, context, ref, userIdKey),
               ],
             ),
           );
@@ -78,13 +90,12 @@ class TrainingMemoPast extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFF7b755e),
           title: Row(
             children: [
               Expanded(
                 flex: 1,
-                child: Text(today),
+                child: Text(tapDay.year.toString() + '/' + tapDay.month.toString() + '/' + tapDay.day.toString() + CommonDataUtil.getDayOfWeek()),
               ),
               Expanded(
                 flex: 1,
@@ -156,7 +167,7 @@ class TrainingMemoPast extends ConsumerWidget {
 
   /// メインwidget表示
   Widget _listContent(
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref) {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref, userIdKey) {
     return Expanded(
       child: ListView(
         children: [

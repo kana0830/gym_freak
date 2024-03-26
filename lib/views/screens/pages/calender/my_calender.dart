@@ -9,7 +9,11 @@ import '../../../../view_models/training_memo_notifier/calender_select_day_notif
 
 /// カレンダー画面
 class MyCalender extends ConsumerWidget {
-  const MyCalender({super.key});
+
+  MyCalender({super.key});
+
+  /// 選択中の日付
+  late DateTime tapDay = DateTime.now();
 
   Widget build(BuildContext context, WidgetRef ref) {
     final menus = ref.watch(calenderNotifierProvider);
@@ -25,9 +29,6 @@ class MyCalender extends ConsumerWidget {
     /// 表示用日付を取得
     String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
 
-    /// 選択中の日付
-    DateTime tapDay = DateTime.now();
-
     if (trainingPart.hasValue) {
       /// トレーニング部位表示部分
       trainingPartInfo = trainingPart.when(
@@ -35,7 +36,7 @@ class MyCalender extends ConsumerWidget {
         error: (error, stacktrace) => Text('エラー $error'),
         data: (data) {
           if (data.isEmpty) {
-            return Text("");
+            return const Text("");
           } else {
             return Padding(
               padding: const EdgeInsets.only(left: 8.0),
@@ -46,7 +47,7 @@ class MyCalender extends ConsumerWidget {
                     padding: const EdgeInsets.only(left: 6.0),
                     child: Text(
                       data.values.toString().replaceAll("(", "").replaceAll(")", ""),
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black87, fontSize: 20.0),
                     ),
                   ),
@@ -158,13 +159,13 @@ class MyCalender extends ConsumerWidget {
                 daysOfWeekHeight: 30,
                 calendarStyle: CalendarStyle(
                   tableBorder:
-                      TableBorder.all(color: Color(0xff848375), width: 0.4),
+                      TableBorder.all(color: const Color(0xff848375), width: 0.4),
                 ),
                 calendarBuilders: CalendarBuilders(
                   /// ヘッダ部分
                   dowBuilder: (_, day) {
                     return Container(
-                      color: Color(0xFFFFF9C4),
+                      color: const Color(0xFFFFF9C4),
                       child: Center(
                         child: Text(
                           _dayOfWeek(day),
@@ -200,7 +201,7 @@ class MyCalender extends ConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color(0xFFffe071),
                             shape: BoxShape.circle,
                           ),
@@ -219,12 +220,12 @@ class MyCalender extends ConsumerWidget {
                   outsideBuilder: (BuildContext context, DateTime day,
                       DateTime focusedDay) {
                     return AnimatedContainer(
-                      color: Color(0xFFE0E0E0),
+                      color: const Color(0xFFE0E0E0),
                       duration: const Duration(milliseconds: 250),
                       child: Center(
                         child: Text(
                           day.day.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black45,
                           ),
                         ),
@@ -236,12 +237,9 @@ class MyCalender extends ConsumerWidget {
                     return selectDay;
                   }
                 ),
-                // selectedDayPredicate: (day) {
-                //   return isSameDay(_selectedDay, day);
-                // },
                 onDaySelected: (selectedDay, focusedDay) {
                   _focusedDay = focusedDay;
-                  tapDay = selectedDay;
+                  tapDay = focusedDay;
                   final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
                   final partNotifier =

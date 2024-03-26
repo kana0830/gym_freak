@@ -17,6 +17,12 @@ class CommonDataUtil{
     return outputFormat.format(now);
   }
 
+  // 日付取得(yyyyMMdd)
+  static String changeDateNoSlash(day){
+    DateFormat outputFormat = DateFormat('yyyyMMdd');
+    return outputFormat.format(day);
+  }
+
   // 今日の曜日取得('(月)')
   static String getDayOfWeek(){
     initializeDateFormatting("ja");

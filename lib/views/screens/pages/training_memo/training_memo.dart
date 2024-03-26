@@ -34,8 +34,8 @@ class TrainingMemo extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return Center(
-              child: const Text(
+          return const Center(
+              child: Text(
             'Enjoy Training!',
             textAlign: TextAlign.center,
             style: TextStyle(

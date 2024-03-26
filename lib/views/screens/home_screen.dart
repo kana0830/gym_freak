@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pages = [
       TrainingMemo(),
-      const MyCalender(),
+      MyCalender(),
       // Ranking(),
       // Profile(user: widget.user),
     ];
