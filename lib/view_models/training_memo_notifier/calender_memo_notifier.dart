@@ -25,6 +25,15 @@ class CalenderMemoNotifier extends _$CalenderMemoNotifier {
     return trainingMemo;
   }
 
+  /// 書き換え
+  void setState(DateTime day) async {
+    var monthString = day.month.toString().length == 1 ? '0' + day.month.toString() : day.month.toString();
+    var dayString = day.day.toString().length == 1 ? '0' + day.day.toString() : day.day.toString();
+    var dateString = day.year.toString() + monthString + dayString;
+    var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + dateString);
+    state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
+  }
+
   // update
   void updateState(userIdKey, menuId, menus) async {
     _trainingMemoRepository.updateTrainingMemo(userIdKey, menuId, menus);

@@ -35,7 +35,7 @@ class TrainingMemoPast extends ConsumerWidget {
       final partNotifier = ref.read(calenderPartNotifierProvider.notifier);
       partNotifier.setState(tapDay);
       final memoNotifier = ref.read(calenderMemoNotifierProvider.notifier);
-      memoNotifier.setState(userIdKey, menu?.id, menu);
+      memoNotifier.setState(tapDay);
     });
 
     /// トレーニング記録表示ウィジェット
