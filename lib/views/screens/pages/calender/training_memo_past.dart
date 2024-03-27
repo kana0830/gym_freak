@@ -50,15 +50,7 @@ class TrainingMemoPast extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return const Center(
-              child: Text(
-            'Enjoy Training!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 30.0,
-              fontFamily: "Tegaki"
-            ),
-          ));
+          return Container();
         } else {
           return Padding(
             padding: const EdgeInsets.all(10.0),
@@ -140,7 +132,7 @@ class TrainingMemoPast extends ConsumerWidget {
           );
         },
         child: const Text(
-          '今日鍛える部位の登録',
+          '鍛える部位の登録',
           style: TextStyle(color: Colors.black),
         ),
       );
