@@ -15,6 +15,7 @@ class MyCalender extends ConsumerWidget {
   /// 選択中の日付
   late DateTime tapDay = DateTime.now();
 
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final menus = ref.watch(calenderNotifierProvider);
     final trainingPart = ref.watch(calenderPartNotifierProvider);
@@ -254,7 +255,7 @@ class MyCalender extends ConsumerWidget {
             Container(
               width: double.infinity,
               height: 30,
-              color: Color(0xFFFFF9C4),
+              color: const Color(0xFFFFF9C4),
               child: trainingPartInfo,
             ),
             Expanded(child: trainingMemoInfo),
