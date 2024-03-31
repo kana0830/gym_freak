@@ -238,15 +238,15 @@ class TrainingMemoDialog extends ConsumerWidget {
               final notifier = ref.read(menuIdNotifierProvider.notifier);
               notifier.updateState(value);
               break;
-            case 2: // weight
+            case 2: /// weight
               final notifier = ref.read(menuNotifierProvider.notifier);
               notifier.updateWeightState(value, i);
               break;
-            case 3: // reps
+            case 3: /// reps
               final notifier = ref.read(menuNotifierProvider.notifier);
               notifier.updateRepsState(value, i);
               break;
-            case 4: //sets
+            case 4: ///sets
               final notifier = ref.read(menuNotifierProvider.notifier);
               notifier.updateSetsState(value, i);
               break;

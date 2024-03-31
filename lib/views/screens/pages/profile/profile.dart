@@ -5,9 +5,10 @@ import '../../../style/style.dart';
 import 'package:age_calculator/age_calculator.dart';
 import 'edit_profile.dart';
 
-// プロフィール画面
+/// プロフィール画面
 class Profile extends StatelessWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> user;
+
   const Profile({super.key, required this.user});
 
   @override
@@ -37,7 +38,8 @@ class Profile extends StatelessWidget {
           ],
         ),
         body: SingleChildScrollView(
-          child: Padding(padding: const EdgeInsets.all(16.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,14 +49,16 @@ class Profile extends StatelessWidget {
                     SizedBox(
                       width: 160,
                       height: 160,
-                      // 画像表示
+
+                      /// 画像表示
                       child: Image.asset('assets/images/profile.jpeg'),
                     ),
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  // 基本情報横並び表示部分
+
+                  /// 基本情報横並び表示部分
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -67,22 +71,24 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 Column(
-                  // 文章系表示部分
+                  /// 文章系表示部分
                   children: [
                     _listContent('自己紹介', user['introduction']),
                     _listContent('好きな種目', user['favoriteMenu']),
-                    _listContent('トレーニング回数', '${user['trainingTimes']}回 / ${weekOrMonthDiv[user['weekOrMonth']]}'),
+                    _listContent('トレーニング回数',
+                        '${user['trainingTimes']}回 / ${weekOrMonthDiv[user['weekOrMonth']]}'),
                     _listContent('大会実績', user['tournamentResults'])
                   ],
                 ),
               ],
-            ),),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  // 文章系表示部分のwidget表示
+  /// 文章系表示部分のwidget表示
   Widget _listContent(String textTitle, String textContent) {
     return Card(
       child: ListTile(
@@ -92,7 +98,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  // 横並び部分タイトルスタイル
+  /// 横並び部分タイトルスタイル
   Widget _textTitle(String textTitle) {
     return Text(
       textTitle,
@@ -104,7 +110,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  // 年齢計算
+  /// 年齢計算
   String _getAge(Timestamp birthday) {
     var bDayToDate = birthday.toDate();
     DateTime bDay = DateTime(bDayToDate.year, bDayToDate.month, bDayToDate.day);
@@ -112,5 +118,3 @@ class Profile extends StatelessWidget {
     return duration.years.toString();
   }
 }
-
-

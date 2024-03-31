@@ -87,7 +87,7 @@ class TrainingMemoPast extends ConsumerWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: Text(tapDay.year.toString() + '/' + tapDay.month.toString() + '/' + tapDay.day.toString() + CommonDataUtil.getDayOfWeek()),
+                child: Text('${tapDay.year}/${tapDay.month}/${tapDay.day}${CommonDataUtil.getDayOfWeek()}'),
               ),
               Expanded(
                 flex: 1,

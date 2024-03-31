@@ -7,7 +7,7 @@ import '../../../../common/division.dart';
 import '../../../../view_models/user_notifier/user_notifier.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
-// プロフィール編集画面
+/// プロフィール編集画面
 class EditProfile extends ConsumerWidget {
   EditProfile(
     this.userData, {
@@ -22,7 +22,7 @@ class EditProfile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userNotifierProvider);
 
-    // ユーザー情報表示部分
+    /// ユーザー情報表示部分
     final userInfo = user.when(
       loading: () => const CircularProgressIndicator(),
       error: (error, stacktrace) => Text('エラー $error'),
@@ -49,7 +49,7 @@ class EditProfile extends ConsumerWidget {
       ),
     );
 
-    // プロフィール画面
+    /// プロフィール画面
     return SafeArea(
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -80,7 +80,7 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
-  // 名前/職業/自己紹介/好きな種目/大会実績
+  /// 名前/職業/自己紹介/好きな種目/大会実績
   Widget _textField(int lines, initValue, divNo) {
     return Card(
       child: TextField(
@@ -114,7 +114,7 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
-  // 性別
+  /// 性別
   Widget _selectField(ref, context) {
     final list = [];
     genderDiv.forEach((k, v) => list.add(Gender(k, v)));
@@ -146,7 +146,7 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
-  // 生年月日
+  /// 生年月日
   Widget _birthDayField(context, data, ref) {
     var bdData = data['birthday'].toDate();
     var initBD = DateFormat('yyyy/MM/dd')
@@ -177,14 +177,14 @@ class EditProfile extends ConsumerWidget {
     );
   }
 
-  // トレーニング回数
+  /// トレーニング回数
   Widget _trainingTimesField(ref) {
-    // トレーニング回数
+    /// トレーニング回数
     final trainingTimesList = [];
     trainingTimesDiv
         .forEach((k, v) => trainingTimesList.add(TrainingTimes(k, v)));
 
-    // 週/月
+    /// 週/月
     final weekOrMonthList = [];
     weekOrMonthDiv.forEach((k, v) => weekOrMonthList.add(WeekOrMonth(k, v)));
 

@@ -59,7 +59,7 @@ class MyCalender extends ConsumerWidget {
         },
       );
     } else {
-      return Text("");
+      return const Text("");
     }
 
     /// トレーニング記録がある場合
