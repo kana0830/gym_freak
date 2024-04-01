@@ -41,9 +41,6 @@ class TrainingMemoPast extends ConsumerWidget {
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
 
-    /// 表示用日付を取得
-    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
-
     /// トレーニング記録表示部分
     trainingMemoInfo = trainingMemo.when(
       loading: () => const CircularProgressIndicator(),
@@ -87,7 +84,7 @@ class TrainingMemoPast extends ConsumerWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: Text('${tapDay.year}/${tapDay.month}/${tapDay.day}${CommonDataUtil.getDayOfWeek()}'),
+                child: Text('${CommonDataUtil.getDate(tapDay)}${CommonDataUtil.getDayOfWeek()}'),
               ),
               Expanded(
                 flex: 1,
@@ -104,6 +101,7 @@ class TrainingMemoPast extends ConsumerWidget {
                 menu: menu,
                 menuId: '',
                 edit: 0,
+                data: '${tapDay.year}${tapDay.month}${tapDay.day}',
               ),
             );
           },
@@ -172,6 +170,7 @@ class TrainingMemoPast extends ConsumerWidget {
                     menu: menu,
                     menuId: menu.id,
                     edit: 1,
+                    data: CommonDataUtil.changeDateNoSlash(tapDay),
                   ),
                 );
               },

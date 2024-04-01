@@ -8,7 +8,7 @@ import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
 class TrainingMemoDialog extends ConsumerWidget {
-  TrainingMemoDialog({this.menu, this.menuId, required this.edit, super.key});
+  TrainingMemoDialog({this.menu, this.menuId, required this.edit, required this.data, super.key});
 
   /// メニュー
   QueryDocumentSnapshot<Map<String, dynamic>>? menu;
@@ -16,6 +16,8 @@ class TrainingMemoDialog extends ConsumerWidget {
   String? menuId = '';
   /// 編集フラグ
   int edit;
+  /// 日付
+  String data;
 
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
@@ -107,7 +109,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: ListView(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     children: [
-                      edit == 0 ? _updateWidget(ref, menu) : _updateWidget(ref, menu),
+                      _updateWidget(ref, menu),
                     ],
                   ),
                 ),
@@ -121,7 +123,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     onPressed: () {
                       final notifier =
                           ref.read(trainingMemoNotifierProvider.notifier);
-                      notifier.updateState(userIdKey, menuId, menu);
+                      notifier.updateState(AuthService.userId + data, menuId, menu);
                       Navigator.pop(context);
                     },
                     child: Text(

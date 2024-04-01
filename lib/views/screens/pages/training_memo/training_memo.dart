@@ -26,7 +26,7 @@ class TrainingMemo extends ConsumerWidget {
     Widget trainingMemoInfo;
 
     /// 表示用日付を取得
-    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
+    String today = CommonDataUtil.getDate(DateTime.now()) + CommonDataUtil.getDayOfWeek();
 
     /// トレーニング記録表示部分
     trainingMemoInfo = trainingMemo.when(
@@ -42,14 +42,14 @@ class TrainingMemo extends ConsumerWidget {
               fontSize: 30.0,
               fontFamily: "Tegaki"
             ),
-          ));
+          ),);
         } else {
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
                 const SizedBox(height: 10.0),
-                _listContent(data, context, ref),
+                _listContent(data, context, ref, today),
               ],
             ),
           );
@@ -97,6 +97,7 @@ class TrainingMemo extends ConsumerWidget {
                 menu: menu,
                 menuId: '',
                 edit: 0,
+                data: today,
               ),
             );
           },
@@ -152,7 +153,7 @@ class TrainingMemo extends ConsumerWidget {
 
   /// メインwidget表示
   Widget _listContent(
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref) {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref, today,) {
     return Expanded(
       child: ListView(
         children: [
@@ -165,6 +166,7 @@ class TrainingMemo extends ConsumerWidget {
                     menu: menu,
                     menuId: menu.id,
                     edit: 1,
+                    data: today,
                   ),
                 );
               },

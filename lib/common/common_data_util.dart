@@ -4,10 +4,9 @@ import 'package:intl/intl.dart';
 
 class CommonDataUtil{
   // 今日の日付取得(yyyy/MM/dd)
-  static String getDate(){
-    DateTime now = DateTime.now();
+  static String getDate(day){
     DateFormat outputFormat = DateFormat('yyyy/MM/dd');
-    return outputFormat.format(now);
+    return outputFormat.format(day);
   }
 
   // 今日の日付取得(yyyyMMdd)

@@ -27,9 +27,6 @@ class MyCalender extends ConsumerWidget {
     /// トレーニング部位表示ウィジェット
     Widget trainingPartInfo;
 
-    /// 表示用日付を取得
-    String today = CommonDataUtil.getDate() + CommonDataUtil.getDayOfWeek();
-
     if (trainingPart.hasValue) {
       /// トレーニング部位表示部分
       trainingPartInfo = trainingPart.when(
