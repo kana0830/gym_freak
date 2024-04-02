@@ -126,7 +126,7 @@ class TrainingMemo extends ConsumerWidget {
           );
         },
         child: const Text(
-          '今日鍛える部位の登録',
+          '鍛える部位の登録',
           style: TextStyle(color: Colors.black),
         ),
       );
