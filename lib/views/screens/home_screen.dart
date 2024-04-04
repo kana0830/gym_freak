@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo.dart';
 import 'package:gym_freak/views/screens/pages/calender/my_calender.dart';
 
-import '../../models/aurh_service.dart';
 import '../../repositories/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {

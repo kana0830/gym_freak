@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'menu_notifier.g.dart';
@@ -19,7 +18,7 @@ class MenuNotifier extends _$MenuNotifier {
   void setState(QueryDocumentSnapshot<Map<String, dynamic>>? menu) {
     if (menuList.isEmpty){
       if(menu != null) {
-        for(var memo in menu?.data()['memo']) {
+        for(var memo in menu.data()['memo']) {
           menuList.add(memo);
         }
       } else {

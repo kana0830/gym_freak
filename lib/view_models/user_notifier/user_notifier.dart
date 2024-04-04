@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_public_notifier_properties
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../models/aurh_service.dart';
 import '../../repositories/user_repository.dart';

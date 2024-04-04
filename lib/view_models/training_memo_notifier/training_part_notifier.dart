@@ -2,7 +2,6 @@
 import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../common/common_data_util.dart';

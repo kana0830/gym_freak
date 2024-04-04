@@ -1,7 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym_freak/models/training_memo.dart';
-
-import '../models/user.dart';
 
 class TrainingMemoRepository {
   @override
@@ -47,21 +44,22 @@ class TrainingMemoRepository {
         .doc(menuId)
         .delete();
 
-    final docRef = FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('trainingMemo')
         .doc(userIdKey)
         .collection('menus')
         .doc(menuId)
-        .update({
-      "memo": FieldValue.arrayRemove([
-        {
-          'reps': '10',
-          'sets': '10',
-          'weight': '',
-        }
-      ])
-    });
-    // docRef.update(updates);
+        .update(
+      {
+        "memo": FieldValue.arrayRemove([
+          {
+            'reps': '10',
+            'sets': '10',
+            'weight': '',
+          }
+        ])
+      },
+    );
   }
 
   // トレーニング部位取得
@@ -71,11 +69,13 @@ class TrainingMemoRepository {
         .collection('trainingMemo')
         .doc(userIdKey)
         .get()
-        .then((DocumentSnapshot doc) {
-          if (doc.data() != null) {
-            trainingPart = doc.data() as Map<String, dynamic>;
-          }
-    },);
+        .then(
+      (DocumentSnapshot doc) {
+        if (doc.data() != null) {
+          trainingPart = doc.data() as Map<String, dynamic>;
+        }
+      },
+    );
     return trainingPart;
   }
 

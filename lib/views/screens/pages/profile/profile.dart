@@ -20,7 +20,7 @@ class Profile extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFF7b755e),
-          title: Text(user?['userName']),
+          title: Text(user['userName']),
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(

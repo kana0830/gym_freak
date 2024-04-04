@@ -75,7 +75,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                         : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              menuId!,
+                              menuId,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18.0,

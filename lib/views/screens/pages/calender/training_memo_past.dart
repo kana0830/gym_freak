@@ -8,7 +8,6 @@ import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
-import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 /// トレーニング記録画面
 class TrainingMemoPast extends ConsumerWidget {

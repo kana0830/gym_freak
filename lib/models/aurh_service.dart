@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../repositories/user_repository.dart';
 import '../views/screens/home_screen.dart';
 
 class AuthService {
@@ -45,7 +44,7 @@ class AuthService {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomeScreen()));
+            builder: (context) => const HomeScreen()));
     // builder: (context) => HomeScreen(user: user)));
   }
 

@@ -15,7 +15,7 @@ class _RankingState extends State<Ranking> {
       child: Scaffold(
         body: Container(
           // TODO
-          child: Center(child: Text("ranking"),),
+          child: const Center(child: Text("ranking"),),
         ),
       ),
     );

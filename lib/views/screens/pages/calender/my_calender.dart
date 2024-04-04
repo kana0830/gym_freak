@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/views/screens/pages/calender/training_memo_past.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_select_day_notifier.dart';
@@ -124,8 +123,8 @@ class MyCalender extends ConsumerWidget {
       trainingMemoInfo = Container();
     }
 
-    DateTime _focusedDay = DateTime.now();
-    DateTime? _selectedDay;
+    DateTime focusedDay = DateTime.now();
+    DateTime? selectedDay;
 
     return SafeArea(
       child: Scaffold(
@@ -134,6 +133,7 @@ class MyCalender extends ConsumerWidget {
             SizedBox(
               height: 300,
               child: TableCalendar(
+                currentDay: tapDay,
                 headerStyle: const HeaderStyle(
                   headerPadding: EdgeInsets.only(top: 6, left: 16, bottom: 6),
                   decoration: BoxDecoration(
@@ -148,7 +148,7 @@ class MyCalender extends ConsumerWidget {
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold),
                 ),
-                focusedDay: _focusedDay,
+                focusedDay: focusedDay,
                 firstDay: DateTime.utc(2020, 1, 1),
                 lastDay: DateTime.utc(2050, 12, 31),
                 shouldFillViewport: true,
@@ -230,13 +230,9 @@ class MyCalender extends ConsumerWidget {
                       ),
                     );
                   },
-                  selectedBuilder: (BuildContext context, DateTime day,
-                      DateTime focusedDay) {
-                    return selectDay;
-                  }
                 ),
                 onDaySelected: (selectedDay, focusedDay) {
-                  _focusedDay = focusedDay;
+                  focusedDay = focusedDay;
                   tapDay = focusedDay;
                   final notifier = ref.read(calenderNotifierProvider.notifier);
                   notifier.setState(selectedDay);
@@ -245,7 +241,7 @@ class MyCalender extends ConsumerWidget {
                   partNotifier.setState(selectedDay);
                   final selectDayNotifier =
                   ref.read(calenderSelectDayNotifierProvider.notifier);
-                  selectDayNotifier.setState(selectedDay, _textColor(selectedDay));
+                  selectDayNotifier.setState(selectedDay);
                 },
               ),
             ),
