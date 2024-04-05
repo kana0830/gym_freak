@@ -8,24 +8,24 @@ class AuthService {
   static var email = '';
   static var userId = '';
 
-  // サインイン
+  /// サインイン
   Future<void> sighIn(context) async {
 
-    // Googleサインイン画面へ飛ばす
+    /// Googleサインイン画面へ飛ばす
     final googleUser = await GoogleSignIn(scopes: [
       'email',
     ]).signIn();
 
-    // responseデータからアクセストークンと取得
+    /// responseデータからアクセストークンと取得
     final googleAuth = await googleUser?.authentication;
     final accessToken = googleAuth?.accessToken;
 
-    // アクセストークンが取得できない場合は中止
+    /// アクセストークンが取得できない場合は中止
     if (accessToken == null) {
       return;
     }
 
-    // firebaseへアクセストークンを送る
+    /// firebaseへアクセストークンを送る
     final oAuthCredential = GoogleAuthProvider.credential(
       accessToken: accessToken,
     );
@@ -40,7 +40,7 @@ class AuthService {
     // final user = await userRepository.getUser(email);
     // AuthService.userId = user.id;
 
-    // ホームスクリーンへ遷移
+    /// ホームスクリーンへ遷移
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -48,7 +48,7 @@ class AuthService {
     // builder: (context) => HomeScreen(user: user)));
   }
 
-  // サインアウト
+  /// サインアウト
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
