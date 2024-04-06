@@ -148,7 +148,7 @@ class MyCalender extends ConsumerWidget {
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold),
                 ),
-                focusedDay: focusedDay,
+                focusedDay: tapDay,
                 firstDay: DateTime.utc(2020, 1, 1),
                 lastDay: DateTime.utc(2050, 12, 31),
                 shouldFillViewport: true,
