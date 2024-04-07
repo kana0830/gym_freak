@@ -63,9 +63,9 @@ class TrainingMemo extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return headerPart('', context, ref);
+          return headerPart('', context, ref, today);
         } else {
-          return headerPart(data['part'], context, ref);
+          return headerPart(data['part'], context, ref, today);
         }
       },
     );
@@ -110,7 +110,7 @@ class TrainingMemo extends ConsumerWidget {
   }
 
   /// トレーニング部位ヘッダ部
-  Widget headerPart(part, context, ref) {
+  Widget headerPart(part, context, ref, today) {
     if (part == '') {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -122,6 +122,7 @@ class TrainingMemo extends ConsumerWidget {
             builder: (context) => TrainingPartDialog(
               part: part,
               edit: 0,
+              tapDay: today,
             ),
           );
         },
@@ -138,6 +139,7 @@ class TrainingMemo extends ConsumerWidget {
             builder: (context) => TrainingPartDialog(
               part: part,
               edit: 0,
+              tapDay: today,
             ),
           );
         },

@@ -125,6 +125,7 @@ class TrainingMemoPast extends ConsumerWidget {
             builder: (context) => TrainingPartDialog(
               part: part,
               edit: 0,
+              tapDay: tapDay,
             ),
           );
         },
@@ -141,6 +142,7 @@ class TrainingMemoPast extends ConsumerWidget {
             builder: (context) => TrainingPartDialog(
               part: part,
               edit: 0,
+              tapDay: tapDay,
             ),
           );
         },

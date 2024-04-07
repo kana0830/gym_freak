@@ -5,16 +5,22 @@ import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 class TrainingPartDialog extends ConsumerWidget {
-  TrainingPartDialog({required this.part, required this.edit, super.key});
+  TrainingPartDialog({required this.part, required this.edit, required this.tapDay, super.key});
 
+  /// 部位
   String part = '';
+  /// 編集モード
   int edit;
+  /// 選択中日付
+  DateTime tapDay;
 
-  /// ユーザーIDキー
-  String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    /// ユーザーIDキー
+    String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
 
     final trainingPart = ref.watch(trainingPartNotifierProvider);
 
@@ -64,7 +70,7 @@ class TrainingPartDialog extends ConsumerWidget {
                     ),
                     onPressed: () {
                       final notifier = ref.read(trainingPartNotifierProvider.notifier);
-                      notifier.updateState(userIdKey, partValue);
+                      notifier.updateState(tapDay, partValue);
                       Navigator.pop(context);
                     },
                     child: Text(

@@ -28,9 +28,9 @@ class TrainingPartNotifier extends _$TrainingPartNotifier {
   }
 
   // update
-  void updateState(userIdKye, value) async {
-    _trainingMemoRepository.updateTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash(), value);
-    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.getDateNoSlash());
+  void updateState(DateTime day, value) async {
+    _trainingMemoRepository.updateTrainingPart(AuthService.userId + CommonDataUtil.changeDateNoSlash(day), value);
+    trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.changeDateNoSlash(day));
     state = AsyncData<Map<String, dynamic>>(trainingPart);
   }
 }
