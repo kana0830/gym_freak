@@ -18,7 +18,7 @@ class MyCalender extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final menus = ref.watch(calenderNotifierProvider);
     final trainingPart = ref.watch(calenderPartNotifierProvider);
-    final selectDay = ref.watch(calenderSelectDayNotifierProvider);
+    // final selectDay = ref.watch(calenderSelectDayNotifierProvider);
 
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;

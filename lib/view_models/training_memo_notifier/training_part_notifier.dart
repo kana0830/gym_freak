@@ -27,7 +27,7 @@ class TrainingPartNotifier extends _$TrainingPartNotifier {
     return trainingPart;
   }
 
-  // update
+  /// update
   void updateState(DateTime day, value) async {
     _trainingMemoRepository.updateTrainingPart(AuthService.userId + CommonDataUtil.changeDateNoSlash(day), value);
     trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + CommonDataUtil.changeDateNoSlash(day));
