@@ -18,7 +18,6 @@ class MyCalender extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final menus = ref.watch(calenderNotifierProvider);
     final trainingPart = ref.watch(calenderPartNotifierProvider);
-    // final selectDay = ref.watch(calenderSelectDayNotifierProvider);
 
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
@@ -73,7 +72,7 @@ class MyCalender extends ConsumerWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => TrainingMemoPast(tapDay: tapDay)));
+                        builder: (context) => TrainingMemoPast(tapDay: tapDay, menus: menus, trainingPart: trainingPart,)));
               },
               child: ListView(
                 children: [

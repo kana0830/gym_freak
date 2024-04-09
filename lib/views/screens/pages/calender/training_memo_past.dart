@@ -8,6 +8,7 @@ import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/calender_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
+import 'back_button_widget.dart';
 
 /// トレーニング記録画面
 class TrainingMemoPast extends ConsumerWidget {
@@ -15,14 +16,13 @@ class TrainingMemoPast extends ConsumerWidget {
   /// 選択中日付
   DateTime tapDay;
 
-  TrainingMemoPast({super.key, required this.tapDay});
+  AsyncValue<List<QueryDocumentSnapshot<Map<String, dynamic>>>> menus;
+  AsyncValue<Map<String, dynamic>> trainingPart;
+
+  TrainingMemoPast({super.key, required this.tapDay, required this.menus, required this.trainingPart});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trainingPart = ref.watch(calenderPartNotifierProvider);
-    final trainingMemo = ref.watch(calenderMemoNotifierProvider);
-
-
 
     /// ユーザーIDキー
     String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
@@ -41,7 +41,7 @@ class TrainingMemoPast extends ConsumerWidget {
     Widget trainingMemoInfo;
 
     /// トレーニング記録表示部分
-    trainingMemoInfo = trainingMemo.when(
+    trainingMemoInfo = menus.when(
       loading: () => const CircularProgressIndicator(),
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
@@ -79,6 +79,10 @@ class TrainingMemoPast extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF7b755e),
+          iconTheme: const IconThemeData(
+            color: Color(0xFF7b755e),
+          ),
+          leading: BackButtonWidget(selectedDay: tapDay, menus: menus, trainingPart: trainingPart,),
           title: Row(
             children: [
               Expanded(
