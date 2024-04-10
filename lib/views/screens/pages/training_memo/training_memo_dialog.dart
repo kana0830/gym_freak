@@ -23,6 +23,7 @@ class TrainingMemoDialog extends ConsumerWidget {
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     /// メニュー
     final menu = ref.watch(menuNotifierProvider);
     /// メニューID

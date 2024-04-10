@@ -19,12 +19,12 @@ class BackButtonWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     return Container(
-      color: Color(0xFF7b755e),
+      color: const Color(0xFF7b755e),
       child: ElevatedButton(
         child: Center(
           child: Container(
-            color: Color(0xFF7b755e),
-              child: Icon(Icons.arrow_back,)),
+            color: const Color(0xFF7b755e),
+              child: const Icon(Icons.arrow_back,)),
         ),
         onPressed: () {
           final notifier = ref.read(calenderNotifierProvider.notifier);

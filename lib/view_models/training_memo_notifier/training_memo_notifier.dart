@@ -25,14 +25,14 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
     return trainingMemo;
   }
 
-  // update
+  /// update
   void updateState(userIdKey, menuId, menus) async {
     _trainingMemoRepository.updateTrainingMemo(userIdKey, menuId, menus);
     trainingMemo = await _trainingMemoRepository.getTrainingMemo(userIdKey);
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 
-  // delete
+  /// delete
   void deleteMenuState(userIdKey, menuId) async {
     _trainingMemoRepository.deleteTrainingMemo(userIdKey, menuId);
     trainingMemo = await _trainingMemoRepository.getTrainingMemo(userIdKey);
