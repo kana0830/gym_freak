@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
+import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 class TrainingPartDialog extends ConsumerWidget {
@@ -69,8 +70,14 @@ class TrainingPartDialog extends ConsumerWidget {
                       backgroundColor: const Color(0xFFFFF59D),
                     ),
                     onPressed: () {
-                      final notifier = ref.read(trainingPartNotifierProvider.notifier);
-                      notifier.updateState(tapDay, partValue);
+                      if (tapDay.isAtSameMomentAs(DateTime.now())) {
+                        final notifier = ref.read(trainingPartNotifierProvider.notifier);
+                        notifier.updateState(tapDay, partValue);
+                      } else {
+                        final notifier = ref.read(calenderPartNotifierProvider.notifier);
+                        notifier.updateState(tapDay, partValue);
+                      }
+
                       Navigator.pop(context);
                     },
                     child: Text(

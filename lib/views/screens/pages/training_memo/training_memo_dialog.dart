@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
+import '../../../../view_models/training_memo_notifier/calender_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_id_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
@@ -125,9 +126,16 @@ class TrainingMemoDialog extends ConsumerWidget {
                       backgroundColor: const Color(0xFFFFF59D),
                     ),
                     onPressed: () {
-                      final notifier =
-                          ref.read(trainingMemoNotifierProvider.notifier);
-                      notifier.updateState(userIdKey, menuId, menu);
+                      if(data.isAtSameMomentAs(DateTime.now())) {
+                        final notifier =
+                        ref.read(trainingMemoNotifierProvider.notifier);
+                        notifier.updateState(userIdKey, menuId, menu);
+                      } else {
+                        final notifier =
+                        ref.read(calenderMemoNotifierProvider.notifier);
+                        notifier.updateState(userIdKey, menuId, menu);
+                      }
+
                       Navigator.pop(context);
                     },
                     child: Text(

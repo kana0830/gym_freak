@@ -8,7 +8,6 @@ import '../../../../view_models/training_memo_notifier/calender_select_day_notif
 
 /// カレンダー画面
 class MyCalender extends ConsumerWidget {
-
   MyCalender({super.key});
 
   /// 選択中の日付
@@ -38,11 +37,18 @@ class MyCalender extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Row(
                 children: [
-                  const Icon(Icons.accessibility, color: Colors.black87, size: 26.0,),
+                  const Icon(
+                    Icons.accessibility,
+                    color: Colors.black87,
+                    size: 26.0,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 6.0),
                     child: Text(
-                      data.values.toString().replaceAll("(", "").replaceAll(")", ""),
+                      data.values
+                          .toString()
+                          .replaceAll("(", "")
+                          .replaceAll(")", ""),
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 20.0),
                     ),
@@ -70,9 +76,15 @@ class MyCalender extends ConsumerWidget {
             return InkWell(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TrainingMemoPast(tapDay: tapDay, menus: menus, trainingPart: trainingPart,)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TrainingMemoPast(
+                      tapDay: tapDay,
+                      menus: menus,
+                      trainingPart: trainingPart,
+                    ),
+                  ),
+                );
               },
               child: ListView(
                 children: [
@@ -155,8 +167,8 @@ class MyCalender extends ConsumerWidget {
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekHeight: 30,
                 calendarStyle: CalendarStyle(
-                  tableBorder:
-                      TableBorder.all(color: const Color(0xff848375), width: 0.4),
+                  tableBorder: TableBorder.all(
+                      color: const Color(0xff848375), width: 0.4),
                 ),
                 calendarBuilders: CalendarBuilders(
                   /// ヘッダ部分
@@ -239,7 +251,7 @@ class MyCalender extends ConsumerWidget {
                       ref.read(calenderPartNotifierProvider.notifier);
                   partNotifier.setState(selectedDay);
                   final selectDayNotifier =
-                  ref.read(calenderSelectDayNotifierProvider.notifier);
+                      ref.read(calenderSelectDayNotifierProvider.notifier);
                   selectDayNotifier.setState(selectedDay);
                 },
               ),
