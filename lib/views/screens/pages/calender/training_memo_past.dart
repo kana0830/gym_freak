@@ -104,7 +104,7 @@ class TrainingMemoPast extends ConsumerWidget {
                 menu: menu,
                 menuId: '',
                 edit: 0,
-                data: '${tapDay.year}${tapDay.month}${tapDay.day}',
+                data: tapDay,
               ),
             );
           },
@@ -175,7 +175,7 @@ class TrainingMemoPast extends ConsumerWidget {
                     menu: menu,
                     menuId: menu.id,
                     edit: 1,
-                    data: CommonDataUtil.changeDateNoSlash(tapDay),
+                    data: tapDay,
                   ),
                 );
               },

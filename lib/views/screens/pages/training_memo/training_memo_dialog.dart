@@ -17,13 +17,16 @@ class TrainingMemoDialog extends ConsumerWidget {
   /// 編集フラグ
   int edit;
   /// 日付
-  String data;
+  DateTime data;
 
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
+
+    /// ユーザーIDキー
+    String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(data);
+
     /// メニュー
     final menu = ref.watch(menuNotifierProvider);
     /// メニューID
@@ -124,7 +127,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     onPressed: () {
                       final notifier =
                           ref.read(trainingMemoNotifierProvider.notifier);
-                      notifier.updateState(AuthService.userId + data, menuId, menu);
+                      notifier.updateState(userIdKey, menuId, menu);
                       Navigator.pop(context);
                     },
                     child: Text(

@@ -49,7 +49,7 @@ class TrainingMemo extends ConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10.0),
-                _listContent(data, context, ref, today),
+                _listContent(data, context, ref),
               ],
             ),
           );
@@ -63,9 +63,9 @@ class TrainingMemo extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return headerPart('', context, ref, today);
+          return headerPart('', context, ref);
         } else {
-          return headerPart(data['part'], context, ref, today);
+          return headerPart(data['part'], context, ref);
         }
       },
     );
@@ -97,7 +97,7 @@ class TrainingMemo extends ConsumerWidget {
                 menu: menu,
                 menuId: '',
                 edit: 0,
-                data: today,
+                data: DateTime.now(),
               ),
             );
           },
@@ -110,7 +110,7 @@ class TrainingMemo extends ConsumerWidget {
   }
 
   /// トレーニング部位ヘッダ部
-  Widget headerPart(part, context, ref, today) {
+  Widget headerPart(part, context, ref) {
     if (part == '') {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -122,7 +122,7 @@ class TrainingMemo extends ConsumerWidget {
             builder: (context) => TrainingPartDialog(
               part: part,
               edit: 0,
-              tapDay: today,
+              tapDay: DateTime.now(),
             ),
           );
         },
@@ -139,7 +139,7 @@ class TrainingMemo extends ConsumerWidget {
             builder: (context) => TrainingPartDialog(
               part: part,
               edit: 0,
-              tapDay: today,
+              tapDay: DateTime.now(),
             ),
           );
         },
@@ -155,7 +155,7 @@ class TrainingMemo extends ConsumerWidget {
 
   /// メインwidget表示
   Widget _listContent(
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref, today,) {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> menus, context, ref) {
     return Expanded(
       child: ListView(
         children: [
@@ -168,7 +168,7 @@ class TrainingMemo extends ConsumerWidget {
                     menu: menu,
                     menuId: menu.id,
                     edit: 1,
-                    data: today,
+                    data: DateTime.now(),
                   ),
                 );
               },
