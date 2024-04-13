@@ -15,15 +15,11 @@ class TrainingPartDialog extends ConsumerWidget {
   /// 選択中日付
   DateTime tapDay;
 
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
     /// ユーザーIDキー
     String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
-
-    final trainingPart = ref.watch(trainingPartNotifierProvider);
 
     String partValue = part;
 
@@ -70,14 +66,16 @@ class TrainingPartDialog extends ConsumerWidget {
                       backgroundColor: const Color(0xFFFFF59D),
                     ),
                     onPressed: () {
-                      if (tapDay.isAtSameMomentAs(DateTime.now())) {
+                      var now = DateTime.now();
+                      var nowDate = DateTime(now.year, now.month, now.day);
+                      var tapDate = DateTime(tapDay.year, tapDay.month, tapDay.day);
+                      if (tapDate.isAtSameMomentAs(nowDate)) {
                         final notifier = ref.read(trainingPartNotifierProvider.notifier);
                         notifier.updateState(tapDay, partValue);
                       } else {
                         final notifier = ref.read(calenderPartNotifierProvider.notifier);
                         notifier.updateState(tapDay, partValue);
                       }
-
                       Navigator.pop(context);
                     },
                     child: Text(

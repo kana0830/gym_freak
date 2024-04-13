@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/views/screens/pages/calender/training_memo_past.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../../../common/common_data_util.dart';
+import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_select_day_notifier.dart';
@@ -249,7 +251,7 @@ class MyCalender extends ConsumerWidget {
                   notifier.setState(selectedDay);
                   final partNotifier =
                       ref.read(calenderPartNotifierProvider.notifier);
-                  partNotifier.setState(selectedDay);
+                  partNotifier.setState(AuthService.userId + CommonDataUtil.changeDateNoSlash(selectedDay));
                   final selectDayNotifier =
                       ref.read(calenderSelectDayNotifierProvider.notifier);
                   selectDayNotifier.setState(selectedDay);

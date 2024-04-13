@@ -19,11 +19,8 @@ class CalenderPartNotifier extends _$CalenderPartNotifier {
   }
 
   /// 書き換え
-  void setState(DateTime day) async {
-    var monthString = day.month.toString().length == 1 ? '0${day.month}' : day.month.toString();
-    var dayString = day.day.toString().length == 1 ? '0${day.day}' : day.day.toString();
-    var dateString = day.year.toString() + monthString + dayString;
-    var trainingPart = await _trainingMemoRepository.getTrainingPart(AuthService.userId + dateString);
+  void setState(String userIdKey) async {
+    var trainingPart = await _trainingMemoRepository.getTrainingPart(userIdKey);
     state = AsyncData<Map<String, dynamic>>(trainingPart);
   }
 

@@ -24,6 +24,9 @@ class TrainingMemoPast extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    final trainingPart = ref.watch(calenderPartNotifierProvider);
+    final trainingMemo = ref.watch(calenderMemoNotifierProvider);
+
     /// ユーザーIDキー
     String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
 
@@ -32,16 +35,16 @@ class TrainingMemoPast extends ConsumerWidget {
     /// メニューデータをセットして書き換え
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final partNotifier = ref.read(calenderPartNotifierProvider.notifier);
-      partNotifier.setState(tapDay);
+      partNotifier.setState(userIdKey);
       final memoNotifier = ref.read(calenderMemoNotifierProvider.notifier);
-      memoNotifier.setState(tapDay);
+      memoNotifier.setState(userIdKey);
     });
 
     /// トレーニング記録表示ウィジェット
     Widget trainingMemoInfo;
 
     /// トレーニング記録表示部分
-    trainingMemoInfo = menus.when(
+    trainingMemoInfo = trainingMemo.when(
       loading: () => const CircularProgressIndicator(),
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
@@ -274,14 +277,19 @@ class TrainingMemoPast extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              const Expanded(
-                                flex: 2,
-                                child: Text('rep'),
-                              ),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '×',
+                                    menu.data()['memo'][i]['reps'] == ''
+                                        ? ''
+                                        : 'kg'),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  menu.data()['memo'][i]['sets'] == ''
+                                      ? ''
+                                      : '×',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -299,9 +307,12 @@ class TrainingMemoPast extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
-                                child: Text('set'),
+                                child: Text(
+                                    menu.data()['memo'][i]['sets'] == ''
+                                        ? ''
+                                        : 'kg'),
                               ),
                             ],
                           ),

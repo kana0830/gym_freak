@@ -126,7 +126,10 @@ class TrainingMemoDialog extends ConsumerWidget {
                       backgroundColor: const Color(0xFFFFF59D),
                     ),
                     onPressed: () {
-                      if(data.isAtSameMomentAs(DateTime.now())) {
+                      var now = DateTime.now();
+                      var nowDate = DateTime(now.year, now.month, now.day);
+                      var tapDate = DateTime(data.year, data.month, data.day);
+                      if(tapDate.isAtSameMomentAs(nowDate)) {
                         final notifier =
                         ref.read(trainingMemoNotifierProvider.notifier);
                         notifier.updateState(userIdKey, menuId, menu);
