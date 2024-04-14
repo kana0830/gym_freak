@@ -267,14 +267,19 @@ class TrainingMemo extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              const Expanded(
-                                flex: 2,
-                                child: Text('rep'),
-                              ),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '×',
+                                    menu.data()['memo'][i]['reps'] == ''
+                                        ? ''
+                                        : 'rep'),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  menu.data()['memo'][i]['sets'] == ''
+                                      ? ''
+                                      : '×',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -292,9 +297,12 @@ class TrainingMemo extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
-                                child: Text('set'),
+                                child: Text(
+                                    menu.data()['memo'][i]['sets'] == ''
+                                        ? ''
+                                        : 'set'),
                               ),
                             ],
                           ),

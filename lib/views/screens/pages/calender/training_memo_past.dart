@@ -282,7 +282,7 @@ class TrainingMemoPast extends ConsumerWidget {
                                 child: Text(
                                     menu.data()['memo'][i]['reps'] == ''
                                         ? ''
-                                        : 'kg'),
+                                        : 'rep'),
                               ),
                               Expanded(
                                 flex: 2,
@@ -312,7 +312,7 @@ class TrainingMemoPast extends ConsumerWidget {
                                 child: Text(
                                     menu.data()['memo'][i]['sets'] == ''
                                         ? ''
-                                        : 'kg'),
+                                        : 'set'),
                               ),
                             ],
                           ),
