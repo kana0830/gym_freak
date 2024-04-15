@@ -104,7 +104,7 @@ class MyCalender extends ConsumerWidget {
                           for (int i = 0; i < menu.data()['memo'].length; i++)
                             Row(
                               children: [
-                                const Text("・"),
+                                Text(menu.data()['memo'][i]['weight'] == '' ? '' : "・"),
                                 Text(menu.data()['memo'][i]['weight']),
                                 Text(menu.data()['memo'][i]['weight'] == ''
                                     ? ''
@@ -115,10 +115,19 @@ class MyCalender extends ConsumerWidget {
                                       : '×',
                                 ),
                                 Text('${menu.data()['memo'][i]['reps']}'),
-                                const Text('rep'),
-                                const Text('×'),
+                                Text(menu.data()['memo'][i]['reps'] == ''
+                                    ? ''
+                                    : 'rep'),
+                                Text(
+                                  menu.data()['memo'][i]['sets'] == ''
+                                      ? ''
+                                      : '×',
+                                  textAlign: TextAlign.center,
+                                ),
                                 Text('${menu.data()['memo'][i]['sets']}'),
-                                const Text('set'),
+                                Text(menu.data()['memo'][i]['sets'] == ''
+                                    ? ''
+                                    : 'set'),
                               ],
                             ),
                         ],
@@ -251,7 +260,8 @@ class MyCalender extends ConsumerWidget {
                   notifier.setState(selectedDay);
                   final partNotifier =
                       ref.read(calenderPartNotifierProvider.notifier);
-                  partNotifier.setState(AuthService.userId + CommonDataUtil.changeDateNoSlash(selectedDay));
+                  partNotifier.setState(AuthService.userId +
+                      CommonDataUtil.changeDateNoSlash(selectedDay));
                   final selectDayNotifier =
                       ref.read(calenderSelectDayNotifierProvider.notifier);
                   selectDayNotifier.setState(selectedDay);
