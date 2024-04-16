@@ -166,7 +166,7 @@ class TrainingMemoDialog extends ConsumerWidget {
             children: [
               Expanded(
                 flex: 5,
-                child: _textField(2, menu[i]['weight'], 1, i, ref),
+                child: _textField(2, menu, 1, i, ref),
               ),
               const Expanded(
                 flex: 2,
@@ -182,7 +182,7 @@ class TrainingMemoDialog extends ConsumerWidget {
               ),
               Expanded(
                 flex: 4,
-                child: _textField(3, menu[i]['reps'], 1, i, ref),
+                child: _textField(3, menu, 1, i, ref),
               ),
               const Expanded(
                 flex: 2,
@@ -198,7 +198,7 @@ class TrainingMemoDialog extends ConsumerWidget {
               ),
               Expanded(
                 flex: 4,
-                child: _textField(4, menu[i]['sets'], 1, i, ref),
+                child: _textField(4, menu, 1, i, ref),
               ),
               const Expanded(
                 flex: 2,
@@ -211,9 +211,12 @@ class TrainingMemoDialog extends ConsumerWidget {
                   onPressed: () {
                     /// 記録枠が１行の場合
                     if(menu.length == 1) {
+                      final notifier = ref.read(menuNotifierProvider.notifier);
+                      notifier.updateWeightState('', i);
+                    } else {
+                      final notifier = ref.read(menuNotifierProvider.notifier);
+                      notifier.deleteMenuState(i);
                     }
-                    final notifier = ref.read(menuNotifierProvider.notifier);
-                    notifier.deleteMenuState(i);
                   },
                 ),
               )
@@ -238,7 +241,36 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   /// 入力欄
-  Widget _textField(int no, String text, int edit, int i, ref) {
+  Widget _textField(int no, dynamic menu, int edit, int i, ref) {
+    var text = "";
+
+    switch (no) {
+      case 1:
+        text = menu;
+        break;
+      case 2: /// weight
+        if (menu.length == 0) {
+          text = '';
+        } else {
+          text = menu[i]['weight'];
+        }
+        break;
+      case 3: /// reps
+        if (menu.length == 0) {
+          text = '';
+        } else {
+          text = menu[i]['reps'];
+          break;
+        }
+      case 4: ///sets
+        if (menu.length == 0) {
+          text = '';
+        } else {
+          text = menu[i]['sets'];
+          break;
+        }
+    }
+
     return Card(
       child: TextFormField(
         textAlign: no == 1 ? TextAlign.start : TextAlign.end,
