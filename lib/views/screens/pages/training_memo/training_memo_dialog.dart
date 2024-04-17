@@ -213,6 +213,8 @@ class TrainingMemoDialog extends ConsumerWidget {
                     if(menu.length == 1) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
                       notifier.updateWeightState('', i);
+                      notifier.updateRepsState('', i);
+                      notifier.updateSetsState('', i);
                     } else {
                       final notifier = ref.read(menuNotifierProvider.notifier);
                       notifier.deleteMenuState(i);

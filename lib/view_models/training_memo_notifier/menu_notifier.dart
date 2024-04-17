@@ -54,11 +54,17 @@ class MenuNotifier extends _$MenuNotifier {
   }
   /// reps書き換え
   void updateRepsState(value, i) async {
+    if (menuList.isEmpty) {
+      menuList.add({});
+    }
     menuList[i]['reps'] = value;
     state = [...menuList];
   }
   /// sets書き換え
   void updateSetsState(value, i) async {
+    if (menuList.isEmpty) {
+      menuList.add({});
+    }
     menuList[i]['sets'] = value;
     state = [...menuList];
   }
