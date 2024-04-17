@@ -274,7 +274,8 @@ class TrainingMemoDialog extends ConsumerWidget {
     return Card(
       child: TextFormField(
         textAlign: no == 1 ? TextAlign.start : TextAlign.end,
-        initialValue: text,
+        // initialValue: text,
+        controller: TextEditingController(text: text),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
           filled: true,

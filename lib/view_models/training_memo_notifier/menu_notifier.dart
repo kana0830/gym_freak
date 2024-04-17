@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'menu_notifier.g.dart';
@@ -8,6 +9,7 @@ class MenuNotifier extends _$MenuNotifier {
 
   QueryDocumentSnapshot<Map<String, dynamic>>? menu;
   late List<Map<String, dynamic>> menuList = [];
+  TextEditingController controller = TextEditingController();
 
   @override
   List<Map<String, dynamic>> build() {
