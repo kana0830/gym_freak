@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
 
+/// 戻るボタン
 class BackButtonWidget extends ConsumerWidget {
   DateTime selectedDay;
   AsyncValue<List<QueryDocumentSnapshot<Map<String, dynamic>>>> menus;
