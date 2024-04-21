@@ -8,6 +8,7 @@ import '../../../../view_models/training_memo_notifier/menu_id_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 
+/// トレーニング記録登録ダイアログ
 class TrainingMemoDialog extends ConsumerWidget {
   TrainingMemoDialog({this.menu, this.menuId, required this.edit, required this.data, super.key});
 
