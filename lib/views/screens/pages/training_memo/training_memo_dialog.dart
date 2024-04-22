@@ -20,9 +20,12 @@ class TrainingMemoDialog extends ConsumerWidget {
   int edit;
   /// 日付
   DateTime data;
-
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
+
+  var text = "";
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
@@ -167,7 +170,23 @@ class TrainingMemoDialog extends ConsumerWidget {
             children: [
               Expanded(
                 flex: 5,
-                child: _textField(2, menu, 1, i, ref),
+                child: Card(
+                  child: TextFormField(
+                    textAlign: TextAlign.end,
+                    // initialValue: text = menu[i]['weight'],
+                    controller: TextEditingController(text: text = menu[i]['weight']),
+                    decoration: const InputDecoration(
+                      floatingLabelStyle: TextStyle(color: Colors.white),
+                      filled: true,
+                      border: InputBorder.none,
+                    ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      final notifier = ref.read(menuNotifierProvider.notifier);
+                      notifier.updateWeightState(value, i);
+                    }
+                  ),
+                ),
               ),
               const Expanded(
                 flex: 2,
@@ -183,7 +202,23 @@ class TrainingMemoDialog extends ConsumerWidget {
               ),
               Expanded(
                 flex: 4,
-                child: _textField(3, menu, 1, i, ref),
+                child: Card(
+                  child: TextFormField(
+                    textAlign: TextAlign.end,
+                    // initialValue: text = menu[i]['reps'],
+                    controller: TextEditingController(text: text = menu[i]['reps']),
+                    decoration: const InputDecoration(
+                      floatingLabelStyle: TextStyle(color: Colors.white),
+                      filled: true,
+                      border: InputBorder.none,
+                    ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                          final notifier = ref.read(menuNotifierProvider.notifier);
+                          notifier.updateRepsState(value, i);
+                    },
+                  ),
+                ),
               ),
               const Expanded(
                 flex: 2,
@@ -199,7 +234,23 @@ class TrainingMemoDialog extends ConsumerWidget {
               ),
               Expanded(
                 flex: 4,
-                child: _textField(4, menu, 1, i, ref),
+                child: Card(
+                  child: TextFormField(
+                    textAlign: TextAlign.end,
+                    // initialValue: text = menu[i]['sets'],
+                    controller: TextEditingController(text: text = menu[i]['sets']),
+                    decoration: const InputDecoration(
+                      floatingLabelStyle: TextStyle(color: Colors.white),
+                      filled: true,
+                      border: InputBorder.none,
+                    ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                        final notifier = ref.read(menuNotifierProvider.notifier);
+                        notifier.updateSetsState(value, i);
+                    },
+                  ),
+                ),
               ),
               const Expanded(
                 flex: 2,
@@ -245,7 +296,6 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   /// 入力欄
   Widget _textField(int no, dynamic menu, int edit, int i, ref) {
-    var text = "";
 
     switch (no) {
       case 1:
@@ -278,7 +328,7 @@ class TrainingMemoDialog extends ConsumerWidget {
       child: TextFormField(
         textAlign: no == 1 ? TextAlign.start : TextAlign.end,
         // initialValue: text,
-        controller: TextEditingController(text: text),
+        controller: TextEditingController(text: formKey.toString()),
         decoration: const InputDecoration(
           floatingLabelStyle: TextStyle(color: Colors.white),
           filled: true,
