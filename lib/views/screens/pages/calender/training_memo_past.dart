@@ -104,7 +104,7 @@ class TrainingMemoPast extends ConsumerWidget {
             showDialog(
               context: context,
               builder: (context) => TrainingMemoDialog(
-                menu: menu,
+                menus: menu,
                 menuId: '',
                 edit: 0,
                 data: tapDay,
@@ -175,7 +175,7 @@ class TrainingMemoPast extends ConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (context) => TrainingMemoDialog(
-                    menu: menu,
+                    menus: menu,
                     menuId: menu.id,
                     edit: 1,
                     data: tapDay,

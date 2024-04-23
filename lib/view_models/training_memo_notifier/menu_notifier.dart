@@ -9,12 +9,13 @@ class MenuNotifier extends _$MenuNotifier {
 
   QueryDocumentSnapshot<Map<String, dynamic>>? menu;
   late List<Map<String, dynamic>> menuList = [];
-  TextEditingController controller = TextEditingController();
+
 
   @override
   List<Map<String, dynamic>> build() {
     return [];
   }
+
 
   /// 親画面からのパラメータ設定
   void setState(QueryDocumentSnapshot<Map<String, dynamic>>? menu) {
@@ -45,12 +46,13 @@ class MenuNotifier extends _$MenuNotifier {
     menuList.add(emptyMap);
   }
   /// weight書き換え
-  void updateWeightState(value, i) async {
+  void updateWeightState(value, i, weightController) async {
     if (menuList.isEmpty) {
       menuList.add({});
     }
     menuList[i]['weight'] = value;
     state = [...menuList];
+    weightController.text = value;
   }
   /// reps書き換え
   void updateRepsState(value, i) async {
@@ -74,7 +76,7 @@ class MenuNotifier extends _$MenuNotifier {
     menuList.removeAt(i);
     if (menuList.isEmpty) {
       insertRowState();
-      updateWeightState('', 0);
+      // updateWeightState('', 0);
       updateRepsState('', 0);
       updateSetsState('', 0);
     }

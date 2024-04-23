@@ -10,10 +10,10 @@ import '../../../../view_models/training_memo_notifier/training_memo_notifier.da
 
 /// トレーニング記録登録ダイアログ
 class TrainingMemoDialog extends ConsumerWidget {
-  TrainingMemoDialog({this.menu, this.menuId, required this.edit, required this.data, super.key});
+  TrainingMemoDialog({this.menus, this.menuId, required this.edit, required this.data, super.key});
 
   /// メニュー
-  QueryDocumentSnapshot<Map<String, dynamic>>? menu;
+  QueryDocumentSnapshot<Map<String, dynamic>>? menus;
   /// メニューID
   String? menuId = '';
   /// 編集フラグ
@@ -25,6 +25,10 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   var text = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController weightController = TextEditingController(text: '');
+  TextEditingController repsController = TextEditingController(text: '');
+  TextEditingController setsController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +44,7 @@ class TrainingMemoDialog extends ConsumerWidget {
     /// メニューデータをセットして書き換え
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(menuNotifierProvider.notifier);
-      notifier.setState(this.menu);
+      notifier.setState(menus);
     });
 
     /// メニューIDデータがある場合、メニューIDデータをセットして書き換え
@@ -174,7 +178,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: TextFormField(
                     textAlign: TextAlign.end,
                     // initialValue: text = menu[i]['weight'],
-                    controller: TextEditingController(text: text = menu[i]['weight']),
+                    controller: TextEditingController(text: weightController.text = menu[i]['weight']),
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -205,8 +209,8 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    // initialValue: text = menu[i]['reps'],
-                    controller: TextEditingController(text: text = menu[i]['reps']),
+                    initialValue: text = menu[i]['reps'],
+                    // controller: TextEditingController(text: text = menu[i]['reps']),
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -237,8 +241,8 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    // initialValue: text = menu[i]['sets'],
-                    controller: TextEditingController(text: text = menu[i]['sets']),
+                    initialValue: text = menu[i]['sets'],
+                    // controller: TextEditingController(text: text = menu[i]['sets']),
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -264,7 +268,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     /// 記録枠が１行の場合
                     if(menu.length == 1) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateWeightState('', i);
+                      notifier.updateWeightState('', i, weightController);
                       notifier.updateRepsState('', i);
                       notifier.updateSetsState('', i);
                     } else {
