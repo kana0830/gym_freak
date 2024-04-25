@@ -10,34 +10,39 @@ import '../../../../view_models/training_memo_notifier/training_memo_notifier.da
 
 /// トレーニング記録登録ダイアログ
 class TrainingMemoDialog extends ConsumerWidget {
-  TrainingMemoDialog({this.menus, this.menuId, required this.edit, required this.data, super.key});
+  TrainingMemoDialog(
+      {this.menus,
+      this.menuId,
+      required this.edit,
+      required this.data,
+      super.key});
 
   /// メニュー
   QueryDocumentSnapshot<Map<String, dynamic>>? menus;
+
   /// メニューID
   String? menuId = '';
+
   /// 編集フラグ
   int edit;
+
   /// 日付
   DateTime data;
+
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
 
-  var text = "";
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  TextEditingController weightController = TextEditingController(text: '');
-  TextEditingController repsController = TextEditingController(text: '');
-  TextEditingController setsController = TextEditingController(text: '');
+  // var text = "";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     /// ユーザーIDキー
-    String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(data);
+    String userIdKey =
+        AuthService.userId + CommonDataUtil.changeDateNoSlash(data);
 
     /// メニュー
     final menu = ref.watch(menuNotifierProvider);
+
     /// メニューID
     final menuId = ref.watch(menuIdNotifierProvider);
 
@@ -84,7 +89,24 @@ class TrainingMemoDialog extends ConsumerWidget {
                     /// 種目名の表示
                     edit == 0 ? const Text('種目') : Container(),
                     edit == 0
-                        ? _textField(1, menuId, 0, 0, ref)
+                        ? Card(
+                            child: TextFormField(
+                              textAlign: TextAlign.start,
+                              initialValue: menuId,
+                              decoration: const InputDecoration(
+                                floatingLabelStyle:
+                                    TextStyle(color: Colors.white),
+                                filled: true,
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.text,
+                              onChanged: (value) {
+                                final notifier =
+                                    ref.read(menuIdNotifierProvider.notifier);
+                                notifier.updateState(value);
+                              },
+                            ),
+                          )
                         : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -95,6 +117,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                                   color: Color(0xFFFFF59D)),
                             ),
                           ),
+
                     /// 記録入力のタイトル
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -117,6 +140,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     ),
                   ],
                 ),
+
                 /// 記録入力リスト
                 Expanded(
                   child: ListView(
@@ -126,6 +150,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     ],
                   ),
                 ),
+
                 /// 登録更新ボタン
                 SizedBox(
                   width: double.infinity,
@@ -137,13 +162,13 @@ class TrainingMemoDialog extends ConsumerWidget {
                       var now = DateTime.now();
                       var nowDate = DateTime(now.year, now.month, now.day);
                       var tapDate = DateTime(data.year, data.month, data.day);
-                      if(tapDate.isAtSameMomentAs(nowDate)) {
+                      if (tapDate.isAtSameMomentAs(nowDate)) {
                         final notifier =
-                        ref.read(trainingMemoNotifierProvider.notifier);
+                            ref.read(trainingMemoNotifierProvider.notifier);
                         notifier.updateState(userIdKey, menuId, menu);
                       } else {
                         final notifier =
-                        ref.read(calenderMemoNotifierProvider.notifier);
+                            ref.read(calenderMemoNotifierProvider.notifier);
                         notifier.updateState(userIdKey, menuId, menu);
                       }
 
@@ -176,19 +201,19 @@ class TrainingMemoDialog extends ConsumerWidget {
                 flex: 5,
                 child: Card(
                   child: TextFormField(
-                    textAlign: TextAlign.end,
-                    initialValue: menu[i]['weight'],
-                    decoration: const InputDecoration(
-                      floatingLabelStyle: TextStyle(color: Colors.white),
-                      filled: true,
-                      border: InputBorder.none,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateWeightState(value, i);
-                    }
-                  ),
+                      textAlign: TextAlign.end,
+                      initialValue: menu[i]['weight'],
+                      decoration: const InputDecoration(
+                        floatingLabelStyle: TextStyle(color: Colors.white),
+                        filled: true,
+                        border: InputBorder.none,
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        final notifier =
+                            ref.read(menuNotifierProvider.notifier);
+                        notifier.updateWeightState(value, i);
+                      }),
                 ),
               ),
               const Expanded(
@@ -216,8 +241,8 @@ class TrainingMemoDialog extends ConsumerWidget {
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                          final notifier = ref.read(menuNotifierProvider.notifier);
-                          notifier.updateRepsState(value, i);
+                      final notifier = ref.read(menuNotifierProvider.notifier);
+                      notifier.updateRepsState(value, i);
                     },
                   ),
                 ),
@@ -247,8 +272,8 @@ class TrainingMemoDialog extends ConsumerWidget {
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                        final notifier = ref.read(menuNotifierProvider.notifier);
-                        notifier.updateSetsState(value, i);
+                      final notifier = ref.read(menuNotifierProvider.notifier);
+                      notifier.updateSetsState(value, i);
                     },
                   ),
                 ),
@@ -263,7 +288,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   icon: const Icon(Icons.highlight_off),
                   onPressed: () {
                     /// 記録枠が１行の場合
-                    if(menu.length == 1) {
+                    if (menu.length == 1) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
                       // notifier.updateWeightState('', i);
                       // notifier.updateRepsState('', i);
@@ -285,79 +310,78 @@ class TrainingMemoDialog extends ConsumerWidget {
               backgroundColor: Colors.black26,
             ),
             onPressed: () {
-              final notifier =
-              ref.read(menuNotifierProvider.notifier);
+              final notifier = ref.read(menuNotifierProvider.notifier);
               notifier.insertRowState();
             },
             child: const Text('セット数追加'),
-            ),
           ),
+        ),
       ],
     );
   }
 
-  /// 入力欄
-  Widget _textField(int no, dynamic menu, int edit, int i, ref) {
-
-    switch (no) {
-      case 1:
-        text = menu;
-        break;
-      case 2: /// weight
-        if (menu.length == 0) {
-          text = '';
-        } else {
-          text = menu[i]['weight'];
-        }
-        break;
-      case 3: /// reps
-        if (menu.length == 0) {
-          text = '';
-        } else {
-          text = menu[i]['reps'];
-          break;
-        }
-      case 4: ///sets
-        if (menu.length == 0) {
-          text = '';
-        } else {
-          text = menu[i]['sets'];
-          break;
-        }
-    }
-
-    return Card(
-      child: TextFormField(
-        textAlign: no == 1 ? TextAlign.start : TextAlign.end,
-        // initialValue: text,
-        controller: TextEditingController(text: formKey.toString()),
-        decoration: const InputDecoration(
-          floatingLabelStyle: TextStyle(color: Colors.white),
-          filled: true,
-          border: InputBorder.none,
-        ),
-        keyboardType: no == 1 ? TextInputType.text : TextInputType.number,
-        onChanged: (value) {
-          switch (no) {
-            case 1:
-              final notifier = ref.read(menuIdNotifierProvider.notifier);
-              notifier.updateState(value);
-              break;
-            case 2: /// weight
-              final notifier = ref.read(menuNotifierProvider.notifier);
-              notifier.updateWeightState(value, i);
-              break;
-            case 3: /// reps
-              final notifier = ref.read(menuNotifierProvider.notifier);
-              notifier.updateRepsState(value, i);
-              break;
-            case 4: ///sets
-              final notifier = ref.read(menuNotifierProvider.notifier);
-              notifier.updateSetsState(value, i);
-              break;
-          }
-        },
-      ),
-    );
-  }
+// /// 入力欄
+// Widget _textField(int no, dynamic menu, int edit, int i, ref) {
+//
+//   switch (no) {
+//     case 1:
+//       text = menu;
+//       break;
+//     case 2: /// weight
+//       if (menu.length == 0) {
+//         text = '';
+//       } else {
+//         text = menu[i]['weight'];
+//       }
+//       break;
+//     case 3: /// reps
+//       if (menu.length == 0) {
+//         text = '';
+//       } else {
+//         text = menu[i]['reps'];
+//         break;
+//       }
+//     case 4: ///sets
+//       if (menu.length == 0) {
+//         text = '';
+//       } else {
+//         text = menu[i]['sets'];
+//         break;
+//       }
+//   }
+//
+//   return Card(
+//     child: TextFormField(
+//       textAlign: no == 1 ? TextAlign.start : TextAlign.end,
+//       // initialValue: text,
+//       controller: TextEditingController(text: formKey.toString()),
+//       decoration: const InputDecoration(
+//         floatingLabelStyle: TextStyle(color: Colors.white),
+//         filled: true,
+//         border: InputBorder.none,
+//       ),
+//       keyboardType: no == 1 ? TextInputType.text : TextInputType.number,
+//       onChanged: (value) {
+//         switch (no) {
+//           case 1:
+//             final notifier = ref.read(menuIdNotifierProvider.notifier);
+//             notifier.updateState(value);
+//             break;
+//           case 2: /// weight
+//             final notifier = ref.read(menuNotifierProvider.notifier);
+//             notifier.updateWeightState(value, i);
+//             break;
+//           case 3: /// reps
+//             final notifier = ref.read(menuNotifierProvider.notifier);
+//             notifier.updateRepsState(value, i);
+//             break;
+//           case 4: ///sets
+//             final notifier = ref.read(menuNotifierProvider.notifier);
+//             notifier.updateSetsState(value, i);
+//             break;
+//         }
+//       },
+//     ),
+//   );
+// }
 }
