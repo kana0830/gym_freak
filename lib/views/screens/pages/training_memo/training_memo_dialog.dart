@@ -177,8 +177,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    // initialValue: text = menu[i]['weight'],
-                    controller: TextEditingController(text: weightController.text = menu[i]['weight']),
+                    initialValue: menu[i]['weight'],
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -187,7 +186,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateWeightState(value, i, weightController);
+                      notifier.updateWeightState(value, i);
                     }
                   ),
                 ),
@@ -209,8 +208,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    initialValue: text = menu[i]['reps'],
-                    // controller: TextEditingController(text: text = menu[i]['reps']),
+                    initialValue: menu[i]['reps'],
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -241,8 +239,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    initialValue: text = menu[i]['sets'],
-                    // controller: TextEditingController(text: text = menu[i]['sets']),
+                    initialValue: menu[i]['sets'],
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -268,9 +265,10 @@ class TrainingMemoDialog extends ConsumerWidget {
                     /// 記録枠が１行の場合
                     if(menu.length == 1) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateWeightState('', i, weightController);
-                      notifier.updateRepsState('', i);
-                      notifier.updateSetsState('', i);
+                      // notifier.updateWeightState('', i);
+                      // notifier.updateRepsState('', i);
+                      // notifier.updateSetsState('', i);
+                      notifier.deleteMenuState(i);
                     } else {
                       final notifier = ref.read(menuNotifierProvider.notifier);
                       notifier.deleteMenuState(i);
