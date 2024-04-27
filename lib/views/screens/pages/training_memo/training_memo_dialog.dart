@@ -19,39 +19,30 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   /// メニュー
   QueryDocumentSnapshot<Map<String, dynamic>>? menus;
-
   /// メニューID
   String? menuId = '';
-
   /// 編集フラグ
   int edit;
-
   /// 日付
   DateTime data;
-
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
-
-  // var text = "";
+  String text = '';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// ユーザーIDキー
     String userIdKey =
         AuthService.userId + CommonDataUtil.changeDateNoSlash(data);
-
     /// メニュー
     final menu = ref.watch(menuNotifierProvider);
-
     /// メニューID
     final menuId = ref.watch(menuIdNotifierProvider);
-
     /// メニューデータをセットして書き換え
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(menuNotifierProvider.notifier);
       notifier.setState(menus);
     });
-
     /// メニューIDデータがある場合、メニューIDデータをセットして書き換え
     if (this.menuId != '') {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -59,7 +50,6 @@ class TrainingMemoDialog extends ConsumerWidget {
         notifier.setState(this.menuId);
       });
     }
-
     ///　スクリーンサイズ取得
     var screenSize = MediaQuery.of(context).size;
 
@@ -202,7 +192,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                       textAlign: TextAlign.end,
-                      initialValue: menu[i]['weight'],
+                      initialValue: text = menu[i]['weight'],
                       decoration: const InputDecoration(
                         floatingLabelStyle: TextStyle(color: Colors.white),
                         filled: true,
@@ -290,10 +280,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     /// 記録枠が１行の場合
                     if (menu.length == 1) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      // notifier.updateWeightState('', i);
-                      // notifier.updateRepsState('', i);
-                      // notifier.updateSetsState('', i);
-                      notifier.deleteMenuState(i);
+                      notifier.deleteMenuState(0);
                     } else {
                       final notifier = ref.read(menuNotifierProvider.notifier);
                       notifier.deleteMenuState(i);
