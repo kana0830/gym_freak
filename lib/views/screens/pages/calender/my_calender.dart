@@ -17,7 +17,9 @@ class MyCalender extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// トレーニング記録
     final menus = ref.watch(calenderNotifierProvider);
+    /// トレーニング部位
     final trainingPart = ref.watch(calenderPartNotifierProvider);
 
     /// トレーニング記録表示ウィジェット
