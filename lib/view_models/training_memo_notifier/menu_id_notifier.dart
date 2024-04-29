@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'menu_id_notifier.g.dart';
 
+/// 部位管理
 @riverpod
 class MenuIdNotifier extends _$MenuIdNotifier {
 

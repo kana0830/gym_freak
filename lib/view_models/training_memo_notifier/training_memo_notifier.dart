@@ -8,6 +8,7 @@ import '../../repositories/user_repository.dart';
 
 part 'training_memo_notifier.g.dart';
 
+/// トレーニング記録管理
 @riverpod
 class TrainingMemoNotifier extends _$TrainingMemoNotifier {
 

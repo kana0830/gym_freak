@@ -10,6 +10,7 @@ import '../../repositories/user_repository.dart';
 
 part 'training_part_notifier.g.dart';
 
+/// トレーニング部位管理
 @riverpod
 class TrainingPartNotifier extends _$TrainingPartNotifier {
 

@@ -6,6 +6,7 @@ import '../../repositories/training_memo_repository.dart';
 
 part 'calender_notifier.g.dart';
 
+/// カレンダー記録管理
 @riverpod
 class CalenderNotifier extends _$CalenderNotifier {
 

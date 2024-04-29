@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'menu_notifier.g.dart';
 
+/// 記録管理
 @riverpod
 class MenuNotifier extends _$MenuNotifier {
 

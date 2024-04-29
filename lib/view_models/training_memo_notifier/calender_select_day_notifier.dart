@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'calender_select_day_notifier.g.dart';
 
+/// カレンダー選択日管理
 @riverpod
 class CalenderSelectDayNotifier extends _$CalenderSelectDayNotifier {
 
