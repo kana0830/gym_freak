@@ -13,7 +13,7 @@ class MenuIdNotifier extends _$MenuIdNotifier {
     return '';
   }
 
-  // 親画面からのパラメータ設定
+  /// 親画面からのパラメータ設定
   void setState(String? menuId) {
     if (this.menuId == ''){
       this.menuId = menuId;
@@ -21,7 +21,7 @@ class MenuIdNotifier extends _$MenuIdNotifier {
     }
   }
 
-  // menuId書き換え
+  /// menuId書き換え
   void updateState(value) async {
     menuId = value;
     state = menuId!;

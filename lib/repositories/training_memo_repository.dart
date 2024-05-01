@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrainingMemoRepository {
   @override
-  // トレーニング記録取得
+  /// トレーニング記録取得
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getTrainingMemo(
       String userIdKey) async {
     List<QueryDocumentSnapshot<Map<String, dynamic>>> trainings = [];
@@ -11,6 +11,7 @@ class TrainingMemoRepository {
         .collection('trainingMemo')
         .doc(userIdKey)
         .collection('menus')
+        .orderBy('createdAt')
         .get()
         .then((querySnapshot) => {trainings.addAll(querySnapshot.docs)});
 
@@ -33,7 +34,7 @@ class TrainingMemoRepository {
         .doc(userIdKey)
         .collection('menus')
         .doc(menuId)
-        .set({'memo': menus});
+        .set({'memo': menus, 'createdAt' : DateTime.now()});
   }
 
   void deleteTrainingMemo(userIdKey, menuId) async {
