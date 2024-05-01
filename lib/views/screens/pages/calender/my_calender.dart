@@ -92,9 +92,8 @@ class MyCalender extends ConsumerWidget {
                     ),
                   );
                 },
-                child: MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
+                child: Container(
+                  padding: EdgeInsets.only(top: 10.0),
                   child: ListView(
                     children: [
                       for (var menu in data)

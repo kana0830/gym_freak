@@ -13,18 +13,26 @@ class TrainingMemoDialog extends ConsumerWidget {
   TrainingMemoDialog(
       {this.menus,
       this.menuId,
+      required this.createdAt,
       required this.edit,
       required this.data,
       super.key});
 
   /// メニュー
   QueryDocumentSnapshot<Map<String, dynamic>>? menus;
+
   /// メニューID
   String? menuId = '';
+
+  /// 登録日時
+  DateTime? createdAt;
+
   /// 編集フラグ
   int edit;
+
   /// 日付
   DateTime data;
+
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
   String text = '';
@@ -34,15 +42,19 @@ class TrainingMemoDialog extends ConsumerWidget {
     /// ユーザーIDキー
     String userIdKey =
         AuthService.userId + CommonDataUtil.changeDateNoSlash(data);
+
     /// メニュー
     final menu = ref.watch(menuNotifierProvider);
+
     /// メニューID
     final menuId = ref.watch(menuIdNotifierProvider);
+
     /// メニューデータをセットして書き換え
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(menuNotifierProvider.notifier);
       notifier.setState(menus);
     });
+
     /// メニューIDデータがある場合、メニューIDデータをセットして書き換え
     if (this.menuId != '') {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -50,6 +62,7 @@ class TrainingMemoDialog extends ConsumerWidget {
         notifier.setState(this.menuId);
       });
     }
+
     ///　スクリーンサイズ取得
     var screenSize = MediaQuery.of(context).size;
 
@@ -155,11 +168,11 @@ class TrainingMemoDialog extends ConsumerWidget {
                       if (tapDate.isAtSameMomentAs(nowDate)) {
                         final notifier =
                             ref.read(trainingMemoNotifierProvider.notifier);
-                        notifier.updateState(userIdKey, menuId, menu);
+                        notifier.updateState(userIdKey, menuId, menu, createdAt);
                       } else {
                         final notifier =
                             ref.read(calenderMemoNotifierProvider.notifier);
-                        notifier.updateState(userIdKey, menuId, menu);
+                        notifier.updateState(userIdKey, menuId, menu, createdAt);
                       }
 
                       Navigator.pop(context);

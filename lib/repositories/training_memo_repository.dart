@@ -28,13 +28,23 @@ class TrainingMemoRepository {
     getTrainingMemo(userIdKey);
   }
 
-  void updateTrainingMemo(userIdKey, menuId, menus) async {
-    await FirebaseFirestore.instance
-        .collection('trainingMemo')
-        .doc(userIdKey)
-        .collection('menus')
-        .doc(menuId)
-        .set({'memo': menus, 'createdAt' : DateTime.now()});
+  void updateTrainingMemo(userIdKey, menuId, menus, createdAt) async {
+    if (createdAt == null) {
+      await FirebaseFirestore.instance
+          .collection('trainingMemo')
+          .doc(userIdKey)
+          .collection('menus')
+          .doc(menuId)
+          .set({'memo': menus, 'createdAt' : DateTime.now()});
+    } else {
+      await FirebaseFirestore.instance
+          .collection('trainingMemo')
+          .doc(userIdKey)
+          .collection('menus')
+          .doc(menuId)
+          .set({'memo': menus});
+    }
+
   }
 
   void deleteTrainingMemo(userIdKey, menuId) async {
@@ -54,8 +64,8 @@ class TrainingMemoRepository {
       {
         "memo": FieldValue.arrayRemove([
           {
-            'reps': '10',
-            'sets': '10',
+            'reps': '',
+            'sets': '',
             'weight': '',
           }
         ])

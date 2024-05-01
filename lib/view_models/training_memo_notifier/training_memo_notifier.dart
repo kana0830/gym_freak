@@ -27,8 +27,8 @@ class TrainingMemoNotifier extends _$TrainingMemoNotifier {
   }
 
   /// update
-  void updateState(userIdKey, menuId, menus) async {
-    _trainingMemoRepository.updateTrainingMemo(userIdKey, menuId, menus);
+  void updateState(userIdKey, menuId, menus, createdAt) async {
+    _trainingMemoRepository.updateTrainingMemo(userIdKey, menuId, menus, createdAt);
     trainingMemo = await _trainingMemoRepository.getTrainingMemo(userIdKey);
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
