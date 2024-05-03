@@ -42,7 +42,7 @@ class TrainingMemoRepository {
           .doc(userIdKey)
           .collection('menus')
           .doc(menuId)
-          .set({'memo': menus});
+          .set({'memo': menus, 'createdAt' : createdAt});
     }
 
   }
