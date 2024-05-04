@@ -30,7 +30,7 @@ class TrainingMemo extends ConsumerWidget {
 
     /// トレーニング記録表示部分
     trainingMemoInfo = trainingMemo.when(
-      loading: () => const CircularProgressIndicator(),
+      loading: () => Container(),
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
@@ -59,7 +59,7 @@ class TrainingMemo extends ConsumerWidget {
 
     /// ヘッダ部位表示
     final Widget part = trainingPart.when(
-      loading: () => const CircularProgressIndicator(),
+      loading: () => Container(),
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
