@@ -178,7 +178,7 @@ class TrainingMemoPast extends ConsumerWidget {
                   builder: (context) => TrainingMemoDialog(
                     menus: menu,
                     menuId: menu.id,
-                    createdAt: menu.data()['createdAt'] != null ? menu.data()['createdAt'].toDate() : null,
+                    createdAt: menu.data()['createdAt'].toDate(),
                     edit: 1,
                     data: tapDay,
                   ),

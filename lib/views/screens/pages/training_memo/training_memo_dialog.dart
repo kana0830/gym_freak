@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
@@ -205,6 +206,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                       textAlign: TextAlign.end,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: text = menu[i]['weight'],
                       decoration: const InputDecoration(
                         floatingLabelStyle: TextStyle(color: Colors.white),
