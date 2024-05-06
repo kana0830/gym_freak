@@ -72,7 +72,7 @@ class TrainingMemoDialog extends ConsumerWidget {
       insetPadding: const EdgeInsets.all(20.0),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: screenSize.height * 0.4,
+          minHeight: screenSize.height * 0.2,
           maxHeight: screenSize.height * 0.6,
         ),
         child: Card(

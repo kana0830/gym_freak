@@ -78,7 +78,7 @@ class MyCalender extends ConsumerWidget {
             return Container();
           } else {
             return Padding(
-              padding: const EdgeInsets.only(top: 12.0),
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -92,60 +92,57 @@ class MyCalender extends ConsumerWidget {
                     ),
                   );
                 },
-                child: Container(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: ListView(
-                    children: [
-                      for (var menu in data)
-                        ListTile(
-                          title: Text(
-                            menu.id,
-                            style: const TextStyle(
-                                color: Color(0xFFFFF59D),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            children: [
-                              for (int i = 0; i < menu.data()['memo'].length; i++)
-                                Row(
-                                  children: [
-                                    Text((menu.data()['memo'][i]['weight'] ==
-                                                '') &&
-                                            (menu.data()['memo'][i]['reps'] ==
-                                                '') &&
-                                            (menu.data()['memo'][i]['sets'] == '')
-                                        ? ''
-                                        : "・"),
-                                    Text(menu.data()['memo'][i]['weight']),
-                                    Text(menu.data()['memo'][i]['weight'] == ''
-                                        ? ''
-                                        : 'kg'),
-                                    Text(
-                                      menu.data()['memo'][i]['weight'] == ''
-                                          ? ''
-                                          : '×',
-                                    ),
-                                    Text('${menu.data()['memo'][i]['reps']}'),
-                                    Text(menu.data()['memo'][i]['reps'] == ''
-                                        ? ''
-                                        : 'rep'),
-                                    Text(
-                                      menu.data()['memo'][i]['sets'] == ''
-                                          ? ''
-                                          : '×',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text('${menu.data()['memo'][i]['sets']}'),
-                                    Text(menu.data()['memo'][i]['sets'] == ''
-                                        ? ''
-                                        : 'set'),
-                                  ],
-                                ),
-                            ],
-                          ),
+                child: ListView(
+                  children: [
+                    for (var menu in data)
+                      ListTile(
+                        title: Text(
+                          menu.id,
+                          style: const TextStyle(
+                              color: Color(0xFFFFF59D),
+                              fontWeight: FontWeight.bold),
                         ),
-                    ],
-                  ),
+                        subtitle: Column(
+                          children: [
+                            for (int i = 0; i < menu.data()['memo'].length; i++)
+                              Row(
+                                children: [
+                                  Text((menu.data()['memo'][i]['weight'] ==
+                                              '') &&
+                                          (menu.data()['memo'][i]['reps'] ==
+                                              '') &&
+                                          (menu.data()['memo'][i]['sets'] == '')
+                                      ? ''
+                                      : "・"),
+                                  Text(menu.data()['memo'][i]['weight']),
+                                  Text(menu.data()['memo'][i]['weight'] == ''
+                                      ? ''
+                                      : 'kg'),
+                                  Text(
+                                    menu.data()['memo'][i]['weight'] == ''
+                                        ? ''
+                                        : '×',
+                                  ),
+                                  Text('${menu.data()['memo'][i]['reps']}'),
+                                  Text(menu.data()['memo'][i]['reps'] == ''
+                                      ? ''
+                                      : 'rep'),
+                                  Text(
+                                    menu.data()['memo'][i]['sets'] == ''
+                                        ? ''
+                                        : '×',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text('${menu.data()['memo'][i]['sets']}'),
+                                  Text(menu.data()['memo'][i]['sets'] == ''
+                                      ? ''
+                                      : 'set'),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
+                  ],
                 ),
               ),
             );
