@@ -19,6 +19,7 @@ class MyCalender extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /// トレーニング記録
     final menus = ref.watch(calenderNotifierProvider);
+
     /// トレーニング部位
     final trainingPart = ref.watch(calenderPartNotifierProvider);
 
@@ -92,111 +93,60 @@ class MyCalender extends ConsumerWidget {
                     ),
                   );
                 },
-                child: ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          data[index].id,
-                          style: const TextStyle(
-                              color: Color(0xFFFFF59D),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          children: [
-                            for (int i = 0; i < data[index]['memo'].length; i++)
-                              Row(
-                                children: [
-                                  Text((data[index]['memo'][i]['weight'] ==
-                                      '') &&
-                                      (data[index]['memo'][i]['reps'] ==
-                                          '') &&
-                                      (data[index]['memo'][i]['sets'] == '')
+                child: ListView.separated(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        data[index].id,
+                        style: const TextStyle(
+                            color: Color(0xFFFFF59D),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        children: [
+                          for (int i = 0; i < data[index]['memo'].length; i++)
+                            Row(
+                              children: [
+                                Text((data[index]['memo'][i]['weight'] == '') &&
+                                        (data[index]['memo'][i]['reps'] ==
+                                            '') &&
+                                        (data[index]['memo'][i]['sets'] == '')
+                                    ? ''
+                                    : "・"),
+                                Text(data[index]['memo'][i]['weight']),
+                                Text(data[index]['memo'][i]['weight'] == ''
+                                    ? ''
+                                    : 'kg'),
+                                Text(
+                                  data[index]['memo'][i]['weight'] == ''
                                       ? ''
-                                      : "・"),
-                                  Text(data[index]['memo'][i]['weight']),
-                                  Text(data[index]['memo'][i]['weight'] == ''
+                                      : '×',
+                                ),
+                                Text('${data[index]['memo'][i]['reps']}'),
+                                Text(data[index]['memo'][i]['reps'] == ''
+                                    ? ''
+                                    : 'rep'),
+                                Text(
+                                  data[index]['memo'][i]['sets'] == ''
                                       ? ''
-                                      : 'kg'),
-                                  Text(
-                                    data[index]['memo'][i]['weight'] == ''
-                                        ? ''
-                                        : '×',
-                                  ),
-                                  Text('${data[index]['memo'][i]['reps']}'),
-                                  Text(data[index]['memo'][i]['reps'] == ''
-                                      ? ''
-                                      : 'rep'),
-                                  Text(
-                                    data[index]['memo'][i]['sets'] == ''
-                                        ? ''
-                                        : '×',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text('${data[index]['memo'][i]['sets']}'),
-                                  Text(data[index]['memo'][i]['sets'] == ''
-                                      ? ''
-                                      : 'set'),
-                                ],
-                              ),
-                          ],
-                        ),
-                      );
-                    }
+                                      : '×',
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text('${data[index]['memo'][i]['sets']}'),
+                                Text(data[index]['memo'][i]['sets'] == ''
+                                    ? ''
+                                    : 'set'),
+                              ],
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 4.0);
+                  },
                 ),
-                //
-                // ListView(
-                //   children: [
-                //     for (var menu in data)
-                //       ListTile(
-                //         title: Text(
-                //           menu.id,
-                //           style: const TextStyle(
-                //               color: Color(0xFFFFF59D),
-                //               fontWeight: FontWeight.bold),
-                //         ),
-                //         subtitle: Column(
-                //           children: [
-                //             for (int i = 0; i < menu.data()['memo'].length; i++)
-                //               Row(
-                //                 children: [
-                //                   Text((menu.data()['memo'][i]['weight'] ==
-                //                               '') &&
-                //                           (menu.data()['memo'][i]['reps'] ==
-                //                               '') &&
-                //                           (menu.data()['memo'][i]['sets'] == '')
-                //                       ? ''
-                //                       : "・"),
-                //                   Text(menu.data()['memo'][i]['weight']),
-                //                   Text(menu.data()['memo'][i]['weight'] == ''
-                //                       ? ''
-                //                       : 'kg'),
-                //                   Text(
-                //                     menu.data()['memo'][i]['weight'] == ''
-                //                         ? ''
-                //                         : '×',
-                //                   ),
-                //                   Text('${menu.data()['memo'][i]['reps']}'),
-                //                   Text(menu.data()['memo'][i]['reps'] == ''
-                //                       ? ''
-                //                       : 'rep'),
-                //                   Text(
-                //                     menu.data()['memo'][i]['sets'] == ''
-                //                         ? ''
-                //                         : '×',
-                //                     textAlign: TextAlign.center,
-                //                   ),
-                //                   Text('${menu.data()['memo'][i]['sets']}'),
-                //                   Text(menu.data()['memo'][i]['sets'] == ''
-                //                       ? ''
-                //                       : 'set'),
-                //                 ],
-                //               ),
-                //           ],
-                //         ),
-                //       ),
-                //   ],
-                // ),
               ),
             );
           }
