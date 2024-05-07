@@ -92,58 +92,111 @@ class MyCalender extends ConsumerWidget {
                     ),
                   );
                 },
-                child: ListView(
-                  children: [
-                    for (var menu in data)
-                      ListTile(
+                child: ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
                         title: Text(
-                          menu.id,
+                          data[index].id,
                           style: const TextStyle(
                               color: Color(0xFFFFF59D),
                               fontWeight: FontWeight.bold),
                         ),
                         subtitle: Column(
                           children: [
-                            for (int i = 0; i < menu.data()['memo'].length; i++)
+                            for (int i = 0; i < data[index]['memo'].length; i++)
                               Row(
                                 children: [
-                                  Text((menu.data()['memo'][i]['weight'] ==
-                                              '') &&
-                                          (menu.data()['memo'][i]['reps'] ==
-                                              '') &&
-                                          (menu.data()['memo'][i]['sets'] == '')
+                                  Text((data[index]['memo'][i]['weight'] ==
+                                      '') &&
+                                      (data[index]['memo'][i]['reps'] ==
+                                          '') &&
+                                      (data[index]['memo'][i]['sets'] == '')
                                       ? ''
                                       : "・"),
-                                  Text(menu.data()['memo'][i]['weight']),
-                                  Text(menu.data()['memo'][i]['weight'] == ''
+                                  Text(data[index]['memo'][i]['weight']),
+                                  Text(data[index]['memo'][i]['weight'] == ''
                                       ? ''
                                       : 'kg'),
                                   Text(
-                                    menu.data()['memo'][i]['weight'] == ''
+                                    data[index]['memo'][i]['weight'] == ''
                                         ? ''
                                         : '×',
                                   ),
-                                  Text('${menu.data()['memo'][i]['reps']}'),
-                                  Text(menu.data()['memo'][i]['reps'] == ''
+                                  Text('${data[index]['memo'][i]['reps']}'),
+                                  Text(data[index]['memo'][i]['reps'] == ''
                                       ? ''
                                       : 'rep'),
                                   Text(
-                                    menu.data()['memo'][i]['sets'] == ''
+                                    data[index]['memo'][i]['sets'] == ''
                                         ? ''
                                         : '×',
                                     textAlign: TextAlign.center,
                                   ),
-                                  Text('${menu.data()['memo'][i]['sets']}'),
-                                  Text(menu.data()['memo'][i]['sets'] == ''
+                                  Text('${data[index]['memo'][i]['sets']}'),
+                                  Text(data[index]['memo'][i]['sets'] == ''
                                       ? ''
                                       : 'set'),
                                 ],
                               ),
                           ],
                         ),
-                      ),
-                  ],
+                      );
+                    }
                 ),
+                //
+                // ListView(
+                //   children: [
+                //     for (var menu in data)
+                //       ListTile(
+                //         title: Text(
+                //           menu.id,
+                //           style: const TextStyle(
+                //               color: Color(0xFFFFF59D),
+                //               fontWeight: FontWeight.bold),
+                //         ),
+                //         subtitle: Column(
+                //           children: [
+                //             for (int i = 0; i < menu.data()['memo'].length; i++)
+                //               Row(
+                //                 children: [
+                //                   Text((menu.data()['memo'][i]['weight'] ==
+                //                               '') &&
+                //                           (menu.data()['memo'][i]['reps'] ==
+                //                               '') &&
+                //                           (menu.data()['memo'][i]['sets'] == '')
+                //                       ? ''
+                //                       : "・"),
+                //                   Text(menu.data()['memo'][i]['weight']),
+                //                   Text(menu.data()['memo'][i]['weight'] == ''
+                //                       ? ''
+                //                       : 'kg'),
+                //                   Text(
+                //                     menu.data()['memo'][i]['weight'] == ''
+                //                         ? ''
+                //                         : '×',
+                //                   ),
+                //                   Text('${menu.data()['memo'][i]['reps']}'),
+                //                   Text(menu.data()['memo'][i]['reps'] == ''
+                //                       ? ''
+                //                       : 'rep'),
+                //                   Text(
+                //                     menu.data()['memo'][i]['sets'] == ''
+                //                         ? ''
+                //                         : '×',
+                //                     textAlign: TextAlign.center,
+                //                   ),
+                //                   Text('${menu.data()['memo'][i]['sets']}'),
+                //                   Text(menu.data()['memo'][i]['sets'] == ''
+                //                       ? ''
+                //                       : 'set'),
+                //                 ],
+                //               ),
+                //           ],
+                //         ),
+                //       ),
+                //   ],
+                // ),
               ),
             );
           }
