@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gym_freak/common/appColors.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/calender_memo_notifier.dart';
@@ -79,7 +80,7 @@ class TrainingMemoDialog extends ConsumerWidget {
           shadowColor: Colors.transparent,
           elevation: 0,
           shape: const RoundedRectangleBorder(
-            side: BorderSide(color: Color(0xFFFFF176), width: 1),
+            side: BorderSide(color: Color(0xFFFFF59D), width: 1),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           child: Padding(
@@ -160,7 +161,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFF59D),
+                      backgroundColor: AppColors.yellow,
                     ),
                     onPressed: () {
                       var now = DateTime.now();
@@ -321,69 +322,4 @@ class TrainingMemoDialog extends ConsumerWidget {
       ],
     );
   }
-
-// /// 入力欄
-// Widget _textField(int no, dynamic menu, int edit, int i, ref) {
-//
-//   switch (no) {
-//     case 1:
-//       text = menu;
-//       break;
-//     case 2: /// weight
-//       if (menu.length == 0) {
-//         text = '';
-//       } else {
-//         text = menu[i]['weight'];
-//       }
-//       break;
-//     case 3: /// reps
-//       if (menu.length == 0) {
-//         text = '';
-//       } else {
-//         text = menu[i]['reps'];
-//         break;
-//       }
-//     case 4: ///sets
-//       if (menu.length == 0) {
-//         text = '';
-//       } else {
-//         text = menu[i]['sets'];
-//         break;
-//       }
-//   }
-//
-//   return Card(
-//     child: TextFormField(
-//       textAlign: no == 1 ? TextAlign.start : TextAlign.end,
-//       // initialValue: text,
-//       controller: TextEditingController(text: formKey.toString()),
-//       decoration: const InputDecoration(
-//         floatingLabelStyle: TextStyle(color: Colors.white),
-//         filled: true,
-//         border: InputBorder.none,
-//       ),
-//       keyboardType: no == 1 ? TextInputType.text : TextInputType.number,
-//       onChanged: (value) {
-//         switch (no) {
-//           case 1:
-//             final notifier = ref.read(menuIdNotifierProvider.notifier);
-//             notifier.updateState(value);
-//             break;
-//           case 2: /// weight
-//             final notifier = ref.read(menuNotifierProvider.notifier);
-//             notifier.updateWeightState(value, i);
-//             break;
-//           case 3: /// reps
-//             final notifier = ref.read(menuNotifierProvider.notifier);
-//             notifier.updateRepsState(value, i);
-//             break;
-//           case 4: ///sets
-//             final notifier = ref.read(menuNotifierProvider.notifier);
-//             notifier.updateSetsState(value, i);
-//             break;
-//         }
-//       },
-//     ),
-//   );
-// }
 }

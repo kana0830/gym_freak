@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/views/screens/pages/calender/training_memo_past.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../../../common/appColors.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/calender_notifier.dart';
@@ -100,7 +101,7 @@ class MyCalender extends ConsumerWidget {
                       title: Text(
                         data[index].id,
                         style: const TextStyle(
-                            color: Color(0xFFFFF59D),
+                            color: AppColors.yellow,
                             fontWeight: FontWeight.bold),
                       ),
                       subtitle: Column(
@@ -172,7 +173,7 @@ class MyCalender extends ConsumerWidget {
                 headerStyle: const HeaderStyle(
                   headerPadding: EdgeInsets.only(top: 6, left: 16, bottom: 6),
                   decoration: BoxDecoration(
-                    color: Color(0xFF7b755e),
+                    color: AppColors.darkYellow,
                   ),
                   formatButtonVisible: false,
                   titleCentered: false,
@@ -198,7 +199,7 @@ class MyCalender extends ConsumerWidget {
                   /// ヘッダ部分
                   dowBuilder: (_, day) {
                     return Container(
-                      color: const Color(0xFFFFF9C4),
+                      color: AppColors.calenderYellow,
                       child: Center(
                         child: Text(
                           _dayOfWeek(day),
@@ -235,7 +236,7 @@ class MyCalender extends ConsumerWidget {
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
                           decoration: const BoxDecoration(
-                            color: Color(0xFFffe071),
+                            color: AppColors.selectYellow,
                             shape: BoxShape.circle,
                           ),
                           child: Center(
@@ -284,7 +285,7 @@ class MyCalender extends ConsumerWidget {
             Container(
               width: double.infinity,
               height: 30,
-              color: const Color(0xFFFFF9C4),
+              color: AppColors.calenderYellow,
               child: trainingPartInfo,
             ),
             Expanded(child: trainingMemoInfo),

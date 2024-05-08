@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_memo_dialog.dart';
 import 'package:gym_freak/views/screens/pages/training_memo/training_part_dialog.dart';
+import '../../../../common/appColors.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
@@ -102,7 +103,7 @@ class TrainingMemo extends ConsumerWidget {
               ),
             );
           },
-          backgroundColor: const Color(0xFFFFF59D),
+          backgroundColor: AppColors.yellow,
           child: const Icon(Icons.add),
         ),
         body: trainingMemoInfo,
@@ -115,7 +116,7 @@ class TrainingMemo extends ConsumerWidget {
     if (part == '') {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFFFF59D),
+          backgroundColor: AppColors.yellow,
         ),
         onPressed: () {
           showDialog(
@@ -184,7 +185,7 @@ class TrainingMemo extends ConsumerWidget {
                       actions: [
                         TextButton(
                           style: TextButton.styleFrom(
-                              backgroundColor: const Color(0xFFFFF59D),
+                              backgroundColor: AppColors.yellow,
                               foregroundColor: Colors.black),
                           child: const Text("いいえ"),
                           onPressed: () => Navigator.pop(context),
@@ -193,7 +194,7 @@ class TrainingMemo extends ConsumerWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextButton(
                             style: TextButton.styleFrom(
-                                backgroundColor: const Color(0xFFFFF59D),
+                                backgroundColor: AppColors.yellow,
                                 foregroundColor: Colors.black),
                             child: const Text("はい"),
                             onPressed: () {
@@ -215,7 +216,7 @@ class TrainingMemo extends ConsumerWidget {
                     menu.id,
                     style: const TextStyle(
                         fontSize: 16.0,
-                        color: Color(0xFFFFF59D),
+                        color: AppColors.yellow,
                         fontWeight: FontWeight.bold),
                   ),
                   subtitle: Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../common/appColors.dart';
 import '../../../../common/common_data_util.dart';
 import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/calender_part_notifier.dart';
@@ -31,7 +32,7 @@ class TrainingPartDialog extends ConsumerWidget {
           shadowColor: Colors.transparent,
           elevation: 0,
           shape: const RoundedRectangleBorder(
-            side: BorderSide(color: Color(0xFFFFF176), width: 1),
+            side: BorderSide(color: AppColors.yellow, width: 1),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           child: Padding(
@@ -63,7 +64,7 @@ class TrainingPartDialog extends ConsumerWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFF59D),
+                      backgroundColor: AppColors.yellow,
                     ),
                     onPressed: () {
                       var now = DateTime.now();
