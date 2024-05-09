@@ -27,7 +27,8 @@ class TrainingMemo extends ConsumerWidget {
     Widget trainingMemoInfo;
 
     /// 表示用日付を取得
-    String today = CommonDataUtil.getDate(DateTime.now()) + CommonDataUtil.getDayOfWeek();
+    String today =
+        CommonDataUtil.getDate(DateTime.now()) + CommonDataUtil.getDayOfWeek();
 
     /// トレーニング記録表示部分
     trainingMemoInfo = trainingMemo.when(
@@ -36,14 +37,12 @@ class TrainingMemo extends ConsumerWidget {
       data: (data) {
         if (data.isEmpty) {
           return const Center(
-              child: Text(
-            'Enjoy Training!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 30.0,
-              fontFamily: "Tegaki"
+            child: Text(
+              'Enjoy Training!',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 30.0, fontFamily: "Tegaki"),
             ),
-          ),);
+          );
         } else {
           return Padding(
             padding: const EdgeInsets.all(10.0),
@@ -81,7 +80,10 @@ class TrainingMemo extends ConsumerWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: Text(today),
+                child: Text(
+                  today,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               Expanded(
                 flex: 1,
@@ -272,10 +274,9 @@ class TrainingMemo extends ConsumerWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                    menu.data()['memo'][i]['reps'] == ''
-                                        ? ''
-                                        : 'rep'),
+                                child: Text(menu.data()['memo'][i]['reps'] == ''
+                                    ? ''
+                                    : 'rep'),
                               ),
                               Expanded(
                                 flex: 2,
@@ -302,10 +303,9 @@ class TrainingMemo extends ConsumerWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                    menu.data()['memo'][i]['sets'] == ''
-                                        ? ''
-                                        : 'set'),
+                                child: Text(menu.data()['memo'][i]['sets'] == ''
+                                    ? ''
+                                    : 'set'),
                               ),
                             ],
                           ),

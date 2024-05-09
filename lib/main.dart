@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'gym_freak',
       theme: ThemeData(
-        fontFamily: 'Japanese',
+        fontFamily: "Japanese",
         brightness: Brightness.dark,
         textTheme: const TextTheme(
           bodyMedium: TextStyle(fontSize: 16.0),
