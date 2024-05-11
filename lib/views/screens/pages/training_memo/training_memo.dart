@@ -40,7 +40,7 @@ class TrainingMemo extends ConsumerWidget {
             child: Text(
               'Enjoy Training!',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30.0, fontFamily: "Tegaki"),
+              style: TextStyle(fontSize: 30.0,),
             ),
           );
         } else {
@@ -273,7 +273,7 @@ class TrainingMemo extends ConsumerWidget {
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Text(menu.data()['memo'][i]['reps'] == ''
                                     ? ''
                                     : 'rep'),
@@ -302,7 +302,7 @@ class TrainingMemo extends ConsumerWidget {
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Text(menu.data()['memo'][i]['sets'] == ''
                                     ? ''
                                     : 'set'),

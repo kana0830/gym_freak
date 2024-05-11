@@ -129,7 +129,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 7,
+                            flex: 8,
                             child: Text('重量'),
                           ),
                           Expanded(
@@ -149,7 +149,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 /// 記録入力リスト
                 Expanded(
                   child: ListView(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    padding: const EdgeInsets.only(bottom: 10.0),
                     children: [
                       _updateWidget(ref, menu),
                     ],

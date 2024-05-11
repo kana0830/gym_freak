@@ -112,7 +112,7 @@ flutter:
         - asset: assets/fonts/Hand_Of_Sean_Demo.ttf
     - family: Japanese
       fonts:
-        - asset: assets/fonts/ZenMaruGothic-Regular.ttf
+        - asset: assets/fonts/Corporate-Logo-Rounded-Bold-ver3.otf
 
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
