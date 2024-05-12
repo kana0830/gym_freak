@@ -148,14 +148,27 @@ class TrainingMemoDialog extends ConsumerWidget {
 
                 /// 記録入力リスト
                 Expanded(
-                  child: ListView(
+                  child: ListView.builder(
+                    itemCount: menu.length,
+                    itemBuilder: (context, index) {
+                      return _updateWidget(ref, menu[index], index);
+                    },
                     padding: const EdgeInsets.only(bottom: 10.0),
-                    children: [
-                      _updateWidget(ref, menu),
-                    ],
                   ),
                 ),
-
+                SizedBox(
+                  width: 120,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black26,
+                    ),
+                    onPressed: () {
+                      final notifier = ref.read(menuNotifierProvider.notifier);
+                      notifier.insertRowState();
+                    },
+                    child: const Text('セット数追加'),
+                  ),
+                ),
                 /// 登録更新ボタン
                 SizedBox(
                   width: double.infinity,
@@ -196,10 +209,9 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   /// 更新用記録入力ウィジェット
-  Widget _updateWidget(ref, menu) {
+  Widget _updateWidget(ref, menu, index) {
     return Column(
       children: [
-        for (int i = 0; i < menu.length; i++)
           Row(
             children: [
               Expanded(
@@ -208,7 +220,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: TextFormField(
                       textAlign: TextAlign.end,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      initialValue: text = menu[i]['weight'],
+                      initialValue: text = menu['weight'],
                       decoration: const InputDecoration(
                         floatingLabelStyle: TextStyle(color: Colors.white),
                         filled: true,
@@ -218,7 +230,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                       onChanged: (value) {
                         final notifier =
                             ref.read(menuNotifierProvider.notifier);
-                        notifier.updateWeightState(value, i);
+                        notifier.updateWeightState(value, index);
                       }),
                 ),
               ),
@@ -239,7 +251,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    initialValue: menu[i]['reps'],
+                    initialValue: menu['reps'],
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -248,7 +260,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateRepsState(value, i);
+                      notifier.updateRepsState(value, index);
                     },
                   ),
                 ),
@@ -270,7 +282,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    initialValue: menu[i]['sets'],
+                    initialValue: menu['sets'],
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -279,7 +291,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateSetsState(value, i);
+                      notifier.updateSetsState(value, index);
                     },
                   ),
                 ),
@@ -293,32 +305,13 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: IconButton(
                   icon: const Icon(Icons.highlight_off),
                   onPressed: () {
-                    /// 記録枠が１行の場合
-                    if (menu.length == 1) {
-                      final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.deleteMenuState(0);
-                    } else {
-                      final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.deleteMenuState(i);
-                    }
+                    final notifier = ref.read(menuNotifierProvider.notifier);
+                    notifier.deleteMenuState(index);
                   },
                 ),
               )
             ],
           ),
-        SizedBox(
-          width: 120,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black26,
-            ),
-            onPressed: () {
-              final notifier = ref.read(menuNotifierProvider.notifier);
-              notifier.insertRowState();
-            },
-            child: const Text('セット数追加'),
-          ),
-        ),
       ],
     );
   }
