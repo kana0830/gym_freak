@@ -220,13 +220,11 @@ class TrainingMemoDialog extends ConsumerWidget {
   /// 更新用記録入力ウィジェット
   Widget _updateWidget(ref, menu, index, weight) {
 
+    weight.text = menu['weight'];
 
-
-    // TextEditingController weightController = TextEditingController();
     TextEditingController repsController = TextEditingController();
     TextEditingController setsController = TextEditingController();
 
-    // weightController.text = menu['weight'];
     repsController.text = menu['reps'];
     setsController.text = menu['sets'];
 
@@ -248,9 +246,12 @@ class TrainingMemoDialog extends ConsumerWidget {
                       ),
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
-                        final notifier =
-                            ref.read(menuNotifierProvider.notifier);
-                        notifier.updateWeightState(value, index);
+                        // final notifier =
+                        //     ref.read(menuNotifierProvider.notifier);
+                        // notifier.updateWeightState(value, index);
+                        final weightNotifier =
+                        ref.read(weightNotifierProvider.notifier);
+                        weightNotifier.updateWeightState(value, index);
                       }),
                 ),
               ),

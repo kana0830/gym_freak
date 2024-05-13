@@ -12,7 +12,7 @@ class WeightNotifier extends _$WeightNotifier {
 
   @override
   List<TextEditingController> build() {
-    return [];
+    return weightControllerList;
   }
 
   /// 親画面からのパラメータ設定
@@ -32,14 +32,11 @@ class WeightNotifier extends _$WeightNotifier {
   //   menuList.add(emptyMap);
   //   state = [...menuList];
   // }
-  // /// weight書き換え
-  // void updateWeightState(value, i) async {
-  //   if (menuList.isEmpty) {
-  //     menuList.add({});
-  //   }
-  //   menuList[i]['weight'] = value;
-  //   state = [...menuList];
-  // }
+  /// weight書き換え
+  void updateWeightState(value, index) async {
+    weightControllerList[index].text = value;
+    state = [...weightControllerList];
+  }
   // /// reps書き換え
   // void updateRepsState(value, i) async {
   //   if (menuList.isEmpty) {
