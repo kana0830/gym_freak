@@ -9,6 +9,7 @@ import '../../../../view_models/training_memo_notifier/calender_memo_notifier.da
 import '../../../../view_models/training_memo_notifier/menu_id_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
+import '../../../../view_models/training_memo_notifier/weight_notifier.dart';
 
 /// トレーニング記録登録ダイアログ
 class TrainingMemoDialog extends ConsumerWidget {
@@ -37,8 +38,6 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
-  String text = '';
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// ユーザーIDキー
@@ -50,6 +49,10 @@ class TrainingMemoDialog extends ConsumerWidget {
 
     /// メニューID
     final menuId = ref.watch(menuIdNotifierProvider);
+
+    /// ウェイト
+    final weight = ref.watch(weightNotifierProvider);
+
 
     /// メニューデータをセットして書き換え
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,6 +67,12 @@ class TrainingMemoDialog extends ConsumerWidget {
         notifier.setState(this.menuId);
       });
     }
+
+    /// ウェイトをセットして書き換え
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(weightNotifierProvider.notifier);
+      notifier.setState(menu);
+    });
 
     ///　スクリーンサイズ取得
     var screenSize = MediaQuery.of(context).size;
@@ -151,7 +160,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: ListView.builder(
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
-                      return _updateWidget(ref, menu[index], index);
+                      return _updateWidget(ref, menu[index], index, weight[index]);
                     },
                     padding: const EdgeInsets.only(bottom: 10.0),
                   ),
@@ -209,7 +218,18 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   /// 更新用記録入力ウィジェット
-  Widget _updateWidget(ref, menu, index) {
+  Widget _updateWidget(ref, menu, index, weight) {
+
+
+
+    // TextEditingController weightController = TextEditingController();
+    TextEditingController repsController = TextEditingController();
+    TextEditingController setsController = TextEditingController();
+
+    // weightController.text = menu['weight'];
+    repsController.text = menu['reps'];
+    setsController.text = menu['sets'];
+
     return Column(
       children: [
           Row(
@@ -220,7 +240,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: TextFormField(
                       textAlign: TextAlign.end,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      initialValue: text = menu['weight'],
+                      controller: weight,
                       decoration: const InputDecoration(
                         floatingLabelStyle: TextStyle(color: Colors.white),
                         filled: true,
@@ -251,7 +271,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    initialValue: menu['reps'],
+                    controller: repsController,
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -282,7 +302,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    initialValue: menu['sets'],
+                    controller: setsController,
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
