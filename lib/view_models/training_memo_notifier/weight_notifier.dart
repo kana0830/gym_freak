@@ -17,9 +17,11 @@ class WeightNotifier extends _$WeightNotifier {
 
   /// 親画面からのパラメータ設定
   void setState(menus) {
-    menus.forEach((menu) {
-      weightControllerList.add(TextEditingController());
-    });
+    if (weightControllerList.isEmpty) {
+      menus.forEach((menu) {
+        weightControllerList.add(TextEditingController());
+      });
+    }
     state = [...weightControllerList];
   }
   // /// list行追加
