@@ -246,9 +246,9 @@ class TrainingMemoDialog extends ConsumerWidget {
                       ),
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
-                        // final notifier =
-                        //     ref.read(menuNotifierProvider.notifier);
-                        // notifier.updateWeightState(value, index);
+                        final notifier =
+                            ref.read(menuNotifierProvider.notifier);
+                        notifier.updateWeightState(value, index);
                         final weightNotifier =
                         ref.read(weightNotifierProvider.notifier);
                         weightNotifier.updateWeightState(value, index);
