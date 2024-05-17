@@ -76,10 +76,6 @@ class MenuNotifier extends _$MenuNotifier {
     state = [...menuList];
     if (menuList.isEmpty) {
       insertRowState();
-      // updateWeightState('', 0);
-      // updateRepsState('', 0);
-      // updateSetsState('', 0);
     }
-    // state = [...menuList];
   }
 }

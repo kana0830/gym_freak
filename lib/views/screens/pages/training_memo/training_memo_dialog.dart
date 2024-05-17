@@ -8,6 +8,8 @@ import '../../../../models/aurh_service.dart';
 import '../../../../view_models/training_memo_notifier/calender_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_id_notifier.dart';
 import '../../../../view_models/training_memo_notifier/menu_notifier.dart';
+import '../../../../view_models/training_memo_notifier/reps_notifier.dart';
+import '../../../../view_models/training_memo_notifier/sets_notifier.dart';
 import '../../../../view_models/training_memo_notifier/training_memo_notifier.dart';
 import '../../../../view_models/training_memo_notifier/weight_notifier.dart';
 
@@ -50,8 +52,12 @@ class TrainingMemoDialog extends ConsumerWidget {
     /// メニューID
     final menuId = ref.watch(menuIdNotifierProvider);
 
-    /// ウェイト
+    /// 重さ
     final weight = ref.watch(weightNotifierProvider);
+    /// 回数
+    final reps = ref.watch(repsNotifierProvider);
+    /// セット数
+    final sets = ref.watch(setsNotifierProvider);
 
 
     /// メニューデータをセットして書き換え
@@ -68,9 +74,19 @@ class TrainingMemoDialog extends ConsumerWidget {
       });
     }
 
-    /// ウェイトをセットして書き換え
+    /// 重さをセットして書き換え
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(weightNotifierProvider.notifier);
+      notifier.setState(menu);
+    });
+    /// 回数をセットして書き換え
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(repsNotifierProvider.notifier);
+      notifier.setState(menu);
+    });
+    /// セット数をセットして書き換え
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(setsNotifierProvider.notifier);
       notifier.setState(menu);
     });
 
@@ -160,7 +176,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: ListView.builder(
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
-                      return _updateWidget(ref, menu[index], index, weight[index]);
+                      return _updateWidget(ref, menu[index], index, weight[index], reps[index], sets[index]);
                     },
                     padding: const EdgeInsets.only(bottom: 10.0),
                   ),
@@ -218,15 +234,15 @@ class TrainingMemoDialog extends ConsumerWidget {
   }
 
   /// 更新用記録入力ウィジェット
-  Widget _updateWidget(ref, menu, index, weight) {
+  Widget _updateWidget(ref, menu, index, weight, reps, sets) {
 
+    /// 重さ
     weight.text = menu['weight'];
+    /// 回数
+    reps.text = menu['reps'];
+    /// セット数
+    sets.text = menu['sets'];
 
-    TextEditingController repsController = TextEditingController();
-    TextEditingController setsController = TextEditingController();
-
-    repsController.text = menu['reps'];
-    setsController.text = menu['sets'];
 
     return Column(
       children: [
@@ -272,7 +288,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    controller: repsController,
+                    controller: reps,
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -303,7 +319,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                 child: Card(
                   child: TextFormField(
                     textAlign: TextAlign.end,
-                    controller: setsController,
+                    controller: sets,
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
