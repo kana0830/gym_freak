@@ -243,7 +243,6 @@ class TrainingMemoDialog extends ConsumerWidget {
     /// セット数
     sets.text = menu['sets'];
 
-
     return Column(
       children: [
           Row(
