@@ -40,6 +40,7 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   /// ユーザーIDキー
   String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// ユーザーIDキー
@@ -54,40 +55,36 @@ class TrainingMemoDialog extends ConsumerWidget {
 
     /// 重さ
     final weight = ref.watch(weightNotifierProvider);
+
     /// 回数
     final reps = ref.watch(repsNotifierProvider);
+
     /// セット数
     final sets = ref.watch(setsNotifierProvider);
 
+    /// 初期ビルド時のみ呼び出し
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      /// メニューデータをセットして書き換え
+      final menuNotifier = ref.read(menuNotifierProvider.notifier);
+      menuNotifier.setState(menus);
 
-    /// メニューデータをセットして書き換え
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(menuNotifierProvider.notifier);
-      notifier.setState(menus);
-    });
+      /// メニューIDデータがある場合、メニューIDデータをセットして書き換え
+      if (this.menuId != '') {
+        final menuIdNotifier = ref.read(menuIdNotifierProvider.notifier);
+        menuIdNotifier.setState(this.menuId);
+      }
 
-    /// メニューIDデータがある場合、メニューIDデータをセットして書き換え
-    if (this.menuId != '') {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final notifier = ref.read(menuIdNotifierProvider.notifier);
-        notifier.setState(this.menuId);
-      });
-    }
+      /// 重さをセットして書き換え
+      final weightNotifier = ref.read(weightNotifierProvider.notifier);
+      weightNotifier.setState(menu);
 
-    /// 重さをセットして書き換え
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(weightNotifierProvider.notifier);
-      notifier.setState(menu);
-    });
-    /// 回数をセットして書き換え
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(repsNotifierProvider.notifier);
-      notifier.setState(menu);
-    });
-    /// セット数をセットして書き換え
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(setsNotifierProvider.notifier);
-      notifier.setState(menu);
+      /// 回数をセットして書き換え
+      final repsNotifier = ref.read(repsNotifierProvider.notifier);
+      repsNotifier.setState(menu);
+
+      /// セット数をセットして書き換え
+      final setsNotifier = ref.read(setsNotifierProvider.notifier);
+      setsNotifier.setState(menu);
     });
 
     ///　スクリーンサイズ取得
@@ -176,7 +173,13 @@ class TrainingMemoDialog extends ConsumerWidget {
                   child: ListView.builder(
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
-                      return _updateWidget(ref, menu[index], index, weight[index], reps[index], sets[index]);
+                      return _updateWidget(
+                          ref,
+                          menu[index],
+                          index,
+                          weight.isEmpty ? TextEditingController() : weight[index],
+                          reps.isEmpty ? TextEditingController() : reps[index],
+                          sets.isEmpty ? TextEditingController() : sets[index]);
                     },
                     padding: const EdgeInsets.only(bottom: 10.0),
                   ),
@@ -194,6 +197,7 @@ class TrainingMemoDialog extends ConsumerWidget {
                     child: const Text('セット数追加'),
                   ),
                 ),
+
                 /// 登録更新ボタン
                 SizedBox(
                   width: double.infinity,
@@ -208,11 +212,13 @@ class TrainingMemoDialog extends ConsumerWidget {
                       if (tapDate.isAtSameMomentAs(nowDate)) {
                         final notifier =
                             ref.read(trainingMemoNotifierProvider.notifier);
-                        notifier.updateState(userIdKey, menuId, menu, createdAt);
+                        notifier.updateState(
+                            userIdKey, menuId, menu, createdAt);
                       } else {
                         final notifier =
                             ref.read(calenderMemoNotifierProvider.notifier);
-                        notifier.updateState(userIdKey, menuId, menu, createdAt);
+                        notifier.updateState(
+                            userIdKey, menuId, menu, createdAt);
                       }
 
                       Navigator.pop(context);
@@ -235,60 +241,26 @@ class TrainingMemoDialog extends ConsumerWidget {
 
   /// 更新用記録入力ウィジェット
   Widget _updateWidget(ref, menu, index, weight, reps, sets) {
-
     /// 重さ
     weight.text = menu['weight'];
+
     /// 回数
     reps.text = menu['reps'];
+
     /// セット数
     sets.text = menu['sets'];
 
-
     return Column(
       children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 5,
-                child: Card(
-                  child: TextFormField(
-                      textAlign: TextAlign.end,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      controller: weight,
-                      decoration: const InputDecoration(
-                        floatingLabelStyle: TextStyle(color: Colors.white),
-                        filled: true,
-                        border: InputBorder.none,
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        final notifier =
-                            ref.read(menuNotifierProvider.notifier);
-                        notifier.updateWeightState(value, index);
-                        final weightNotifier =
-                        ref.read(weightNotifierProvider.notifier);
-                        weightNotifier.updateWeightState(value, index);
-                      }),
-                ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Text('kg'),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text(
-                  '×',
-                  style: TextStyle(fontSize: 20.0),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Card(
-                  child: TextFormField(
+        Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Card(
+                child: TextFormField(
                     textAlign: TextAlign.end,
-                    controller: reps,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    controller: weight,
                     decoration: const InputDecoration(
                       floatingLabelStyle: TextStyle(color: Colors.white),
                       filled: true,
@@ -297,58 +269,91 @@ class TrainingMemoDialog extends ConsumerWidget {
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateRepsState(value, index);
-                    },
+                      notifier.updateWeightState(value, index);
+                      final weightNotifier =
+                          ref.read(weightNotifierProvider.notifier);
+                      weightNotifier.updateWeightState(value, index);
+                    }),
+              ),
+            ),
+            const Expanded(
+              flex: 2,
+              child: Text('kg'),
+            ),
+            const Expanded(
+              flex: 1,
+              child: Text(
+                '×',
+                style: TextStyle(fontSize: 20.0),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Card(
+                child: TextFormField(
+                  textAlign: TextAlign.end,
+                  controller: reps,
+                  decoration: const InputDecoration(
+                    floatingLabelStyle: TextStyle(color: Colors.white),
+                    filled: true,
+                    border: InputBorder.none,
                   ),
-                ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Text('rep'),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text(
-                  '×',
-                  style: TextStyle(fontSize: 20.0),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Card(
-                  child: TextFormField(
-                    textAlign: TextAlign.end,
-                    controller: sets,
-                    decoration: const InputDecoration(
-                      floatingLabelStyle: TextStyle(color: Colors.white),
-                      filled: true,
-                      border: InputBorder.none,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.updateSetsState(value, index);
-                    },
-                  ),
-                ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Text('set'),
-              ),
-              Expanded(
-                flex: 2,
-                child: IconButton(
-                  icon: const Icon(Icons.highlight_off),
-                  onPressed: () {
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
                     final notifier = ref.read(menuNotifierProvider.notifier);
-                    notifier.deleteMenuState(index);
+                    notifier.updateRepsState(value, index);
                   },
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            const Expanded(
+              flex: 2,
+              child: Text('rep'),
+            ),
+            const Expanded(
+              flex: 1,
+              child: Text(
+                '×',
+                style: TextStyle(fontSize: 20.0),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Card(
+                child: TextFormField(
+                  textAlign: TextAlign.end,
+                  controller: sets,
+                  decoration: const InputDecoration(
+                    floatingLabelStyle: TextStyle(color: Colors.white),
+                    filled: true,
+                    border: InputBorder.none,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    final notifier = ref.read(menuNotifierProvider.notifier);
+                    notifier.updateSetsState(value, index);
+                  },
+                ),
+              ),
+            ),
+            const Expanded(
+              flex: 2,
+              child: Text('set'),
+            ),
+            Expanded(
+              flex: 2,
+              child: IconButton(
+                icon: const Icon(Icons.highlight_off),
+                onPressed: () {
+                  final notifier = ref.read(menuNotifierProvider.notifier);
+                  notifier.deleteMenuState(index);
+                },
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
