@@ -24,6 +24,6 @@ class CommonDataUtil{
   /// 今日の曜日取得('(月)')
   static String getDayOfWeek(){
     initializeDateFormatting("ja");
-    return ' (${DateFormat.E('ja').format(DateTime.now())})';
+    return '(${DateFormat.E('ja').format(DateTime.now())})';
   }
 }

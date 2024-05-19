@@ -191,8 +191,14 @@ class TrainingMemoDialog extends ConsumerWidget {
                       backgroundColor: Colors.black26,
                     ),
                     onPressed: () {
-                      final notifier = ref.read(menuNotifierProvider.notifier);
-                      notifier.insertRowState();
+                      final menuNotifier = ref.read(menuNotifierProvider.notifier);
+                      menuNotifier.insertRowState();
+                      final weightNotifier = ref.read(weightNotifierProvider.notifier);
+                      weightNotifier.insertRowState();
+                      final repsNotifier = ref.read(repsNotifierProvider.notifier);
+                      repsNotifier.insertRowState();
+                      final setsNotifier = ref.read(setsNotifierProvider.notifier);
+                      setsNotifier.insertRowState();
                     },
                     child: const Text('セット数追加'),
                   ),

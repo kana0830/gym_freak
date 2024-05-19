@@ -77,7 +77,33 @@ class MyCalender extends ConsumerWidget {
         error: (error, stacktrace) => Text('エラー $error'),
         data: (data) {
           if (data.isEmpty) {
-            return Container();
+            return Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 10.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.yellow,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrainingMemoPast(
+                          tapDay: tapDay,
+                          menus: menus,
+                          trainingPart: trainingPart,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    '記録を登録する',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+            );
           } else {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -288,7 +314,9 @@ class MyCalender extends ConsumerWidget {
               color: AppColors.calenderYellow,
               child: trainingPartInfo,
             ),
-            Expanded(child: trainingMemoInfo),
+            Expanded(
+                child: trainingMemoInfo
+            ),
           ],
         ),
       ),

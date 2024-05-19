@@ -30,4 +30,10 @@ class RepsNotifier extends _$RepsNotifier {
     repsControllerList[index].text = value;
     state = [...repsControllerList];
   }
+
+  /// 空行追加
+  void insertRowState() async {
+    repsControllerList.add(TextEditingController());
+    state = [...repsControllerList];
+  }
 }

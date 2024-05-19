@@ -50,7 +50,13 @@ class TrainingMemoPast extends ConsumerWidget {
       error: (error, stacktrace) => Text('エラー $error'),
       data: (data) {
         if (data.isEmpty) {
-          return Container();
+          return const Center(
+            child: Text(
+              'Enjoy Training!',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 30.0,),
+            ),
+          );
         } else {
           return Padding(
             padding: const EdgeInsets.all(10.0),

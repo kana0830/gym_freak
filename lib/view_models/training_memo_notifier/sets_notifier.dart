@@ -30,4 +30,10 @@ class SetsNotifier extends _$SetsNotifier {
     setsControllerList[index].text = value;
     state = [...setsControllerList];
   }
+
+  /// 空行追加
+  void insertRowState() async {
+    setsControllerList.add(TextEditingController());
+    state = [...setsControllerList];
+  }
 }

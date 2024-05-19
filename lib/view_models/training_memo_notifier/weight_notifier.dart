@@ -24,48 +24,16 @@ class WeightNotifier extends _$WeightNotifier {
     }
     state = [...weightControllerList];
   }
-  // /// list行追加
-  // void insertRowState() async {
-  //   Map<String, dynamic> emptyMap = {
-  //     'weight' : '',
-  //     'reps' : '',
-  //     'sets' : ''
-  //   };
-  //   menuList.add(emptyMap);
-  //   state = [...menuList];
-  // }
+
   /// weight書き換え
   void updateWeightState(value, index) async {
     weightControllerList[index].text = value;
     state = [...weightControllerList];
   }
-  // /// reps書き換え
-  // void updateRepsState(value, i) async {
-  //   if (menuList.isEmpty) {
-  //     menuList.add({});
-  //   }
-  //   menuList[i]['reps'] = value;
-  //   state = [...menuList];
-  // }
-  // /// sets書き換え
-  // void updateSetsState(value, i) async {
-  //   if (menuList.isEmpty) {
-  //     menuList.add({});
-  //   }
-  //   menuList[i]['sets'] = value;
-  //   state = [...menuList];
-  // }
-  //
-  // /// delete
-  // void deleteMenuState(i) async {
-  //   menuList.removeAt(i);
-  //   state = [...menuList];
-  //   if (menuList.isEmpty) {
-  //     insertRowState();
-  //     // updateWeightState('', 0);
-  //     // updateRepsState('', 0);
-  //     // updateSetsState('', 0);
-  //   }
-  //   // state = [...menuList];
-  // }
+
+  /// 空行追加
+  void insertRowState() async {
+    weightControllerList.add(TextEditingController());
+    state = [...weightControllerList];
+  }
 }

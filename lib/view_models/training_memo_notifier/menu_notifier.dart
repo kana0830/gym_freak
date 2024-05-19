@@ -45,6 +45,7 @@ class MenuNotifier extends _$MenuNotifier {
     menuList.add(emptyMap);
     state = [...menuList];
   }
+
   /// weight書き換え
   void updateWeightState(value, i) async {
     if (menuList.isEmpty) {
@@ -53,6 +54,7 @@ class MenuNotifier extends _$MenuNotifier {
     menuList[i]['weight'] = value;
     state = [...menuList];
   }
+
   /// reps書き換え
   void updateRepsState(value, i) async {
     if (menuList.isEmpty) {
@@ -61,6 +63,7 @@ class MenuNotifier extends _$MenuNotifier {
     menuList[i]['reps'] = value;
     state = [...menuList];
   }
+
   /// sets書き換え
   void updateSetsState(value, i) async {
     if (menuList.isEmpty) {
