@@ -93,9 +93,9 @@ class TrainingMemoDialog extends ConsumerWidget {
     /// トレーニング記録ダイアログ
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
-      child: ConstrainedBox(
+      child: Container(
         constraints: BoxConstraints(
-          minHeight: screenSize.height * 0.2,
+          minHeight: screenSize.height * 0.1,
           maxHeight: screenSize.height * 0.6,
         ),
         child: Card(
