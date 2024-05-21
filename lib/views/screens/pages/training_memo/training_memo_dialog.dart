@@ -96,7 +96,7 @@ class TrainingMemoDialog extends ConsumerWidget {
       child: Container(
         constraints: BoxConstraints(
           minHeight: screenSize.height * 0.1,
-          maxHeight: screenSize.height * 0.6,
+          maxHeight: screenSize.height * 0.8,
         ),
         child: Card(
           shadowColor: Colors.transparent,
