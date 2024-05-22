@@ -93,10 +93,9 @@ class TrainingMemoDialog extends ConsumerWidget {
     /// トレーニング記録ダイアログ
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: screenSize.height * 0.1,
-          maxHeight: screenSize.height * 0.8,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: 300,
         ),
         child: Card(
           shadowColor: Colors.transparent,
@@ -108,6 +107,7 @@ class TrainingMemoDialog extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 /// 記録の表示
                 Column(
@@ -169,7 +169,8 @@ class TrainingMemoDialog extends ConsumerWidget {
                 ),
 
                 /// 記録入力リスト
-                Expanded(
+                ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
                   child: ListView.builder(
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
