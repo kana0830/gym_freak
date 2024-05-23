@@ -170,7 +170,7 @@ class TrainingMemoDialog extends ConsumerWidget {
 
                 /// 記録入力リスト
                 ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
+                  constraints: const BoxConstraints(minHeight: 0, maxHeight: 300),
                   child: ListView.builder(
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
