@@ -95,7 +95,7 @@ class TrainingMemoDialog extends ConsumerWidget {
       insetPadding: const EdgeInsets.all(20.0),
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          minWidth: 300,
+          maxHeight: 430,
         ),
         child: Card(
           shadowColor: Colors.transparent,
@@ -169,9 +169,9 @@ class TrainingMemoDialog extends ConsumerWidget {
                 ),
 
                 /// 記録入力リスト
-                ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: 0, maxHeight: 300),
+                Expanded(
                   child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
                       return _updateWidget(
