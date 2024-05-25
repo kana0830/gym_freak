@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'weight_notifier.g.dart';
 
-/// 記録管理
+/// weight管理
 @riverpod
 class WeightNotifier extends _$WeightNotifier {
 

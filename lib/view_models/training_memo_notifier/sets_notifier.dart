@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sets_notifier.g.dart';
 
-/// 記録管理
+/// sets管理
 @riverpod
 class SetsNotifier extends _$SetsNotifier {
 
