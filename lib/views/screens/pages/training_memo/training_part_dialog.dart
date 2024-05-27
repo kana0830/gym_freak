@@ -7,20 +7,26 @@ import '../../../../view_models/training_memo_notifier/calender_part_notifier.da
 import '../../../../view_models/training_memo_notifier/training_part_notifier.dart';
 
 class TrainingPartDialog extends ConsumerWidget {
-  TrainingPartDialog({required this.part, required this.edit, required this.tapDay, super.key});
+  TrainingPartDialog(
+      {required this.part,
+      required this.edit,
+      required this.tapDay,
+      super.key});
 
   /// 部位
   String part = '';
+
   /// 編集モード
   int edit;
+
   /// 選択中日付
   DateTime tapDay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     /// ユーザーIDキー
-    String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
+    String userIdKey =
+        AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
 
     String partValue = part;
 
@@ -69,12 +75,15 @@ class TrainingPartDialog extends ConsumerWidget {
                     onPressed: () {
                       var now = DateTime.now();
                       var nowDate = DateTime(now.year, now.month, now.day);
-                      var tapDate = DateTime(tapDay.year, tapDay.month, tapDay.day);
+                      var tapDate =
+                          DateTime(tapDay.year, tapDay.month, tapDay.day);
                       if (tapDate.isAtSameMomentAs(nowDate)) {
-                        final notifier = ref.read(trainingPartNotifierProvider.notifier);
+                        final notifier =
+                            ref.read(trainingPartNotifierProvider.notifier);
                         notifier.updateState(tapDay, partValue);
                       } else {
-                        final notifier = ref.read(calenderPartNotifierProvider.notifier);
+                        final notifier =
+                            ref.read(calenderPartNotifierProvider.notifier);
                         notifier.updateState(tapDay, partValue);
                       }
                       Navigator.pop(context);
