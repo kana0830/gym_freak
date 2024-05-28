@@ -182,7 +182,33 @@ class MyCalender extends ConsumerWidget {
 
       /// トレーニング記録がない場合
     } else {
-      trainingMemoInfo = Container();
+      trainingMemoInfo = Padding(
+        padding: const EdgeInsets.only(left: 16.0, top: 10.0),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.yellow,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TrainingMemoPast(
+                    tapDay: tapDay,
+                    menus: menus,
+                    trainingPart: trainingPart,
+                  ),
+                ),
+              );
+            },
+            child: const Text(
+              '記録を登録する',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+      );;
     }
 
     DateTime focusedDay = DateTime.now();
