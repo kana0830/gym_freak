@@ -212,7 +212,6 @@ class MyCalender extends ConsumerWidget {
     }
 
     DateTime focusedDay = DateTime.now();
-    DateTime? selectedDay;
 
     return SafeArea(
       child: Scaffold(
