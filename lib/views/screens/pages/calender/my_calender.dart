@@ -208,7 +208,7 @@ class MyCalender extends ConsumerWidget {
             ),
           ),
         ),
-      );;
+      );
     }
 
     DateTime focusedDay = DateTime.now();
