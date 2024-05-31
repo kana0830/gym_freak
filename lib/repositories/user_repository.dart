@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserRepository {
 
   @override
+
+  /// ユーザ情報取得
   Future<QueryDocumentSnapshot<Map<String, dynamic>>> getUser(String email) async {
     List<QueryDocumentSnapshot<Map<String, dynamic>>> users = [];
     await FirebaseFirestore.instance.collection('user')
@@ -14,6 +16,7 @@ class UserRepository {
     return users.first;
   }
 
+  /// ユーザ情報更新
   void updateUser(Map<String, dynamic> user) async{
     await FirebaseFirestore.instance.collection('user').doc('1').update({
       'birthday' : user['birthday'] as Timestamp,

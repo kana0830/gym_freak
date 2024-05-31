@@ -26,9 +26,4 @@ class CalenderNotifier extends _$CalenderNotifier {
     var trainingMemo = await _trainingMemoRepository.getTrainingMemo(AuthService.userId + dateString);
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
-
-  /// update
-  void updateState(value) async {
-
-  }
 }

@@ -32,7 +32,7 @@ class CalenderMemoNotifier extends _$CalenderMemoNotifier {
     state = AsyncData<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(trainingMemo);
   }
 
-  // delete
+  /// delete
   void deleteMenuState(userIdKey, menuId) async {
     _trainingMemoRepository.deleteTrainingMemo(userIdKey, menuId);
     trainingMemo = await _trainingMemoRepository.getTrainingMemo(userIdKey);

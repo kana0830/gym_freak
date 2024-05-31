@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrainingMemoRepository {
   @override
+
   /// トレーニング記録取得
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getTrainingMemo(
       String userIdKey) async {
@@ -18,6 +19,7 @@ class TrainingMemoRepository {
     return trainings;
   }
 
+  /// トレーニング記録登録
   void insertTrainingMemo(userIdKey, partValue) async {
     await FirebaseFirestore.instance
         .collection('trainingMemo')
@@ -28,6 +30,7 @@ class TrainingMemoRepository {
     getTrainingMemo(userIdKey);
   }
 
+  /// トレーニング記録更新
   void updateTrainingMemo(userIdKey, menuId, menus, createdAt) async {
     if (createdAt == null) {
       await FirebaseFirestore.instance
@@ -47,6 +50,7 @@ class TrainingMemoRepository {
 
   }
 
+  /// トレーニング記録削除
   void deleteTrainingMemo(userIdKey, menuId) async {
     await FirebaseFirestore.instance
         .collection('trainingMemo')
@@ -73,7 +77,7 @@ class TrainingMemoRepository {
     );
   }
 
-  // トレーニング部位取得
+  /// トレーニング部位取得
   Future<Map<String, dynamic>> getTrainingPart(String userIdKey) async {
     Map<String, dynamic> trainingPart = {};
     await FirebaseFirestore.instance
@@ -90,6 +94,7 @@ class TrainingMemoRepository {
     return trainingPart;
   }
 
+  /// トレーニング部位更新
   void updateTrainingPart(userIdKey, partValue) async {
     await FirebaseFirestore.instance
         .collection('trainingMemo')

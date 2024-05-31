@@ -7,7 +7,6 @@ class TrainingMemo {
   late String id;
   late String userIdKey;
   late String part;
-  // late Map<String, dynamic> record;
 
   TrainingMemo(Map<String, dynamic> doc, docId) {
     id = docId;
