@@ -18,9 +18,11 @@ class TrainingMemo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// トレーニング部位
     final trainingPart = ref.watch(trainingPartNotifierProvider);
+    /// トレーニング記録
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
-
+    /// 空メニュー
     QueryDocumentSnapshot<Map<String, dynamic>>? menu;
 
     /// トレーニング記録表示ウィジェット

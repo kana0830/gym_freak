@@ -38,9 +38,6 @@ class TrainingMemoDialog extends ConsumerWidget {
   /// 日付
   DateTime data;
 
-  /// ユーザーIDキー
-  String userIdKey = AuthService.userId + CommonDataUtil.getDateNoSlash();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// ユーザーIDキー
@@ -86,9 +83,6 @@ class TrainingMemoDialog extends ConsumerWidget {
       final setsNotifier = ref.read(setsNotifierProvider.notifier);
       setsNotifier.setState(menu);
     });
-
-    ///　スクリーンサイズ取得
-    var screenSize = MediaQuery.of(context).size;
 
     /// トレーニング記録ダイアログ
     return Dialog(

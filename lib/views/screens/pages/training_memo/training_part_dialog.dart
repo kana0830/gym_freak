@@ -28,6 +28,7 @@ class TrainingPartDialog extends ConsumerWidget {
     String userIdKey =
         AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
 
+    /// 部位
     String partValue = part;
 
     /// トレーニング記録ダイアログ
