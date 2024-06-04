@@ -20,8 +20,10 @@ class TrainingMemo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /// トレーニング部位
     final trainingPart = ref.watch(trainingPartNotifierProvider);
+
     /// トレーニング記録
     final trainingMemo = ref.watch(trainingMemoNotifierProvider);
+
     /// 空メニュー
     QueryDocumentSnapshot<Map<String, dynamic>>? menu;
 
@@ -42,7 +44,9 @@ class TrainingMemo extends ConsumerWidget {
             child: Text(
               'Enjoy Training!',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30.0,),
+              style: TextStyle(
+                fontSize: 30.0,
+              ),
             ),
           );
         } else {

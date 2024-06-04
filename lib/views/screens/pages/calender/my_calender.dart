@@ -211,6 +211,7 @@ class MyCalender extends ConsumerWidget {
       );
     }
 
+    /// 選択日
     DateTime focusedDay = DateTime.now();
 
     return SafeArea(
@@ -254,7 +255,7 @@ class MyCalender extends ConsumerWidget {
                       child: Center(
                         child: Text(
                           _dayOfWeek(day),
-                          style: TextStyle(color: _textColor(day)),
+                          style: TextStyle(color: AppColors.textColor(day)),
                         ),
                       ),
                     );
@@ -270,7 +271,7 @@ class MyCalender extends ConsumerWidget {
                         child: Text(
                           day.day.toString(),
                           style: TextStyle(
-                            color: _textColor(day),
+                            color: AppColors.textColor(day),
                           ),
                         ),
                       ),
@@ -294,7 +295,7 @@ class MyCalender extends ConsumerWidget {
                             child: Text(
                               day.day.toString(),
                               style: TextStyle(
-                                color: _textColor(day),
+                                color: AppColors.textColor(day),
                               ),
                             ),
                           ),
@@ -348,18 +349,7 @@ class MyCalender extends ConsumerWidget {
     );
   }
 
-  Color _textColor(DateTime day) {
-    const defaultTextColor = Colors.black87;
-    switch (day.weekday) {
-      case 6:
-        return Colors.blue[600]!;
-      case 7:
-        return Colors.red;
-      default:
-        return defaultTextColor;
-    }
-  }
-
+  /// 曜日取得
   String _dayOfWeek(day) {
     switch (day.weekday) {
       case 1:
@@ -380,4 +370,5 @@ class MyCalender extends ConsumerWidget {
         return '';
     }
   }
+
 }
