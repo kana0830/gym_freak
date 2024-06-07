@@ -11,7 +11,6 @@ class MenuNotifier extends _$MenuNotifier {
   QueryDocumentSnapshot<Map<String, dynamic>>? menu;
   late List<Map<String, dynamic>> menuList = [];
 
-
   @override
   List<Map<String, dynamic>> build() {
     return [];

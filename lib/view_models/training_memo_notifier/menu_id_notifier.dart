@@ -6,6 +6,7 @@ part 'menu_id_notifier.g.dart';
 @riverpod
 class MenuIdNotifier extends _$MenuIdNotifier {
 
+  /// メニューID
   String? menuId = '';
 
   @override
