@@ -25,12 +25,15 @@ class TrainingMemoPast extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    /// トレーニング部位状態管理
     final trainingPart = ref.watch(calenderPartNotifierProvider);
+    /// トレーニング記録状態管理
     final trainingMemo = ref.watch(calenderMemoNotifierProvider);
 
     /// ユーザーIDキー
     String userIdKey = AuthService.userId + CommonDataUtil.changeDateNoSlash(tapDay);
 
+    /// メニュー
     QueryDocumentSnapshot<Map<String, dynamic>>? menu;
 
     /// メニューデータをセットして書き換え
