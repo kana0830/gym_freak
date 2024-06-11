@@ -17,7 +17,10 @@ class TrainingMemoPast extends ConsumerWidget {
   /// 選択中日付
   DateTime tapDay;
 
+  /// メニュー
   AsyncValue<List<QueryDocumentSnapshot<Map<String, dynamic>>>> menus;
+
+  /// トレーニング部位
   AsyncValue<Map<String, dynamic>> trainingPart;
 
   TrainingMemoPast({super.key, required this.tapDay, required this.menus, required this.trainingPart});
