@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // late List<QueryDocumentSnapshot<Map<String, dynamic>>> user;
+  /// ログインユーザ
   final currentUser = FirebaseAuth.instance.currentUser;
   final userRepository = UserRepository();
 

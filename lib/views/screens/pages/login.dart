@@ -3,6 +3,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:gym_freak/models/aurh_service.dart';
 
+/// ログイン画面
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
